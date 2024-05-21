@@ -31,6 +31,16 @@ public class SimplePool : MonoBehaviour
         return poolInstance[poolType].Spawn(pos, rot) as T;
     }
 
+    public static T Spawn<T>(PoolType poolType) where T : GameUnit
+    {
+        if (!poolInstance.ContainsKey(poolType))
+        {
+            Debug.LogError(poolType + "IS NOT PRELOAD!!!");
+            return null;
+        }
+        return poolInstance[poolType].Spawn() as T;
+    }
+
     public static void Despawn(GameUnit unit)
     {
         if (!poolInstance.ContainsKey(unit.poolType))
@@ -94,20 +104,28 @@ public class Pool
         }
     }
 
-    public GameUnit Spawn(Vector3 pos, Quaternion rot)
+    public GameUnit Spawn()
     {
         GameUnit unit;
-        if(inactives.Count == 0)
+        if (inactives.Count == 0)
         {
             unit = GameObject.Instantiate(prefab, parent);
         }
         else
         {
-            unit =inactives.Dequeue();
+            unit = inactives.Dequeue();
         }
-        unit.Tf.SetPositionAndRotation(pos, rot);
         actives.Add(unit);
         unit.gameObject.SetActive(true);
+
+        return unit;
+    }
+
+    public GameUnit Spawn(Vector3 pos, Quaternion rot)
+    {
+        GameUnit unit = Spawn();
+        
+        unit.Tf.SetPositionAndRotation(pos, rot);
 
         return unit;
     }

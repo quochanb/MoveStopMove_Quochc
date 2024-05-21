@@ -10,16 +10,18 @@ public class Character : GameUnit
     [SerializeField] protected float radius = 5f;
     [SerializeField] protected Transform currentTarget;
     [SerializeField] protected WeaponType currentWeaponType;
+    [SerializeField] protected CharacterWeapon characterWeapon;
+
+    protected ThrowWeapon throwWeapon;
 
     private string currentAnim;
     private bool isDead, isAttack, isMoving;
 
     public Collider[] enemyInAttackRange = new Collider[4];
-    public Weapon currentWeapon;
 
     private void Start()
     {
-        currentWeapon = FindObjectOfType<Weapon>();
+        characterWeapon = FindObjectOfType<CharacterWeapon>();
         OnInit();
     }
 
@@ -32,7 +34,7 @@ public class Character : GameUnit
 
     protected virtual void OnDespawn()
     {
-
+        Destroy(this.gameObject);
     }
 
     public Vector3 CheckGround(Vector3 nextPoint)
@@ -72,17 +74,23 @@ public class Character : GameUnit
     {
         if (!isAttack)
         {
+            characterWeapon.gameObject.SetActive(false);
             Tf.LookAt(currentTarget);
             ChangeAnim(Constants.ANIM_ATTACK);
-            currentWeapon.gameObject.SetActive(true);
-            currentWeapon.Throw();
+            Debug.Log(this);
+            throwWeapon.Throw(this, OnHitVictim);
             isAttack = true;
         }
-        if (isAttack)
+        else
         {
-            currentWeapon.gameObject.SetActive(false);
+            characterWeapon.gameObject.SetActive(true);
             isAttack = false;
         }
+    }
+
+    public void OnHitVictim(Character attacker, Character victim)
+    {
+        victim.OnDead();
     }
 
     public void ChangeWeapon(WeaponType weaponType)
@@ -139,6 +147,7 @@ public class Character : GameUnit
         if (isDead)
         {
             ChangeAnim(Constants.ANIM_DEAD);
+            Invoke(nameof(OnDespawn), 1f);
             return;
         }
     }

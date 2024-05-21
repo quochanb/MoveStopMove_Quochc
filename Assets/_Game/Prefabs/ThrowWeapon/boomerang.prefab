@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2111538695785259066}
   - component: {fileID: 2111538695788159002}
   - component: {fileID: 2111538695787029210}
+  - component: {fileID: 4544367724427978624}
   m_Layer: 0
   m_Name: boomerang
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111538695785036826}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 12.31, y: 2.07, z: 3.16}
+  m_LocalPosition: {x: 12.31, y: 2.07, z: 3.161}
   m_LocalScale: {x: 9, y: 9, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -83,3 +84,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4544367724427978624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111538695785036826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e1d4e73d899c6240a5c409b06aa21c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 2
+  speed: 5
+  returnTime: 1.5
