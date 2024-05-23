@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class Character : GameUnit
 {
-    [SerializeField] protected Animator anim;
     [SerializeField] protected Rigidbody rb;
-    [SerializeField] protected LayerMask characterLayer, groundLayer;
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected GameObject body;
     [SerializeField] protected float radius = 5f;
     [SerializeField] protected Transform currentTarget;
     [SerializeField] protected WeaponType currentWeaponType;
-    [SerializeField] protected CharacterWeapon characterWeapon;
+    [SerializeField] protected LayerMask characterLayer, groundLayer;
 
-    protected ThrowWeapon throwWeapon;
+    public Weapon weapon;
 
     private string currentAnim;
     private bool isDead, isAttack, isMoving;
 
     public Collider[] enemyInAttackRange = new Collider[4];
 
-    private void Start()
+    private void Awake()
     {
-        characterWeapon = FindObjectOfType<CharacterWeapon>();
+        weapon = FindObjectOfType<Weapon>();
         OnInit();
     }
 
@@ -53,10 +53,11 @@ public class Character : GameUnit
         if (isMoving)
         {
             isAttack = false;
+            ChangeAnim(Constants.ANIM_RUN);
         }
     }
 
-    public void StopMove()
+    public virtual void StopMove()
     {
         isMoving = false;
         if (currentTarget == null)
@@ -74,17 +75,14 @@ public class Character : GameUnit
     {
         if (!isAttack)
         {
-            characterWeapon.gameObject.SetActive(false);
             Tf.LookAt(currentTarget);
             ChangeAnim(Constants.ANIM_ATTACK);
-            Debug.Log(this);
-            throwWeapon.Throw(this, OnHitVictim);
+            weapon.Throw(this, OnHitVictim);
             isAttack = true;
         }
-        else
+        if (isAttack)
         {
-            characterWeapon.gameObject.SetActive(true);
-            isAttack = false;
+            StartCoroutine(ChangeAnimAfterDelay(0.5f));
         }
     }
 
@@ -108,26 +106,17 @@ public class Character : GameUnit
 
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(Tf.position, radius);
-    }
-
     public void FindEnemyTarget()
     {
         int numberOfCharacterInRange = Physics.OverlapSphereNonAlloc(Tf.position, radius, enemyInAttackRange, characterLayer);
 
+        currentTarget = null;
         for (int i = 0; i < numberOfCharacterInRange; i++)
         {
             if (enemyInAttackRange[i] != null && enemyInAttackRange[i].transform != Tf)
             {
                 currentTarget = enemyInAttackRange[i].transform;
                 break;
-            }
-            else
-            {
-                currentTarget = null;
             }
         }
     }
@@ -146,9 +135,18 @@ public class Character : GameUnit
         isDead = true;
         if (isDead)
         {
+            isMoving = false;
             ChangeAnim(Constants.ANIM_DEAD);
-            Invoke(nameof(OnDespawn), 1f);
+            Invoke(nameof(OnDespawn), 2f);
             return;
+        }
+    }
+
+    public void UpSize()
+    {
+        if (body.transform.localScale.x <= 1.5f)
+        {
+            body.transform.localScale *= 1.03f;
         }
     }
 
@@ -160,5 +158,11 @@ public class Character : GameUnit
             currentAnim = animName;
             anim.SetTrigger(currentAnim);
         }
+    }
+
+    private IEnumerator ChangeAnimAfterDelay(float time)
+    {
+        yield return Cache.GetWFS(time);
+        ChangeAnim(Constants.ANIM_IDLE);
     }
 }

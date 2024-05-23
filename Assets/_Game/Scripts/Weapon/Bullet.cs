@@ -8,6 +8,7 @@ public class Bullet : GameUnit
 {
     [SerializeField] protected float speed = 5f;
     protected Character attacker;
+    protected Transform target;
     protected Action<Character, Character> onHit;
 
     public virtual void OnInit(Character attacker, Action<Character, Character> onHit)
@@ -18,7 +19,11 @@ public class Bullet : GameUnit
 
     public virtual void Move()
     {
-
+        target = attacker.GetTarget();
+        if (target != null)
+        {
+            Tf.Translate((target.position - Tf.position).normalized * speed * Time.deltaTime);
+        }
     }
 
     public void OnDespawn()
@@ -26,16 +31,27 @@ public class Bullet : GameUnit
         SimplePool.Despawn(this);
     }
 
+    public void DelayDespawnBullet()
+    {
+        Invoke(nameof(OnDespawn), 1.5f);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(Constants.TAG_CHARACTER))
         {
             Character victim = Cache.GetCharacter(other);
-            if (victim != null && victim != attacker)
+            if (victim != attacker)
             {
+                attacker.UpSize();
                 onHit?.Invoke(attacker, victim);
                 OnDespawn();
             }
+        }
+
+        if (other.CompareTag(Constants.TAG_OBSTACLE))
+        {
+            OnDespawn();
         }
     }
 }

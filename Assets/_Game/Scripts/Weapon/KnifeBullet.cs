@@ -8,9 +8,4 @@ public class KnifeBullet : Bullet
     {
         Move();
     }
-
-    public override void Move()
-    {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }
 }

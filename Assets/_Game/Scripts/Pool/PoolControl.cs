@@ -23,10 +23,4 @@ public class PoolAmount
     public Transform parent;
 }
 
-public enum PoolType
-{
-    KnifeBullet = 0,
-    AxeBullet = 1,
-    BoomerangBullet = 2,
-    Bot = 3
-}
+

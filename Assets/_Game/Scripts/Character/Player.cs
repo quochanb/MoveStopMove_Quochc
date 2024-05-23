@@ -24,7 +24,6 @@ public class Player : Character
         Vector3 nextPoint = Tf.position + Joystick.direction * speed * Time.deltaTime;
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
-        ChangeAnim(Constants.ANIM_RUN);
         FindEnemyTarget();
     }
 }

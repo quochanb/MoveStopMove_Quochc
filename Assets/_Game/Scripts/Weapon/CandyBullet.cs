@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AxeBullet : Bullet
+public class CandyBullet : Bullet
 {
     private void Update()
     {
@@ -12,7 +12,6 @@ public class AxeBullet : Bullet
     public override void Move()
     {
         base.Move();
-        Tf.Translate(Vector3.forward * speed * Time.deltaTime);
-        Tf.Rotate(Vector3.forward, 360 * Time.deltaTime);
+        //Tf.Rotate(new Vector3(0, 10000, 0) * Time.deltaTime);
     }
 }

@@ -14,4 +14,15 @@ public class Cache : MonoBehaviour
         }
         return characters[collider];
     }
+
+    private static Dictionary<float, WaitForSeconds> waitForSeconds = new Dictionary<float, WaitForSeconds>();
+
+    public static WaitForSeconds GetWFS(float time)
+    {
+        if (!waitForSeconds.ContainsKey(time))
+        {
+            waitForSeconds.Add(time, new WaitForSeconds(time));
+        }
+        return waitForSeconds[time];
+    }
 }
