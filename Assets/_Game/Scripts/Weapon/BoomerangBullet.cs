@@ -13,9 +13,9 @@ public class BoomerangBullet : Bullet
         Move();
     }
 
-    public override void OnInit(Character attacker, Action<Character, Character> onHit)
+    public override void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
-        base.OnInit(attacker, onHit);
+        base.OnInit(attacker, onHit, target);
         startPosition = Tf.position;
     }
 

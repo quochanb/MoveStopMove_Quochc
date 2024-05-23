@@ -6,12 +6,15 @@ using UnityEngine;
 public class Weapon : GameUnit
 {
     [SerializeField] GameObject weaponSprite;
-    public const float TIME_ACTIVE = 1.5f;
+    public const float TIME_ACTIVE = 1f;
+
+    private Vector3 target;
 
     public void Throw(Character attacker, Action<Character, Character> onHit)
     {
+        target = attacker.GetTarget().position;
         Bullet bullet = SimplePool.Spawn<Bullet>(poolType, Tf.position, Quaternion.identity);
-        bullet.OnInit(attacker, onHit);
+        bullet.OnInit(attacker, onHit, target);
         bullet.DelayDespawnBullet();
         weaponSprite.gameObject.SetActive(false);
 

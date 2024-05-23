@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 1
-  speed: 5
+  speed: 6
 --- !u!1001 &8669876710103749912
 PrefabInstance:
   m_ObjectHideFlags: 0

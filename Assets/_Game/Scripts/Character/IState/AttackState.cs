@@ -17,7 +17,7 @@ public class AttackState : IState
         }
         else
         {
-            enemy.StopMove();
+            enemy.Attack();
         }
     }
 

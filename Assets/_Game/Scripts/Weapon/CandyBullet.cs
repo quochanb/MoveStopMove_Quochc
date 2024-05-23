@@ -12,6 +12,6 @@ public class CandyBullet : Bullet
     public override void Move()
     {
         base.Move();
-        //Tf.Rotate(new Vector3(0, 10000, 0) * Time.deltaTime);
+        Tf.eulerAngles += new Vector3(0, 10, 0);
     }
 }

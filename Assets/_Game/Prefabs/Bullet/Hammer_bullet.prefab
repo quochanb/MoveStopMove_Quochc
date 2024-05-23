@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 1
-  speed: 5
+  speed: 6
 --- !u!65 &8032203259649056974
 BoxCollider:
   m_ObjectHideFlags: 0

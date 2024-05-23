@@ -8,21 +8,21 @@ public class Bullet : GameUnit
 {
     [SerializeField] protected float speed = 5f;
     protected Character attacker;
-    protected Transform target;
+    protected Vector3 target;
     protected Action<Character, Character> onHit;
 
-    public virtual void OnInit(Character attacker, Action<Character, Character> onHit)
+    public virtual void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
         this.attacker = attacker;
         this.onHit = onHit;
+        this.target = target;
     }
 
     public virtual void Move()
     {
-        target = attacker.GetTarget();
         if (target != null)
         {
-            Tf.Translate((target.position - Tf.position).normalized * speed * Time.deltaTime);
+            Tf.position = Vector3.MoveTowards(Tf.position, target, speed * Time.deltaTime);
         }
     }
 
@@ -33,7 +33,7 @@ public class Bullet : GameUnit
 
     public void DelayDespawnBullet()
     {
-        Invoke(nameof(OnDespawn), 1.5f);
+        Invoke(nameof(OnDespawn), 1f);
     }
 
     private void OnTriggerEnter(Collider other)

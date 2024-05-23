@@ -59,21 +59,13 @@ public class Character : GameUnit
 
     public virtual void StopMove()
     {
-        isMoving = false;
-        if (currentTarget == null)
-        {
-            ChangeAnim(Constants.ANIM_IDLE);
-            return;
-        }
-        else
-        {
-            Attack();
-        }
+        Debug.Log("Stop");
+        Attack();
     }
 
     public void Attack()
     {
-        if (!isAttack)
+        if (currentTarget != null)
         {
             Tf.LookAt(currentTarget);
             ChangeAnim(Constants.ANIM_ATTACK);
@@ -89,6 +81,26 @@ public class Character : GameUnit
     public void OnHitVictim(Character attacker, Character victim)
     {
         victim.OnDead();
+    }
+
+    public Transform GetTarget()
+    {
+        if (currentTarget != null)
+        {
+            return currentTarget;
+        }
+        return null;
+    }
+
+    public void OnDead()
+    {
+        isDead = true;
+        if (isDead)
+        {
+            ChangeAnim(Constants.ANIM_DEAD);
+            Invoke(nameof(OnDespawn), 2f);
+            return;
+        }
     }
 
     public void ChangeWeapon(WeaponType weaponType)
@@ -121,27 +133,6 @@ public class Character : GameUnit
         }
     }
 
-    public Transform GetTarget()
-    {
-        if (currentTarget != null)
-        {
-            return currentTarget;
-        }
-        return null;
-    }
-
-    public void OnDead()
-    {
-        isDead = true;
-        if (isDead)
-        {
-            isMoving = false;
-            ChangeAnim(Constants.ANIM_DEAD);
-            Invoke(nameof(OnDespawn), 2f);
-            return;
-        }
-    }
-
     public void UpSize()
     {
         if (body.transform.localScale.x <= 1.5f)
@@ -164,5 +155,6 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         ChangeAnim(Constants.ANIM_IDLE);
+        isAttack = false;
     }
 }

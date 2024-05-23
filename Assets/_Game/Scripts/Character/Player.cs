@@ -8,6 +8,7 @@ public class Player : Character
 
     private void Update()
     {
+        FindEnemyTarget();
         if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
         {
             Move();
@@ -24,6 +25,5 @@ public class Player : Character
         Vector3 nextPoint = Tf.position + Joystick.direction * speed * Time.deltaTime;
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
-        FindEnemyTarget();
     }
 }

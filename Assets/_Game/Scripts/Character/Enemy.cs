@@ -21,7 +21,7 @@ public class Enemy : Character
     protected override void OnInit()
     {
         base.OnInit();
-        //ChangeState(new IdleState());
+        ChangeState(new IdleState());
     }
 
     public override void Move()
@@ -30,7 +30,7 @@ public class Enemy : Character
         Vector3 point;
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if(NavmeshRandomPoint(Tf.position, 10, out point))
+            if (NavmeshRandomPoint(Tf.position, 10, out point))
             {
                 Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
                 agent.SetDestination(point);
@@ -50,11 +50,12 @@ public class Enemy : Character
         agent.SetDestination(destination);
     }
 
+
     private bool NavmeshRandomPoint(Vector3 center, float radius, out Vector3 point)
     {
-        Vector3 randomPoint = Tf.position + Random.insideUnitSphere * radius;
+        Vector3 randomPoint = center + Random.insideUnitSphere * radius;
         NavMeshHit hit;
-        if(NavMesh.SamplePosition(randomPoint, out hit, radius, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(randomPoint, out hit, radius, 1))
         {
             point = hit.position;
             return true;
@@ -63,7 +64,6 @@ public class Enemy : Character
         return false;
     }
 
-    private bool IsDestination => Vector3.Distance(Tf.position, destination) < 0.1f;
 
     public void ChangeState(IState newState)
     {
