@@ -8,12 +8,16 @@ public class Player : Character
 
     private void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         FindEnemyTarget();
         if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
         {
             Move();
         }
-        if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
             StopMove();
         }

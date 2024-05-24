@@ -6,18 +6,16 @@ public class PatrolState : IState
 {
     public void OnEnter(Enemy enemy)
     {
-        
+        Vector3 destination = enemy.GetNextPoint();
+        enemy.SetDestination(destination);
+        enemy.Move();
     }
 
     public void OnExecute(Enemy enemy)
     {
-        if(enemy.GetTarget() != null)
+        if (enemy.IsDestination)
         {
-            enemy.ChangeState(new AttackState());
-        }
-        else
-        {
-            enemy.Move();
+            enemy.ChangeState(new IdleState());
         }
     }
 

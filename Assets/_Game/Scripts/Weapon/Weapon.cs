@@ -6,7 +6,7 @@ using UnityEngine;
 public class Weapon : GameUnit
 {
     [SerializeField] GameObject weaponSprite;
-    public const float TIME_ACTIVE = 1f;
+    public const float TIME_ACTIVE = 1.2f;
 
     private Vector3 target;
 
@@ -16,15 +16,25 @@ public class Weapon : GameUnit
         Bullet bullet = SimplePool.Spawn<Bullet>(poolType, Tf.position, Quaternion.identity);
         bullet.OnInit(attacker, onHit, target);
         bullet.DelayDespawnBullet();
-        weaponSprite.gameObject.SetActive(false);
+        DeactiveWeapon();
 
         StartCoroutine(DelayActiveWeapon(TIME_ACTIVE));
+    }
+
+    public void ActiveWeapon()
+    {
+        weaponSprite.gameObject.SetActive(true);
+    }
+
+    public void DeactiveWeapon()
+    {
+        weaponSprite.gameObject.SetActive(false);
     }
 
     private IEnumerator DelayActiveWeapon(float time)
     {
         yield return Cache.GetWFS(time);
-        weaponSprite.gameObject.SetActive(true);
+        ActiveWeapon();
     }
 }
 

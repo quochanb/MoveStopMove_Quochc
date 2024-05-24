@@ -9,9 +9,14 @@ public class Enemy : Character
     private Vector3 destination;
     private IState currentState;
 
+    public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
     private void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
         if (currentState != null)
         {
             currentState.OnExecute(this);
@@ -21,27 +26,19 @@ public class Enemy : Character
     protected override void OnInit()
     {
         base.OnInit();
-        ChangeState(new IdleState());
+        ChangeState(new PatrolState());
     }
 
     public override void Move()
     {
         base.Move();
-        Vector3 point;
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            if (NavmeshRandomPoint(Tf.position, 10, out point))
-            {
-                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
-                agent.SetDestination(point);
-            }
-        }
+        agent.isStopped = false;
     }
 
     public override void StopMove()
     {
         base.StopMove();
-        SetDestination(Tf.position);
+        agent.isStopped = true;
     }
 
     public void SetDestination(Vector3 destination)
@@ -50,20 +47,21 @@ public class Enemy : Character
         agent.SetDestination(destination);
     }
 
-
-    private bool NavmeshRandomPoint(Vector3 center, float radius, out Vector3 point)
+    public Vector3 GetNextPoint()
     {
-        Vector3 randomPoint = center + Random.insideUnitSphere * radius;
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, radius, 1))
+        Vector3 point;
+        if (NavmeshRandomPoint(Tf.position, 20, out point))
         {
-            point = hit.position;
-            return true;
+            return point;
         }
-        point = Vector3.zero;
-        return false;
+        return Tf.position;
     }
 
+    public override void OnDead()
+    {
+        base.OnDead();
+        agent.isStopped = true;
+    }
 
     public void ChangeState(IState newState)
     {
@@ -76,5 +74,18 @@ public class Enemy : Character
         {
             currentState.OnEnter(this);
         }
+    }
+
+    private bool NavmeshRandomPoint(Vector3 center, float radius, out Vector3 point)
+    {
+        Vector3 randomPoint = center + Random.insideUnitSphere * radius;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, radius, 1))
+        {
+            point = hit.position;
+            return true;
+        }
+        point = Vector3.zero;
+        return false;
     }
 }

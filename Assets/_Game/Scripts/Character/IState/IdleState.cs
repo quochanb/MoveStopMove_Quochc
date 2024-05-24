@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class IdleState : IState
 {
-    float delayTime;
+    float randomTime;
     float timer;
 
     public void OnEnter(Enemy enemy)
     {
-        delayTime = 1f;
+        enemy.ChangeAnim(Constants.ANIM_IDLE);
+        enemy.StopMove();
+        randomTime = Random.Range(0,3);
         timer = 0f;
     }
 
     public void OnExecute(Enemy enemy)
     {
         timer += Time.deltaTime;
-        if(timer >= delayTime)
+        if(timer >= randomTime)
         {
             enemy.ChangeState(new PatrolState());
+            
         }
     }
 

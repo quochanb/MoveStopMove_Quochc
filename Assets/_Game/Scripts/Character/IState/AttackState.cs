@@ -11,14 +11,7 @@ public class AttackState : IState
 
     public void OnExecute(Enemy enemy)
     {
-        if(enemy.GetTarget() == null)
-        {
-            enemy.ChangeState(new PatrolState());
-        }
-        else
-        {
-            enemy.Attack();
-        }
+        
     }
 
     public void OnExit(Enemy enemy)

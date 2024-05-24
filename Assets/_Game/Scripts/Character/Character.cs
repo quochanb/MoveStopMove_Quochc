@@ -11,13 +11,12 @@ public class Character : GameUnit
     [SerializeField] protected Transform currentTarget;
     [SerializeField] protected WeaponType currentWeaponType;
     [SerializeField] protected LayerMask characterLayer, groundLayer;
+    protected bool isDead, isAttack, isMoving;
+    private string currentAnim;
 
     public Weapon weapon;
-
-    private string currentAnim;
-    private bool isDead, isAttack, isMoving;
-
-    public Collider[] enemyInAttackRange = new Collider[4];
+    //public bool IsDead => isDead = true;
+    public Collider[] enemyInAttackRange = new Collider[5];
 
     private void Awake()
     {
@@ -59,15 +58,22 @@ public class Character : GameUnit
 
     public virtual void StopMove()
     {
-        Debug.Log("Stop");
-        Attack();
+        isMoving = false;
+        if (currentTarget == null)
+        {
+            ChangeAnim(Constants.ANIM_IDLE);
+        }
+        else
+        {
+            Attack(currentTarget);
+        }
     }
 
-    public void Attack()
+    public void Attack(Transform target)
     {
-        if (currentTarget != null)
+        if (!isAttack && target != null)
         {
-            Tf.LookAt(currentTarget);
+            Tf.LookAt(target);
             ChangeAnim(Constants.ANIM_ATTACK);
             weapon.Throw(this, OnHitVictim);
             isAttack = true;
@@ -92,14 +98,13 @@ public class Character : GameUnit
         return null;
     }
 
-    public void OnDead()
+    public virtual void OnDead()
     {
-        isDead = true;
-        if (isDead)
+        if (!isDead)
         {
+            isDead = true;
             ChangeAnim(Constants.ANIM_DEAD);
             Invoke(nameof(OnDespawn), 2f);
-            return;
         }
     }
 
@@ -123,14 +128,21 @@ public class Character : GameUnit
         int numberOfCharacterInRange = Physics.OverlapSphereNonAlloc(Tf.position, radius, enemyInAttackRange, characterLayer);
 
         currentTarget = null;
+        float closestDistance = Mathf.Infinity;
+
         for (int i = 0; i < numberOfCharacterInRange; i++)
         {
             if (enemyInAttackRange[i] != null && enemyInAttackRange[i].transform != Tf)
             {
-                currentTarget = enemyInAttackRange[i].transform;
-                break;
+                float distanceToEnemy = Vector3.Distance(Tf.position, enemyInAttackRange[i].transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    currentTarget = enemyInAttackRange[i].transform;
+                }
             }
         }
+
     }
 
     public void UpSize()
