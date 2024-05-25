@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class KnifeBullet : Bullet
 {
-    private void Update()
+    public override void Move()
     {
-        Move();
+        base.Move();
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2395641900083985790}
   - component: {fileID: 4903603847817911221}
   m_Layer: 0
-  m_Name: knife_bullet
+  m_Name: Knife_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6ff73835b439f43a8ab072023829e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 0
+  poolType: 9
   speed: 6
 --- !u!65 &4903603847817911221
 BoxCollider:

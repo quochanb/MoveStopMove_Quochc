@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class CandyBullet : Bullet
 {
-    private void Update()
-    {
-        Move();
-    }
-
     public override void Move()
     {
         base.Move();

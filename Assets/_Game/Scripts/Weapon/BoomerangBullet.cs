@@ -8,11 +8,6 @@ public class BoomerangBullet : Bullet
     [SerializeField] float returnTime = 1.5f;
     private Vector3 startPosition;
 
-    private void Update()
-    {
-        Move();
-    }
-
     public override void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
         base.OnInit(attacker, onHit, target);

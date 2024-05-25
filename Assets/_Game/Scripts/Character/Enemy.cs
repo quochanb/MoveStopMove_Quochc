@@ -11,12 +11,9 @@ public class Enemy : Character
 
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
-    private void Update()
+    protected override void Update()
     {
-        if (isDead)
-        {
-            return;
-        }
+        base.Update();
         if (currentState != null)
         {
             currentState.OnExecute(this);
@@ -26,7 +23,8 @@ public class Enemy : Character
     protected override void OnInit()
     {
         base.OnInit();
-        ChangeState(new PatrolState());
+        //ChangeState(new PatrolState());
+        ChangeState(new IdleState());
     }
 
     public override void Move()
@@ -50,7 +48,7 @@ public class Enemy : Character
     public Vector3 GetNextPoint()
     {
         Vector3 point;
-        if (NavmeshRandomPoint(Tf.position, 20, out point))
+        if (NavmeshRandomPoint(Tf.position, 30, out point))
         {
             return point;
         }

@@ -18,6 +18,11 @@ public class Bullet : GameUnit
         weapon = FindObjectOfType<Weapon>();
     }
 
+    private void Update()
+    {
+        Move();
+    }
+
     public virtual void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
         this.attacker = attacker;
@@ -47,10 +52,6 @@ public class Bullet : GameUnit
 
     private void OnTriggerEnter(Collider other)
     {
-        if(weapon != null)
-        {
-            
-        }
         if (other.CompareTag(Constants.TAG_CHARACTER))
         {
             Character victim = Cache.GetCharacter(other);

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6704232897363658922}
   - component: {fileID: 6704232897362528874}
   m_Layer: 0
-  m_Name: knife
+  m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5670118101554686728}
   - component: {fileID: 4265043514137818814}
   m_Layer: 0
-  m_Name: knife
+  m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,5 +129,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d0e0330eca8140a30e8b936c9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 0
+  poolType: 9
   weaponSprite: {fileID: 6704232897364792490}

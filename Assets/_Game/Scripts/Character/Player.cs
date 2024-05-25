@@ -6,21 +6,26 @@ public class Player : Character
 {
     [SerializeField] private float speed = 6f;
 
-    private void Update()
+    protected override void Update()
     {
-        if (isDead)
+        base.Update();
+        if (currentTarget != null)
         {
-            return;
+            currentTarget.ActiveLockTarget();
+            if (currentTarget == null || IsOutOfAttackRange(currentTarget))
+            {
+                currentTarget.DeactiveLockTarget();
+            }
         }
-        FindEnemyTarget();
         if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
         {
             Move();
         }
-        else if (Input.GetMouseButtonUp(0))
+        else 
         {
             StopMove();
         }
+        
     }
 
     public override void Move()
@@ -30,4 +35,5 @@ public class Player : Character
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
+
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4480377278526239829}
   - component: {fileID: 4480377278527239829}
   m_Layer: 0
-  m_Name: candy_0
+  m_Name: Candy_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2289056487343736155}
   - component: {fileID: 7204438141127921777}
   m_Layer: 0
-  m_Name: candy_0
+  m_Name: Candy_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,5 +130,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d0e0330eca8140a30e8b936c9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 1
+  poolType: 4
   weaponSprite: {fileID: 4480377278529431637}

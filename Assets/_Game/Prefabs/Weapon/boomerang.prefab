@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3357866832344707317}
   - component: {fileID: -4730065355977629820}
   m_Layer: 0
-  m_Name: boomerang
+  m_Name: Boomerang
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d0e0330eca8140a30e8b936c9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 2
+  poolType: 3
   weaponSprite: {fileID: 8419755413889429098}
 --- !u!1 &8419755413889429098
 GameObject:
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 8419755413892690538}
   - component: {fileID: 8419755413891690666}
   m_Layer: 0
-  m_Name: boomerang
+  m_Name: Boomerang
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

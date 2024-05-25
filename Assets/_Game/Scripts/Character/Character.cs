@@ -7,8 +7,9 @@ public class Character : GameUnit
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Animator anim;
     [SerializeField] protected GameObject body;
+    [SerializeField] protected GameObject lockTarget;
     [SerializeField] protected float radius = 5f;
-    [SerializeField] protected Transform currentTarget;
+    [SerializeField] protected Character currentTarget;
     [SerializeField] protected WeaponType currentWeaponType;
     [SerializeField] protected LayerMask characterLayer, groundLayer;
     protected bool isDead, isAttack, isMoving;
@@ -16,12 +17,24 @@ public class Character : GameUnit
 
     public Weapon weapon;
     //public bool IsDead => isDead = true;
-    public Collider[] enemyInAttackRange = new Collider[5];
+    public Collider[] enemyInAttackRange = new Collider[10];
 
     private void Awake()
     {
         weapon = FindObjectOfType<Weapon>();
         OnInit();
+    }
+
+    protected virtual void Update()
+    {
+        if (isDead)
+        {
+            return;
+        }
+        if (currentTarget == null || IsOutOfAttackRange(currentTarget))
+        {
+            FindEnemyTarget();
+        }
     }
 
     protected virtual void OnInit()
@@ -36,6 +49,7 @@ public class Character : GameUnit
         Destroy(this.gameObject);
     }
 
+
     public Vector3 CheckGround(Vector3 nextPoint)
     {
         RaycastHit hit;
@@ -49,11 +63,7 @@ public class Character : GameUnit
     public virtual void Move()
     {
         isMoving = true;
-        if (isMoving)
-        {
-            isAttack = false;
-            ChangeAnim(Constants.ANIM_RUN);
-        }
+        ChangeAnim(Constants.ANIM_RUN);
     }
 
     public virtual void StopMove()
@@ -69,33 +79,22 @@ public class Character : GameUnit
         }
     }
 
-    public void Attack(Transform target)
+    public virtual void Attack(Character target)
     {
-        if (!isAttack && target != null)
+        if (!isAttack && !target.isDead)
         {
-            Tf.LookAt(target);
+            Tf.LookAt(target.Tf);
             ChangeAnim(Constants.ANIM_ATTACK);
             weapon.Throw(this, OnHitVictim);
+            Debug.Log(weapon.name);
             isAttack = true;
-        }
-        if (isAttack)
-        {
-            StartCoroutine(ChangeAnimAfterDelay(0.5f));
+            StartCoroutine(DelayAttack(1.2f));
         }
     }
 
     public void OnHitVictim(Character attacker, Character victim)
     {
-        victim.OnDead();
-    }
-
-    public Transform GetTarget()
-    {
-        if (currentTarget != null)
-        {
-            return currentTarget;
-        }
-        return null;
+        //victim.OnDead();
     }
 
     public virtual void OnDead()
@@ -106,6 +105,15 @@ public class Character : GameUnit
             ChangeAnim(Constants.ANIM_DEAD);
             Invoke(nameof(OnDespawn), 2f);
         }
+    }
+
+    public Character GetTarget()
+    {
+        if (currentTarget != null)
+        {
+            return currentTarget;
+        }
+        return null;
     }
 
     public void ChangeWeapon(WeaponType weaponType)
@@ -123,7 +131,7 @@ public class Character : GameUnit
 
     }
 
-    public void FindEnemyTarget()
+    public virtual Character FindEnemyTarget()
     {
         int numberOfCharacterInRange = Physics.OverlapSphereNonAlloc(Tf.position, radius, enemyInAttackRange, characterLayer);
 
@@ -138,11 +146,12 @@ public class Character : GameUnit
                 if (distanceToEnemy < closestDistance)
                 {
                     closestDistance = distanceToEnemy;
-                    currentTarget = enemyInAttackRange[i].transform;
+                    currentTarget = Cache.GetCharacter(enemyInAttackRange[i]);
                 }
             }
         }
 
+        return currentTarget;
     }
 
     public void UpSize()
@@ -150,23 +159,48 @@ public class Character : GameUnit
         if (body.transform.localScale.x <= 1.5f)
         {
             body.transform.localScale *= 1.03f;
+            radius *= 1.03f;
         }
+    }
+
+    public void ActiveLockTarget()
+    {
+        lockTarget.gameObject.SetActive(true);
+    }
+
+    public void DeactiveLockTarget()
+    {
+        lockTarget.gameObject.SetActive(false);
+    }
+
+    public bool IsOutOfAttackRange(Character target)
+    {
+        if (target == null)
+        {
+            return true;
+        }
+        float distanceToTarget = Vector3.Distance(Tf.position, target.Tf.position);
+        return distanceToTarget > radius;
     }
 
     public void ChangeAnim(string animName)
     {
         if (currentAnim != animName)
         {
-            anim.ResetTrigger(animName);
+            if (currentAnim != null)
+            {
+                anim.ResetTrigger(currentAnim);
+            }
             currentAnim = animName;
             anim.SetTrigger(currentAnim);
         }
     }
 
-    private IEnumerator ChangeAnimAfterDelay(float time)
+    private IEnumerator DelayAttack(float time)
     {
         yield return Cache.GetWFS(time);
         ChangeAnim(Constants.ANIM_IDLE);
         isAttack = false;
     }
+
 }

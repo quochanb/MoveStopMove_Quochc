@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5341684688667447474}
   - component: {fileID: 1282224792236663861}
   m_Layer: 0
-  m_Name: boomerang_bullet
+  m_Name: Boomerang_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e1d4e73d899c6240a5c409b06aa21c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 2
+  poolType: 3
   speed: 6
   returnTime: 1.5
 --- !u!65 &1282224792236663861

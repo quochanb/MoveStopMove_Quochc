@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3498925281955319623}
   - component: {fileID: 6592928568579434433}
   m_Layer: 0
-  m_Name: candy_bullet
+  m_Name: Candy_1_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dad1bfebe6b37f43b0a3f2c0f638abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 1
+  poolType: 4
   speed: 6
 --- !u!65 &6592928568579434433
 BoxCollider:
