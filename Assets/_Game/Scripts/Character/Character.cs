@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Character : GameUnit
 {
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Animator anim;
-    [SerializeField] protected GameObject body;
-    [SerializeField] protected GameObject lockTarget;
+    [SerializeField] protected GameObject body, lockTarget;
+    [SerializeField] protected Transform bulletSpawnPoint;
     [SerializeField] protected float radius = 5f;
     [SerializeField] protected Character currentTarget;
     [SerializeField] protected WeaponType currentWeaponType;
@@ -69,6 +71,7 @@ public class Character : GameUnit
     public virtual void StopMove()
     {
         isMoving = false;
+
         if (currentTarget == null)
         {
             ChangeAnim(Constants.ANIM_IDLE);
@@ -81,14 +84,25 @@ public class Character : GameUnit
 
     public virtual void Attack(Character target)
     {
-        if (!isAttack && !target.isDead)
+        if (!isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
         {
             Tf.LookAt(target.Tf);
             ChangeAnim(Constants.ANIM_ATTACK);
-            weapon.Throw(this, OnHitVictim);
-            Debug.Log(weapon.name);
+            StartCoroutine(ThrowWeapon(0.3f));
             isAttack = true;
-            StartCoroutine(DelayAttack(1.2f));
+            StartCoroutine(DelayAttack(1.5f));
+        }
+    }
+
+    public void Throw(Character attacker, Action<Character, Character> onHit)
+    {
+        if (currentTarget != null)
+        {
+            Vector3 target = currentTarget.Tf.position;
+            Bullet bullet = SimplePool.Spawn<Bullet>(poolType, bulletSpawnPoint.position, Quaternion.identity);
+            bullet.OnInit(attacker, onHit, target);
+            bullet.DelayDespawnBullet();
+            weapon.DeactiveWeapon();
         }
     }
 
@@ -199,8 +213,14 @@ public class Character : GameUnit
     private IEnumerator DelayAttack(float time)
     {
         yield return Cache.GetWFS(time);
-        ChangeAnim(Constants.ANIM_IDLE);
         isAttack = false;
+        ChangeAnim(Constants.ANIM_IDLE);
+    }
+
+    private IEnumerator ThrowWeapon(float time)
+    {
+        yield return Cache.GetWFS(time);
+        Throw(this, OnHitVictim);
     }
 
 }

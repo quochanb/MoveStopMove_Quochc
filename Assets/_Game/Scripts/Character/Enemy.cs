@@ -23,8 +23,8 @@ public class Enemy : Character
     protected override void OnInit()
     {
         base.OnInit();
-        //ChangeState(new PatrolState());
-        ChangeState(new IdleState());
+        ChangeState(new PatrolState());
+        //ChangeState(new IdleState());
     }
 
     public override void Move()

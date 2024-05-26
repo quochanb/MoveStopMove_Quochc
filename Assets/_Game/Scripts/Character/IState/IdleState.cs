@@ -10,23 +10,29 @@ public class IdleState : IState
     public void OnEnter(Enemy enemy)
     {
         enemy.StopMove();
-        randomTime = Random.Range(0,3);
+        randomTime = Random.Range(1, 4);
         timer = 0f;
     }
 
     public void OnExecute(Enemy enemy)
     {
         timer += Time.deltaTime;
-        if(timer >= randomTime && enemy.GetTarget()!= null)
+        if (timer >= randomTime)
         {
-            //enemy.ChangeState(new PatrolState());
-            enemy.Attack(enemy.GetTarget());
-            
+            if (enemy.GetTarget() != null)
+            {
+                enemy.ChangeState(new AttackState());
+            }
+            if(enemy.GetTarget() == null)
+            {
+                enemy.ChangeState(new PatrolState());
+            }
         }
+
     }
 
     public void OnExit(Enemy enemy)
     {
-        
+
     }
 }
