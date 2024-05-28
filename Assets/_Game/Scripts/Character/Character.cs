@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -43,7 +44,7 @@ public class Character : GameUnit
     {
         isDead = false;
         isMoving = false;
-        isAttack = false;
+        isAttack = true;
     }
 
     protected virtual void OnDespawn()
@@ -84,28 +85,35 @@ public class Character : GameUnit
 
     public virtual void Attack(Character target)
     {
-        if (!isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
+        if (isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
         {
             Tf.LookAt(target.Tf);
             ChangeAnim(Constants.ANIM_ATTACK);
-            StartCoroutine(ThrowWeapon(0.3f));
-            isAttack = true;
+            StartCoroutine(ThrowWeapon(0.2f));
+            isAttack = false;
             StartCoroutine(DelayAttack(1.5f));
         }
     }
 
+    //goi khi attack
     public void Throw(Character attacker, Action<Character, Character> onHit)
     {
         if (currentTarget != null)
         {
             Vector3 target = currentTarget.Tf.position;
-            Bullet bullet = SimplePool.Spawn<Bullet>(poolType, bulletSpawnPoint.position, Quaternion.identity);
-            bullet.OnInit(attacker, onHit, target);
-            bullet.DelayDespawnBullet();
-            weapon.DeactiveWeapon();
+            //kiem tra neu huong tan cong khong thay doi thi moi spawn bullet
+            if (Vector3.Dot((target - attacker.Tf.position).normalized, attacker.Tf.forward) > 0.9f)
+            {
+                Bullet bullet = SimplePool.Spawn<Bullet>(poolType, bulletSpawnPoint.position, Quaternion.identity);
+                bullet.OnInit(attacker, onHit, target);
+                bullet.DelayDespawnBullet();
+                weapon.DeactiveWeapon();
+            }
         }
+
     }
 
+    //xu ly khi bullet va cham voi character
     public void OnHitVictim(Character attacker, Character victim)
     {
         //victim.OnDead();
@@ -113,12 +121,10 @@ public class Character : GameUnit
 
     public virtual void OnDead()
     {
-        if (!isDead)
-        {
-            isDead = true;
-            ChangeAnim(Constants.ANIM_DEAD);
-            Invoke(nameof(OnDespawn), 2f);
-        }
+        isDead = true;
+        ChangeAnim(Constants.ANIM_DEAD);
+        Invoke(nameof(OnDespawn), 2f);
+
     }
 
     public Character GetTarget()
@@ -145,10 +151,10 @@ public class Character : GameUnit
 
     }
 
-    public virtual Character FindEnemyTarget()
+    //find enemy gan nhat
+    public Character FindEnemyTarget()
     {
         int numberOfCharacterInRange = Physics.OverlapSphereNonAlloc(Tf.position, radius, enemyInAttackRange, characterLayer);
-
         currentTarget = null;
         float closestDistance = Mathf.Infinity;
 
@@ -177,16 +183,19 @@ public class Character : GameUnit
         }
     }
 
+    //khoa muc tieu
     public void ActiveLockTarget()
     {
         lockTarget.gameObject.SetActive(true);
     }
 
+    //bo khoa muc tieu
     public void DeactiveLockTarget()
     {
         lockTarget.gameObject.SetActive(false);
     }
 
+    //kiem tra character co trong tam danh khong
     public bool IsOutOfAttackRange(Character target)
     {
         if (target == null)
@@ -201,6 +210,7 @@ public class Character : GameUnit
     {
         if (currentAnim != animName)
         {
+            Debug.Log(animName);
             if (currentAnim != null)
             {
                 anim.ResetTrigger(currentAnim);
@@ -213,8 +223,8 @@ public class Character : GameUnit
     private IEnumerator DelayAttack(float time)
     {
         yield return Cache.GetWFS(time);
-        isAttack = false;
-        ChangeAnim(Constants.ANIM_IDLE);
+        isAttack = true;
+
     }
 
     private IEnumerator ThrowWeapon(float time)
@@ -222,5 +232,4 @@ public class Character : GameUnit
         yield return Cache.GetWFS(time);
         Throw(this, OnHitVictim);
     }
-
 }

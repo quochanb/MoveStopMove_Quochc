@@ -5,10 +5,13 @@ using UnityEngine;
 public class AttackState : IState
 {
     Character target;
-
+    float timer;
+    float delayTime;
     public void OnEnter(Enemy enemy)
     {
         target = enemy.GetTarget();
+        timer = 0;
+        delayTime = 1f;
     }
 
     public void OnExecute(Enemy enemy)
@@ -17,14 +20,18 @@ public class AttackState : IState
         {
             enemy.Attack(target);
         }
-        else
+        if (target == null || enemy.IsOutOfAttackRange(target))
         {
-            enemy.ChangeState(new PatrolState());
+            timer += Time.deltaTime;
+            if (timer >= delayTime)
+            {
+                enemy.ChangeState(new PatrolState());
+            }
         }
     }
 
     public void OnExit(Enemy enemy)
     {
-        
+
     }
 }

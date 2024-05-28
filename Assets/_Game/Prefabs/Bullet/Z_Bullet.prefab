@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 11
-  speed: 6
+  speed: 8
   returnTime: 1.5
 --- !u!65 &535501868591813955
 BoxCollider:

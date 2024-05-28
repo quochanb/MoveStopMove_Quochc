@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Enemy : Character
 {
     [SerializeField] private NavMeshAgent agent;
+    public event UnityAction<Enemy> OnDeath;
     private Vector3 destination;
-    private IState currentState;
+    public IState currentState;
 
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
@@ -23,32 +25,21 @@ public class Enemy : Character
     protected override void OnInit()
     {
         base.OnInit();
-        ChangeState(new PatrolState());
         //ChangeState(new IdleState());
     }
 
-    public override void Move()
-    {
-        base.Move();
-        agent.isStopped = false;
-    }
-
-    public override void StopMove()
-    {
-        base.StopMove();
-        agent.isStopped = true;
-    }
-
+    //move
     public void SetDestination(Vector3 destination)
     {
         this.destination = destination;
         agent.SetDestination(destination);
     }
 
-    public Vector3 GetNextPoint()
+    //lay random vi tri
+    public Vector3 GetRandomPoint()
     {
         Vector3 point;
-        if (NavmeshRandomPoint(Tf.position, 30, out point))
+        if (NavmeshRandomPoint(Tf.position, 20, out point))
         {
             return point;
         }
@@ -58,6 +49,7 @@ public class Enemy : Character
     public override void OnDead()
     {
         base.OnDead();
+        OnDeath?.Invoke(this);
         agent.isStopped = true;
     }
 
@@ -78,7 +70,7 @@ public class Enemy : Character
     {
         Vector3 randomPoint = center + Random.insideUnitSphere * radius;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, radius, 1))
+        if (NavMesh.SamplePosition(randomPoint, out hit, radius, NavMesh.AllAreas))
         {
             point = hit.position;
             return true;

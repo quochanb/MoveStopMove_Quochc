@@ -13,6 +13,7 @@ public enum PoolType
     Bullet_Knife = 9,
     Bullet_Uzi = 10,
     Bullet_Z = 11,
+    Enemy = 12
 }
 
 public enum WeaponType

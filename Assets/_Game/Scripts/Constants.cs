@@ -12,6 +12,7 @@ public class Constants : MonoBehaviour
     public const string ANIM_ATTACK = "attack";
     public const string ANIM_CHARSKIN = "charskin";
 
-    public const string TAG_CHARACTER = "Character";
+    public const string TAG_PLAYER = "Player";
     public const string TAG_OBSTACLE = "Obstacle";
+    public const string TAG_ENEMY = "Enemy";
 }

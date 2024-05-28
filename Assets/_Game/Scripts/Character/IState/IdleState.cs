@@ -9,7 +9,7 @@ public class IdleState : IState
 
     public void OnEnter(Enemy enemy)
     {
-        enemy.StopMove();
+        enemy.ChangeAnim(Constants.ANIM_IDLE);
         randomTime = Random.Range(1, 4);
         timer = 0f;
     }
@@ -17,18 +17,16 @@ public class IdleState : IState
     public void OnExecute(Enemy enemy)
     {
         timer += Time.deltaTime;
-        if (timer >= randomTime)
+        if (enemy.FindEnemyTarget() != null)
         {
-            if (enemy.GetTarget() != null)
-            {
-                enemy.ChangeState(new AttackState());
-            }
-            if(enemy.GetTarget() == null)
-            {
-                enemy.ChangeState(new PatrolState());
-            }
-        }
+            enemy.ChangeState(new AttackState());
 
+        }
+        else if (timer >= randomTime)
+        {
+            enemy.ChangeState(new PatrolState());
+
+        }
     }
 
     public void OnExit(Enemy enemy)

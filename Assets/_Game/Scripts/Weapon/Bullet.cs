@@ -28,7 +28,7 @@ public class Bullet : GameUnit
         this.attacker = attacker;
         this.onHit = onHit;
         this.target = target;
-        this.Tf.localScale = weapon.Tf.localScale;
+        
         direction = (target - Tf.position).normalized;
     }
 
@@ -37,6 +37,7 @@ public class Bullet : GameUnit
         if (target != null)
         {
             Tf.position += direction * speed * Time.deltaTime;
+            
         }
     }
 
@@ -53,12 +54,12 @@ public class Bullet : GameUnit
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Constants.TAG_CHARACTER))
+        if (other.CompareTag(Constants.TAG_PLAYER) || other.CompareTag(Constants.TAG_ENEMY))
         {
             Character victim = Cache.GetCharacter(other);
             if (victim != attacker)
             {
-                attacker.UpSize();
+                //attacker.UpSize();
                 onHit?.Invoke(attacker, victim);
                 OnDespawn();
             }

@@ -21,9 +21,13 @@ public class Player : Character
         {
             Move();
         }
-        else 
+        else
         {
             StopMove();
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            ChangeAnim(Constants.ANIM_IDLE);
         }
         
     }

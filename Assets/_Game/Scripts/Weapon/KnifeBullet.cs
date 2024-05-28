@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class KnifeBullet : Bullet
 {
-    public override void Move()
+    public override void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
-        base.Move();
+        base.OnInit(attacker, onHit, target);
+
+        Tf.LookAt(target);
     }
 }
