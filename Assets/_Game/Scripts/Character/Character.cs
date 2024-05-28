@@ -9,18 +9,23 @@ public class Character : GameUnit
 {
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Animator anim;
+    [SerializeField] protected float radius = 5f;
     [SerializeField] protected GameObject body, lockTarget;
     [SerializeField] protected Transform bulletSpawnPoint;
-    [SerializeField] protected float radius = 5f;
     [SerializeField] protected Character currentTarget;
-    [SerializeField] protected WeaponType currentWeaponType;
     [SerializeField] protected LayerMask characterLayer, groundLayer;
+
+    [SerializeField] protected Transform rightHand, leftHand, head;
+
     protected bool isDead, isAttack, isMoving;
-    private string currentAnim;
 
     public Weapon weapon;
-    //public bool IsDead => isDead = true;
+    public Pant pant;
+    public WeaponData weaponData;
+    public HatData hatData;
     public Collider[] enemyInAttackRange = new Collider[10];
+    
+    private string currentAnim;
 
     private void Awake()
     {
@@ -44,7 +49,7 @@ public class Character : GameUnit
     {
         isDead = false;
         isMoving = false;
-        isAttack = true;
+        isAttack = false;
     }
 
     protected virtual void OnDespawn()
@@ -83,50 +88,35 @@ public class Character : GameUnit
         }
     }
 
+    //attack
     public virtual void Attack(Character target)
     {
-        if (isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
+        if (!isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
         {
             Tf.LookAt(target.Tf);
             ChangeAnim(Constants.ANIM_ATTACK);
-            StartCoroutine(ThrowWeapon(0.2f));
-            isAttack = false;
-            StartCoroutine(DelayAttack(1.5f));
+            StartCoroutine(ThrowWeapon(0.24f));
+            isAttack = true;
+            StartCoroutine(DelayAttack(1.2f));
         }
-    }
-
-    //goi khi attack
-    public void Throw(Character attacker, Action<Character, Character> onHit)
-    {
-        if (currentTarget != null)
-        {
-            Vector3 target = currentTarget.Tf.position;
-            //kiem tra neu huong tan cong khong thay doi thi moi spawn bullet
-            if (Vector3.Dot((target - attacker.Tf.position).normalized, attacker.Tf.forward) > 0.9f)
-            {
-                Bullet bullet = SimplePool.Spawn<Bullet>(poolType, bulletSpawnPoint.position, Quaternion.identity);
-                bullet.OnInit(attacker, onHit, target);
-                bullet.DelayDespawnBullet();
-                weapon.DeactiveWeapon();
-            }
-        }
-
     }
 
     //xu ly khi bullet va cham voi character
     public void OnHitVictim(Character attacker, Character victim)
     {
-        //victim.OnDead();
+        victim.OnDead();
     }
 
+    //die
     public virtual void OnDead()
     {
         isDead = true;
         ChangeAnim(Constants.ANIM_DEAD);
-        Invoke(nameof(OnDespawn), 2f);
+        //Invoke(nameof(OnDespawn), 2f);
 
     }
 
+    //lay ra character muc tieu hien tai
     public Character GetTarget()
     {
         if (currentTarget != null)
@@ -136,19 +126,26 @@ public class Character : GameUnit
         return null;
     }
 
+    //lay vi tri sinh ra bullet
+    public Transform GetSpawnPoint()
+    {
+        return bulletSpawnPoint;
+    }
+
     public void ChangeWeapon(WeaponType weaponType)
     {
-        currentWeaponType = weaponType;
+        weapon = Instantiate(weaponData.GetWeapon(weaponType), rightHand);
+        
     }
 
-    public void ChangeHat()
+    public void ChangeHat(HatType hatType)
     {
-
+        Hat hat = Instantiate(hatData.GetHat(hatType), head);
     }
 
-    public void ChangePant()
+    public void ChangePant(PantType pantType)
     {
-
+        pant.ChangeMaterialPant(pantType);
     }
 
     //find enemy gan nhat
@@ -210,7 +207,6 @@ public class Character : GameUnit
     {
         if (currentAnim != animName)
         {
-            Debug.Log(animName);
             if (currentAnim != null)
             {
                 anim.ResetTrigger(currentAnim);
@@ -223,13 +219,14 @@ public class Character : GameUnit
     private IEnumerator DelayAttack(float time)
     {
         yield return Cache.GetWFS(time);
-        isAttack = true;
+        isAttack = false;
+        ChangeAnim(Constants.ANIM_IDLE);
 
     }
 
     private IEnumerator ThrowWeapon(float time)
     {
         yield return Cache.GetWFS(time);
-        Throw(this, OnHitVictim);
+        weapon.Throw(this, OnHitVictim);
     }
 }

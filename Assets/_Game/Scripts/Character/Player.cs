@@ -17,19 +17,28 @@ public class Player : Character
                 currentTarget.DeactiveLockTarget();
             }
         }
-        if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
-        {
-            Move();
-        }
-        else
-        {
-            StopMove();
-        }
         if (Input.GetMouseButtonUp(0))
         {
             ChangeAnim(Constants.ANIM_IDLE);
         }
         
+        if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
+        {
+            Move();
+        }
+        
+        else
+        {
+            StopMove();
+        }
+    }
+
+    protected override void OnInit()
+    {
+        base.OnInit();
+        ChangeWeapon(WeaponType.Axe_2);
+        ChangeHat(HatType.Headphone);
+        ChangePant(PantType.Pokemon);
     }
 
     public override void Move()

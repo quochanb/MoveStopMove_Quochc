@@ -59,7 +59,6 @@ public class Bullet : GameUnit
             Character victim = Cache.GetCharacter(other);
             if (victim != attacker)
             {
-                //attacker.UpSize();
                 onHit?.Invoke(attacker, victim);
                 OnDespawn();
             }

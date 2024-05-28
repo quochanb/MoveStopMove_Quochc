@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level : GameUnit
+public class Level : MonoBehaviour
 {
+    [SerializeField] private Transform[] startPoint;
     [SerializeField] private int totalEnemy = 50;
-    [SerializeField] private int initialEnemyCount = 20;
+    [SerializeField] private int initialEnemyCount = 10;
 
     private int spawnedEnemies;
-    private int currentEnemyCount;
+    //private int currentEnemyCount;
     //List<Enemy> enemies = new List<Enemy>();
     
 
@@ -16,44 +17,45 @@ public class Level : GameUnit
     {
         for(int i = 0; i < initialEnemyCount; i++)
         {
-            Spawn();
+            Spawn(startPoint[i].position);
         }
     }
 
-    public void Spawn()
+    public void Spawn(Vector3 point)
     {
         if (spawnedEnemies > totalEnemy || spawnedEnemies > initialEnemyCount)
         {
             return;
         }
-        Enemy enemy = SimplePool.Spawn<Enemy>(PoolType.Enemy, transform.position, Quaternion.identity);
-        enemy.Tf.position = enemy.GetRandomPoint();
+        Enemy enemy = SimplePool.Spawn<Enemy>(PoolType.Enemy, point, Quaternion.identity);
+        //enemy.Tf.position = enemy.GetRandomPoint();
         //enemies.Add(enemy);
         spawnedEnemies++;
-        currentEnemyCount++;
-        enemy.OnDeath += HandleOnDeath;
+        //currentEnemyCount++;
     }
 
-    public void Despawn(Enemy enemy)
-    {
-        //enemies.Remove(enemy);
-        SimplePool.Despawn(enemy);
-    }
 
     private void HandleOnDeath(Enemy enemy)
     {
-        if(enemy != null)
-        {
-            enemy.OnDeath -= HandleOnDeath;
-        }
-        currentEnemyCount--;
-        Despawn(enemy);
+        //if(enemy != null)
+        //{
+        //    enemy.OnDeath -= HandleOnDeath;
+        //}
+        //currentEnemyCount--;
+        StartCoroutine(DespawnEnemy(enemy));
+        Spawn(startPoint[Random.Range(0, startPoint.Length)].position);
         //StartCoroutine(RespawnEnemy(2f));
     }
 
     IEnumerator RespawnEnemy(float time)
     {
         yield return Cache.GetWFS(time);
-        Spawn();
+        Spawn(startPoint[Random.Range(0, startPoint.Length)].position);
+    }
+
+    IEnumerator DespawnEnemy(Enemy enemy)
+    {
+        yield return Cache.GetWFS(2f);
+        SimplePool.Despawn(enemy);
     }
 }

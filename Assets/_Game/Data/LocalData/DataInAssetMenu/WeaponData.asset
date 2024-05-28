@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d93d92ebff4b3469bb3adcc8b6a32b, type: 3}
+  m_Name: WeaponData
+  m_EditorClassIdentifier: 
+  weaponList:
+  - weaponType: 0
+    weapon: {fileID: -65190403003420850, guid: ac2c9d2c9fe67d14f8b4c2429c5aa4aa, type: 3}
+  - weaponType: 1
+    weapon: {fileID: 6393495725106400132, guid: 3fcb6fc66180cdf42b47a706fdc957f4, type: 3}
+  - weaponType: 2
+    weapon: {fileID: 2406868020049365076, guid: 2c2e102119aa68444bf59a68fd63312d, type: 3}
+  - weaponType: 3
+    weapon: {fileID: -4730065355977629820, guid: 764fa4844f965fd4e8b2fc90267bbde0, type: 3}
+  - weaponType: 4
+    weapon: {fileID: 7204438141127921777, guid: 2f4fe9aa63435be43b39c3e7d678ba17, type: 3}
+  - weaponType: 5
+    weapon: {fileID: 97803251562204399, guid: cc589f9fbbf743843a742affd7aee404, type: 3}
+  - weaponType: 6
+    weapon: {fileID: 8200187398968233420, guid: 47de1bced8123e44c9b1d75d77704199, type: 3}
+  - weaponType: 7
+    weapon: {fileID: 7407038721005453826, guid: ad453c5bec726ce4ca8e9c6a5d74dea8, type: 3}
+  - weaponType: 8
+    weapon: {fileID: 5744964230012370241, guid: cf2f0d95b14b2c74d8e6d168d3e971b1, type: 3}
+  - weaponType: 9
+    weapon: {fileID: 4265043514137818814, guid: fdc3aefb8e9d5be4bb9cac13fd298f94, type: 3}
+  - weaponType: 10
+    weapon: {fileID: 8263629529145292684, guid: 7f8dab5178812f44980d1d523ee5e49f, type: 3}
+  - weaponType: 11
+    weapon: {fileID: 8335819865499587499, guid: c058d45d252b640498690d7c13f29d85, type: 3}

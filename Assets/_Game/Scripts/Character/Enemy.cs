@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Enemy : Character
 {
     [SerializeField] private NavMeshAgent agent;
-    public event UnityAction<Enemy> OnDeath;
+    
     private Vector3 destination;
     public IState currentState;
 
@@ -49,7 +49,6 @@ public class Enemy : Character
     public override void OnDead()
     {
         base.OnDead();
-        OnDeath?.Invoke(this);
         agent.isStopped = true;
     }
 
