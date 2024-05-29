@@ -19,10 +19,11 @@ public class Character : GameUnit
 
     protected bool isDead, isAttack, isMoving;
 
-    public Weapon weapon;
     public Pant pant;
-    public WeaponData weaponData;
+    public Weapon weapon;
     public HatData hatData;
+    public WeaponData weaponData;
+    public bool IsDead => isDead;
     public Collider[] enemyInAttackRange = new Collider[10];
     
     private string currentAnim;
@@ -35,26 +36,23 @@ public class Character : GameUnit
 
     protected virtual void Update()
     {
-        if (isDead)
-        {
-            return;
-        }
-        if (currentTarget == null || IsOutOfAttackRange(currentTarget))
+        
+        if (currentTarget == null || IsOutOfAttackRange(currentTarget) || currentTarget.isDead)
         {
             FindEnemyTarget();
         }
     }
 
-    protected virtual void OnInit()
+    public virtual void OnInit()
     {
         isDead = false;
         isMoving = false;
         isAttack = false;
     }
 
-    protected virtual void OnDespawn()
+    public virtual void OnDespawn()
     {
-        Destroy(this.gameObject);
+        
     }
 
 
@@ -112,8 +110,10 @@ public class Character : GameUnit
     {
         isDead = true;
         ChangeAnim(Constants.ANIM_DEAD);
-        //Invoke(nameof(OnDespawn), 2f);
-
+        if (IsDead)
+        {
+            return;
+        }
     }
 
     //lay ra character muc tieu hien tai
@@ -220,8 +220,6 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
-        ChangeAnim(Constants.ANIM_IDLE);
-
     }
 
     private IEnumerator ThrowWeapon(float time)

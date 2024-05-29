@@ -9,6 +9,10 @@ public class Player : Character
     protected override void Update()
     {
         base.Update();
+        if (IsDead)
+        {
+            return;
+        }
         if (currentTarget != null)
         {
             currentTarget.ActiveLockTarget();
@@ -33,7 +37,7 @@ public class Player : Character
         }
     }
 
-    protected override void OnInit()
+    public override void OnInit()
     {
         base.OnInit();
         ChangeWeapon(WeaponType.Axe_2);
@@ -48,5 +52,4 @@ public class Player : Character
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
-
 }

@@ -49,7 +49,7 @@ public class Bullet : GameUnit
 
     public void DelayDespawnBullet()
     {
-        Invoke(nameof(OnDespawn), 1.2f);
+        Invoke(nameof(OnDespawn), 0.9f);
     }
 
     private void OnTriggerEnter(Collider other)

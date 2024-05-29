@@ -17,7 +17,11 @@ public class IdleState : IState
     public void OnExecute(Enemy enemy)
     {
         timer += Time.deltaTime;
-        if (enemy.FindEnemyTarget() != null)
+        if (enemy.IsDead)
+        {
+            return;
+        }
+        if (enemy.GetTarget() != null)
         {
             enemy.ChangeState(new AttackState());
 

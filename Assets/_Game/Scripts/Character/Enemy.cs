@@ -6,11 +6,12 @@ using UnityEngine.Events;
 
 public class Enemy : Character
 {
+    public delegate void OnDeathDelegate();
+    public static OnDeathDelegate onDeathEvent;
     [SerializeField] private NavMeshAgent agent;
     
     private Vector3 destination;
     public IState currentState;
-
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
     protected override void Update()
@@ -22,10 +23,16 @@ public class Enemy : Character
         }
     }
 
-    protected override void OnInit()
+    public override void OnInit()
     {
         base.OnInit();
-        //ChangeState(new IdleState());
+        ChangeState(new IdleState());
+    }
+
+    public override void OnDespawn()
+    {
+        base.OnDespawn();
+        SimplePool.Despawn(this);
     }
 
     //move
@@ -49,7 +56,9 @@ public class Enemy : Character
     public override void OnDead()
     {
         base.OnDead();
+        onDeathEvent?.Invoke();
         agent.isStopped = true;
+        Invoke(nameof(OnDespawn), 1.5f);
     }
 
     public void ChangeState(IState newState)

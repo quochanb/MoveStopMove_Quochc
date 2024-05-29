@@ -13,6 +13,10 @@ public class PatrolState : IState
 
     public void OnExecute(Enemy enemy)
     {
+        if (enemy.IsDead)
+        {
+            return;
+        }
         if (enemy.IsDestination)
         {
             enemy.ChangeState(new IdleState());

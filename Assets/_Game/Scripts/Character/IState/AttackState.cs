@@ -16,11 +16,15 @@ public class AttackState : IState
 
     public void OnExecute(Enemy enemy)
     {
+        if (enemy.IsDead)
+        {
+            return;
+        }
         if (target != null)
         {
             enemy.Attack(target);
         }
-        if (target == null || enemy.IsOutOfAttackRange(target))
+        if (target == null || enemy.IsOutOfAttackRange(target) || target.IsDead)
         {
             timer += Time.deltaTime;
             if (timer >= delayTime)
