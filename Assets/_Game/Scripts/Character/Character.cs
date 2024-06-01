@@ -25,7 +25,7 @@ public class Character : GameUnit
     public WeaponData weaponData;
     public bool IsDead => isDead;
     public Collider[] enemyInAttackRange = new Collider[10];
-    
+
     private string currentAnim;
 
     private void Awake()
@@ -36,7 +36,7 @@ public class Character : GameUnit
 
     protected virtual void Update()
     {
-        
+
         if (currentTarget == null || IsOutOfAttackRange(currentTarget) || currentTarget.isDead)
         {
             FindEnemyTarget();
@@ -52,7 +52,7 @@ public class Character : GameUnit
 
     public virtual void OnDespawn()
     {
-        
+
     }
 
 
@@ -95,7 +95,7 @@ public class Character : GameUnit
             ChangeAnim(Constants.ANIM_ATTACK);
             StartCoroutine(ThrowWeapon(0.24f));
             isAttack = true;
-            StartCoroutine(DelayAttack(1.2f));
+            StartCoroutine(DelayAttack(1f));
         }
     }
 
@@ -103,6 +103,10 @@ public class Character : GameUnit
     public void OnHitVictim(Character attacker, Character victim)
     {
         victim.OnDead();
+        if (!attacker.isDead)
+        {
+            attacker.ChangeAnim(Constants.ANIM_IDLE);
+        }
     }
 
     //die
@@ -135,7 +139,7 @@ public class Character : GameUnit
     public void ChangeWeapon(WeaponType weaponType)
     {
         weapon = Instantiate(weaponData.GetWeapon(weaponType), rightHand);
-        
+
     }
 
     public void ChangeHat(HatType hatType)

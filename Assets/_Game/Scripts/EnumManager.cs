@@ -76,3 +76,10 @@ public enum ColorType
     Color_9 = 9,
     Color_10 = 10
 }
+
+public enum ButtonState
+{
+    Buy = 0,
+    Select = 1,
+    Equipped = 2
+}

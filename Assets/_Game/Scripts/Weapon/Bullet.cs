@@ -45,11 +45,15 @@ public class Bullet : GameUnit
     {
         SimplePool.Despawn(this);
         weapon.ActiveWeapon();
+        if(!attacker.IsDead)
+        {
+            attacker.ChangeAnim(Constants.ANIM_IDLE);
+        }
     }
 
     public void DelayDespawnBullet()
     {
-        Invoke(nameof(OnDespawn), 0.9f);
+        Invoke(nameof(OnDespawn), 0.7f);
     }
 
     private void OnTriggerEnter(Collider other)

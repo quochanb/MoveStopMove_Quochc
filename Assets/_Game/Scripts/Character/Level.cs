@@ -42,7 +42,7 @@ public class Level : MonoBehaviour
 
     private void HandleOnDeath()
     {
-        StartCoroutine(RespawnEnemy(2f));
+        StartCoroutine(RespawnEnemy(Random.Range(3, 5)));
     }
 
     IEnumerator RespawnEnemy(float time)

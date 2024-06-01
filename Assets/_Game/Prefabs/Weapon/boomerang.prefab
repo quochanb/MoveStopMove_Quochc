@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8d0e0330eca8140a30e8b936c9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 3
   weaponSprite: {fileID: 8419755413889429098}
+  bulletType: 3
 --- !u!1 &8419755413889429098
 GameObject:
   m_ObjectHideFlags: 0

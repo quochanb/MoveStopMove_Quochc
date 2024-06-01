@@ -15,4 +15,7 @@ public class Constants : MonoBehaviour
     public const string TAG_PLAYER = "Player";
     public const string TAG_OBSTACLE = "Obstacle";
     public const string TAG_ENEMY = "Enemy";
+
+    public const string P_PREF_MUTED = "muted";
+    public const string P_PREF_VIBRATED = "vibrated";
 }

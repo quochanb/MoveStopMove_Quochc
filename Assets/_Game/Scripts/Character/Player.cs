@@ -52,4 +52,10 @@ public class Player : Character
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 7);
+    }
 }
