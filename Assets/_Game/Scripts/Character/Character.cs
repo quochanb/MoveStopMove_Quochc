@@ -20,7 +20,7 @@ public class Character : GameUnit
     protected bool isDead, isAttack, isMoving;
 
     public Pant pant;
-    public Weapon weapon;
+    public Weapon currentWeapon;
     public HatData hatData;
     public WeaponData weaponData;
     public bool IsDead => isDead;
@@ -30,7 +30,7 @@ public class Character : GameUnit
 
     private void Awake()
     {
-        weapon = FindObjectOfType<Weapon>();
+        currentWeapon = FindObjectOfType<Weapon>();
         OnInit();
     }
 
@@ -138,8 +138,12 @@ public class Character : GameUnit
 
     public void ChangeWeapon(WeaponType weaponType)
     {
-        weapon = Instantiate(weaponData.GetWeapon(weaponType), rightHand);
-
+        if (currentWeapon != null)
+        {
+            Destroy(currentWeapon.gameObject);
+        }
+        Weapon newWeapon = Instantiate(weaponData.GetWeapon(weaponType), rightHand);
+        currentWeapon = newWeapon;
     }
 
     public void ChangeHat(HatType hatType)
@@ -229,6 +233,6 @@ public class Character : GameUnit
     private IEnumerator ThrowWeapon(float time)
     {
         yield return Cache.GetWFS(time);
-        weapon.Throw(this, OnHitVictim);
+        currentWeapon.Throw(this, OnHitVictim);
     }
 }

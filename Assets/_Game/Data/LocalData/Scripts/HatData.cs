@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="HatData", menuName ="LocalData/HatData", order = 1)]
 public class HatData : ScriptableObject
 {
-    [SerializeField] List<HatItem> hatList;
+    public List<HatItem> hatList;
 
     public Hat GetHat(HatType hatType)
     {
@@ -19,4 +19,6 @@ public class HatItem
 {
     public HatType hatType;
     public Hat hat;
+    public Sprite hatSprite;
+    public int hatPrice;
 }

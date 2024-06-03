@@ -62,6 +62,13 @@ public enum PantType
     None = 9
 }
 
+public enum ShieldType
+{
+    None = 0,
+    Shield_1 = 1,
+    Shield_2 = 2
+}
+
 public enum ColorType
 {
     None = 0,
@@ -77,9 +84,10 @@ public enum ColorType
     Color_10 = 10
 }
 
-public enum ButtonState
+public enum ButtonType
 {
-    Buy = 0,
-    Select = 1,
-    Equipped = 2
+    HatType = 0,
+    PantType = 1,
+    ShieldType = 2,
+    ComboSkinType = 3
 }

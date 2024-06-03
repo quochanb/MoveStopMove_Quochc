@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName ="PantData", menuName ="LocalData/PantData", order = 2)]
+[CreateAssetMenu(fileName = "PantData", menuName = "LocalData/PantData", order = 2)]
 public class PantData : ScriptableObject
 {
-    [SerializeField] List<Material> materialPantList;
+    public List<PantItem> pantList;
 
     public Material GetPantMaterial(PantType pantType)
     {
-        return materialPantList[(int) pantType];
+        return pantList[(int)pantType].material;
     }
+}
+
+[System.Serializable]
+public class PantItem
+{
+    public PantType pantType;
+    public Material material;
+    public Sprite pantSprite;
+    public int pantPrice;
 }

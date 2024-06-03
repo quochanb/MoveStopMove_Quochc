@@ -15,21 +15,41 @@ MonoBehaviour:
   hatList:
   - hatType: 0
     hat: {fileID: -7143967908087342320, guid: 48f14caa5d5fb1042a6ceb47f71a5974, type: 3}
+    hatSprite: {fileID: 21300000, guid: 2f8937590677b044b8619858abca9ecf, type: 3}
+    hatPrice: 500
   - hatType: 1
     hat: {fileID: -2286383122575890520, guid: 606be692864a88c43bda8ac65c948a8e, type: 3}
+    hatSprite: {fileID: 21300000, guid: 7ecc7cd28cb66fb41ac2e56ca5e22d5c, type: 3}
+    hatPrice: 500
   - hatType: 2
     hat: {fileID: -8129349684092344832, guid: 8e0b9ce4303aada40b301536aa3bf2d4, type: 3}
+    hatSprite: {fileID: 21300000, guid: a50fa6b5fea3d264cbec440c2da1dbf8, type: 3}
+    hatPrice: 500
   - hatType: 3
     hat: {fileID: -4721490856007235511, guid: 04dc41beee1a0e94194f3cb72c779d09, type: 3}
+    hatSprite: {fileID: 21300000, guid: 5dd6afb8b1bc7b947853e77fc8811be4, type: 3}
+    hatPrice: 500
   - hatType: 4
     hat: {fileID: -3849531242744476045, guid: febeef33a3fcbe44e8400ee69022cb8e, type: 3}
+    hatSprite: {fileID: 21300000, guid: 16a71104cd40fbd408c2919484df4cd7, type: 3}
+    hatPrice: 500
   - hatType: 5
     hat: {fileID: -5914479833212353666, guid: f80a812e398cd214593e51a0647c815a, type: 3}
+    hatSprite: {fileID: 21300000, guid: 76e934370403f35428e37cc379bed4c7, type: 3}
+    hatPrice: 500
   - hatType: 6
     hat: {fileID: 1134051192484744843, guid: f48ee9200849d544c87feec4ff0412de, type: 3}
+    hatSprite: {fileID: 21300000, guid: 69fc10e773b5a814198a5883e168c2b7, type: 3}
+    hatPrice: 500
   - hatType: 7
     hat: {fileID: 8650064376047801806, guid: 736072d515faa8340beb0d7a90b14b42, type: 3}
+    hatSprite: {fileID: 21300000, guid: 694f596b7929bdb409ba3630631783d9, type: 3}
+    hatPrice: 500
   - hatType: 8
     hat: {fileID: 3465998745351607435, guid: 857b65574fb0812459b641c83587cc35, type: 3}
+    hatSprite: {fileID: 21300000, guid: c72f60a9ff619e54ea03f81d8477c714, type: 3}
+    hatPrice: 500
   - hatType: 9
     hat: {fileID: 4873332455819706621, guid: 6e7456f83e4e7f4419377d73db0cf9be, type: 3}
+    hatSprite: {fileID: 21300000, guid: 0721f07e295ea594ba265006fe888315, type: 3}
+    hatPrice: 500
