@@ -17,8 +17,16 @@ public class ButtonItemUI : MonoBehaviour
     private PantItem pantItem;
     private ShieldItem shieldItem;
 
+    //tao bien static de luu button hien tai duoc chon
+    private static ButtonItemUI currentSelectedBtn;
+    private Player player;
+
     private void Start()
     {
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
         button.onClick.AddListener(OnSelectButton);
     }
 
@@ -26,21 +34,24 @@ public class ButtonItemUI : MonoBehaviour
     {
         btnLock.gameObject.SetActive(true);
         equipped.gameObject.SetActive(false);
-        border.gameObject.SetActive(false);
+        border.enabled = false;
     }
 
+    //set hat data
     public void SetData(HatItem hatItem)
     {
         this.hatItem = hatItem;
         btnImage.sprite = hatItem.hatSprite;
     }
 
+    //set pant data
     public void SetData(PantItem pantItem)
     {
         this.pantItem = pantItem;
         btnImage.sprite = pantItem.pantSprite;
     }
 
+    //set shield data
     public void SetData(ShieldItem shieldItem)
     {
         this.shieldItem = shieldItem;
@@ -50,7 +61,28 @@ public class ButtonItemUI : MonoBehaviour
     //xu ly khi an vao button
     private void OnSelectButton()
     {
-        border.gameObject.SetActive(true);
-        //Instantiate
+        //tat border cua button
+        if (currentSelectedBtn != null && currentSelectedBtn != this)
+        {
+            currentSelectedBtn.border.enabled = false;
+        }
+        //bat border cua button duoc chon
+        border.enabled = true;
+        //cap nhat lai nut duoc chon hien tai
+        currentSelectedBtn = this;
+
+        //doi trang bi khi an nut
+        if (hatItem != null)
+        {
+            player.ChangeHat(hatItem.hatType);
+        }
+        if (pantItem != null)
+        {
+            player.ChangePant(pantItem.pantType);
+        }
+        if (shieldItem != null)
+        {
+            player.ChangeShield(shieldItem.shieldType);
+        }
     }
 }

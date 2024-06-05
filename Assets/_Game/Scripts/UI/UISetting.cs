@@ -28,35 +28,43 @@ public class UISetting : UICanvas
         UpdateButtonIcon();
     }
 
-    public void OnSoundBtnPress()
+    //xu ly bat-tat sound
+    private void OnSoundBtnPress()
     {
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;
         PlayerPrefs.SetInt(Constants.P_PREF_MUTED, muted ? 0 : 1);
         UpdateButtonIcon();
     }
 
-    public void OnVibraBtnPress()
+    //xu ly bat-tat vibration
+    private void OnVibraBtnPress()
     {
         bool vibrated = PlayerPrefs.GetInt(Constants.P_PREF_VIBRATED, 0) == 1;
         PlayerPrefs.SetInt(Constants.P_PREF_VIBRATED, vibrated ? 0 : 1);
         UpdateButtonIcon();
     }
 
-    public void OnHomeBtnPress()
+    //xu ly khi nhan nut home
+    private void OnHomeBtnPress()
     {
         Close(0);
         UIManager.Instance.OpenUI<UIMainMenu>();
+        GameManager.Instance.OnMainMenu();
         //UNDONE
     }
 
-    public void OnContinueBtnPress()
+    //xu ly khi nhan nut continue
+    private void OnContinueBtnPress()
     {
         Close(0);
         UIManager.Instance.OpenUI<UIJoystick>();
-        UIManager.Instance.OpenUI<UIGamePlay>();
+        UIManager.Instance.GetUI<UIGamePlay>().ChangeAnim(Constants.ANIM_GL_OPEN);
+        //UIManager.Instance.OpenUI<UIGamePlay>();
+        GameManager.Instance.OnGamePlay();
         //UNDONE
     }
 
+    //cap nhat icon sound va vibration
     private void UpdateButtonIcon()
     {
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;

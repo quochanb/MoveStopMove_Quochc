@@ -64,9 +64,9 @@ public enum PantType
 
 public enum ShieldType
 {
-    None = 0,
-    Shield_1 = 1,
-    Shield_2 = 2
+    Shield_1 = 0,
+    Shield_2 = 1,
+    None = 2
 }
 
 public enum ColorType
@@ -84,10 +84,11 @@ public enum ColorType
     Color_10 = 10
 }
 
-public enum ButtonType
+public enum GameState
 {
-    HatType = 0,
-    PantType = 1,
-    ShieldType = 2,
-    ComboSkinType = 3
+    MainMenu = 0,
+    GamePlay = 1,
+    GamePause = 2,
+    Revive = 3,
+    Finish = 4
 }

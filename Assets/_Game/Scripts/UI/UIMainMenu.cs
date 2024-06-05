@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,11 @@ public class UIMainMenu : UICanvas
     [SerializeField] private Image soundOnIcon, soundOffIcon;
     [SerializeField] private Image vibraOnIcon, vibraOffIcon;
 
+    [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private Animator anim;
+
+    private string currentAnim;
+
     private void Start()
     {
         wpShopBtn.onClick.AddListener(OnOpenWeaponShop);
@@ -23,31 +29,43 @@ public class UIMainMenu : UICanvas
         soundBtn.onClick.AddListener(OnSoundBtnPress);
         vibraBtn.onClick.AddListener(OnVibraBtnPress);
 
+
         Load();
         UpdateButtonIcon();
     }
 
-    public void OnOpenWeaponShop()
+    public void UpdateCoin(int coin)
+    {
+        coinText.text = coin.ToString();
+    }
+
+    //xu ly khi an nut weapon shop
+    private void OnOpenWeaponShop()
     {
         UIManager.Instance.OpenUI<UIWeaponShop>();
+        ChangeAnim(Constants.ANIM_MM_CLOSE);
         //UNDONE
     }
 
-    public void OnOpenSkinShop()
+    //xu ly khi an nut skin shop
+    private void OnOpenSkinShop()
     {
         UIManager.Instance.OpenUI<UISkinShop>();
+        ChangeAnim(Constants.ANIM_MM_CLOSE);
         //UNDONE
     }
 
-    public void OnPlayGame()
+    //xu ly khi an nut Play
+    private void OnPlayGame()
     {
         Close(0);
         UIManager.Instance.OpenUI<UIJoystick>();
         UIManager.Instance.OpenUI<UIGamePlay>();
+        GameManager.Instance.OnGamePlay();
     }
 
     //xu ly khi an nut sound
-    public void OnSoundBtnPress()
+    private void OnSoundBtnPress()
     {
         //UNDONE
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;
@@ -56,7 +74,7 @@ public class UIMainMenu : UICanvas
     }
 
     //xu ly khi an nut vibration
-    public void OnVibraBtnPress()
+    private void OnVibraBtnPress()
     {
         //UNDONE
         bool vibrated = PlayerPrefs.GetInt(Constants.P_PREF_VIBRATED, 0) == 1;
@@ -91,5 +109,15 @@ public class UIMainMenu : UICanvas
         // Update vibration icon
         vibraOnIcon.enabled = !vibrated;
         vibraOffIcon.enabled = vibrated;
+    }
+
+    public void ChangeAnim(string animName)
+    {
+        if (currentAnim != animName)
+        {
+            anim.ResetTrigger(currentAnim);
+            currentAnim = animName;
+            anim.SetTrigger(currentAnim);
+        }
     }
 }

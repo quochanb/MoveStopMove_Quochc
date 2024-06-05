@@ -306,9 +306,12 @@ MonoBehaviour:
   rightHand: {fileID: 7741083907764320668}
   leftHand: {fileID: 930760780102117959}
   head: {fileID: 8313923787180660365}
-  pant: {fileID: 8387563558031715460}
-  weapon: {fileID: 0}
+  currentHat: {fileID: 0}
+  currentPant: {fileID: 8387563558031715460}
+  currentShield: {fileID: 0}
+  currentWeapon: {fileID: 0}
   hatData: {fileID: 11400000, guid: 2e09c65996d323b4c8ac6fa670861891, type: 2}
+  shieldData: {fileID: 11400000, guid: 2f860135383eb9041b793c9c7d74912e, type: 2}
   weaponData: {fileID: 11400000, guid: aa4e604f6e6206e4e9cede229a330c3e, type: 2}
   enemyInAttackRange:
   - {fileID: 0}

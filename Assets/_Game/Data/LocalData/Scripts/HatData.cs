@@ -21,4 +21,5 @@ public class HatItem
     public Hat hat;
     public Sprite hatSprite;
     public int hatPrice;
+    public string hatProperty;
 }

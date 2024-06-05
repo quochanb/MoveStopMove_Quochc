@@ -23,4 +23,5 @@ public class WeaponItem
     public Sprite sprite;
     public string name;
     public int price;
+    public string wpProperty;
 }

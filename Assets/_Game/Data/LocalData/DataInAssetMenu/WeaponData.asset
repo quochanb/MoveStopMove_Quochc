@@ -17,59 +17,71 @@ MonoBehaviour:
     weapon: {fileID: -65190403003420850, guid: ac2c9d2c9fe67d14f8b4c2429c5aa4aa, type: 3}
     sprite: {fileID: 21300000, guid: 317ab2e33cd06af499894eac0b795074, type: 3}
     name: ARROW
-    price: 100
+    price: 200
+    wpProperty: +1 Range
   - weaponType: 1
     weapon: {fileID: 6393495725106400132, guid: 3fcb6fc66180cdf42b47a706fdc957f4, type: 3}
     sprite: {fileID: 21300000, guid: 29cf7060a95599b45b5032a6a3cd1798, type: 3}
     name: AXE
-    price: 200
+    price: 400
+    wpProperty: +3 Range
   - weaponType: 2
     weapon: {fileID: 2406868020049365076, guid: 2c2e102119aa68444bf59a68fd63312d, type: 3}
     sprite: {fileID: 21300000, guid: dd47ffa33ce48924eb157693923298bb, type: 3}
     name: BATTLE AXE
-    price: 300
+    price: 600
+    wpProperty: +5 Attack Speed
   - weaponType: 3
     weapon: {fileID: -4730065355977629820, guid: 764fa4844f965fd4e8b2fc90267bbde0, type: 3}
     sprite: {fileID: 21300000, guid: 850560a3d5d05414985431b7fe969284, type: 3}
     name: BOOMERANG
-    price: 400
+    price: 800
+    wpProperty: +5 Range*2
   - weaponType: 4
     weapon: {fileID: 7204438141127921777, guid: 2f4fe9aa63435be43b39c3e7d678ba17, type: 3}
     sprite: {fileID: 21300000, guid: 82541a9d027d1ef459d4baf465a125ce, type: 3}
     name: LOLIPOP
-    price: 500
+    price: 1000
+    wpProperty: +5 Range
   - weaponType: 5
     weapon: {fileID: 97803251562204399, guid: cc589f9fbbf743843a742affd7aee404, type: 3}
     sprite: {fileID: 21300000, guid: 724e4328a30d97c4fa51f406c3ff007d, type: 3}
     name: CANDY CANE
-    price: 600
+    price: 1200
+    wpProperty: +10 Range
   - weaponType: 6
     weapon: {fileID: 8200187398968233420, guid: 47de1bced8123e44c9b1d75d77704199, type: 3}
     sprite: {fileID: 21300000, guid: 3af6351134a980440a9abb799a182e85, type: 3}
     name: ICE-CREAM
-    price: 700
+    price: 1400
+    wpProperty: +15 Attack Speed
   - weaponType: 7
     weapon: {fileID: 7407038721005453826, guid: ad453c5bec726ce4ca8e9c6a5d74dea8, type: 3}
     sprite: {fileID: 21300000, guid: 5a7af5be6b42eb940ac6d08116d0fe7e, type: 3}
     name: SWIRLY POP
-    price: 800
+    price: 1600
+    wpProperty: +15 Range
   - weaponType: 8
     weapon: {fileID: 5744964230012370241, guid: cf2f0d95b14b2c74d8e6d168d3e971b1, type: 3}
     sprite: {fileID: 21300000, guid: 2dbdf917bda18854c9feb89adc0a75f7, type: 3}
     name: HAMMER
-    price: 900
+    price: 1800
+    wpProperty: +20 Range
   - weaponType: 9
     weapon: {fileID: 4265043514137818814, guid: fdc3aefb8e9d5be4bb9cac13fd298f94, type: 3}
     sprite: {fileID: 21300000, guid: 33c349a86a058c34196d38bf8d1d2ca9, type: 3}
     name: KNIFE
-    price: 1000
+    price: 2000
+    wpProperty: +15 Attack Speed
   - weaponType: 10
     weapon: {fileID: 8263629529145292684, guid: 7f8dab5178812f44980d1d523ee5e49f, type: 3}
     sprite: {fileID: 21300000, guid: 344190b4a34fea344b3b501047bdad40, type: 3}
     name: UZI
-    price: 1100
+    price: 2200
+    wpProperty: +25 Range
   - weaponType: 11
     weapon: {fileID: 8335819865499587499, guid: c058d45d252b640498690d7c13f29d85, type: 3}
     sprite: {fileID: 0}
     name: Z
     price: 1200
+    wpProperty: +10 Range*2

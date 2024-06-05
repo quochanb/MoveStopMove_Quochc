@@ -7,6 +7,11 @@ using UnityEngine;
 public class ShieldData : ScriptableObject
 {
     public List<ShieldItem> shieldList;
+
+    public Shield GetShield(ShieldType shieldType)
+    {
+        return shieldList[(int)shieldType].shield;
+    }
 }
 
 
@@ -17,4 +22,5 @@ public class ShieldItem
     public Shield shield;
     public Sprite shieldSprite;
     public int shieldPrice;
+    public string shieldProperty;
 }

@@ -11,6 +11,10 @@ public class Constants : MonoBehaviour
     public const string ANIM_DEAD = "dead";
     public const string ANIM_ATTACK = "attack";
     public const string ANIM_CHARSKIN = "charskin";
+    public const string ANIM_MM_OPEN = "open";
+    public const string ANIM_MM_CLOSE = "close";
+    public const string ANIM_GL_OPEN = "glopen";
+    public const string ANIM_GL_CLOSE = "glclose";
 
     public const string TAG_PLAYER = "Player";
     public const string TAG_OBSTACLE = "Obstacle";

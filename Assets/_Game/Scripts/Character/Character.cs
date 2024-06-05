@@ -19,9 +19,13 @@ public class Character : GameUnit
 
     protected bool isDead, isAttack, isMoving;
 
-    public Pant pant;
+    public Hat currentHat;
+    public Pant currentPant;
+    public Shield currentShield;
     public Weapon currentWeapon;
+
     public HatData hatData;
+    public ShieldData shieldData;
     public WeaponData weaponData;
     public bool IsDead => isDead;
     public Collider[] enemyInAttackRange = new Collider[10];
@@ -43,6 +47,7 @@ public class Character : GameUnit
         }
     }
 
+    //khoi tao
     public virtual void OnInit()
     {
         isDead = false;
@@ -50,12 +55,13 @@ public class Character : GameUnit
         isAttack = false;
     }
 
+    //goi khi muon huy
     public virtual void OnDespawn()
     {
 
     }
 
-
+    //check ground de di chuyen
     public Vector3 CheckGround(Vector3 nextPoint)
     {
         RaycastHit hit;
@@ -66,12 +72,14 @@ public class Character : GameUnit
         return Tf.position;
     }
 
+    //moving
     public virtual void Move()
     {
         isMoving = true;
         ChangeAnim(Constants.ANIM_RUN);
     }
 
+    //stop moving
     public virtual void StopMove()
     {
         isMoving = false;
@@ -109,7 +117,7 @@ public class Character : GameUnit
         }
     }
 
-    //die
+    //xu ly khi character die
     public virtual void OnDead()
     {
         isDead = true;
@@ -136,6 +144,7 @@ public class Character : GameUnit
         return bulletSpawnPoint;
     }
 
+    //change weapon
     public void ChangeWeapon(WeaponType weaponType)
     {
         if (currentWeapon != null)
@@ -146,14 +155,35 @@ public class Character : GameUnit
         currentWeapon = newWeapon;
     }
 
+    //change hat
     public void ChangeHat(HatType hatType)
     {
-        Hat hat = Instantiate(hatData.GetHat(hatType), head);
+        if (currentHat != null)
+        {
+            Destroy(currentHat.gameObject);
+        }
+        Hat newHat = Instantiate(hatData.GetHat(hatType), head);
+        currentHat = newHat;
     }
 
+    //change pant
     public void ChangePant(PantType pantType)
     {
-        pant.ChangeMaterialPant(pantType);
+        if (currentPant != null)
+        {
+            currentPant.ChangeMaterialPant(pantType);
+        }
+    }
+
+    //change shield
+    public void ChangeShield(ShieldType shieldType)
+    {
+        if (currentShield != null)
+        {
+            Destroy(currentShield.gameObject);
+        }
+        Shield newShield = Instantiate(shieldData.GetShield(shieldType), leftHand);
+        currentShield = newShield;
     }
 
     //find enemy gan nhat
@@ -211,6 +241,7 @@ public class Character : GameUnit
         return distanceToTarget > radius;
     }
 
+    //change anim
     public void ChangeAnim(string animName)
     {
         if (currentAnim != animName)
@@ -224,12 +255,14 @@ public class Character : GameUnit
         }
     }
 
+    //delay den lan tan cong tiep theo
     private IEnumerator DelayAttack(float time)
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
     }
 
+    //delay nem vu khi
     private IEnumerator ThrowWeapon(float time)
     {
         yield return Cache.GetWFS(time);

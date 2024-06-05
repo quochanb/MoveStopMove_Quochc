@@ -21,4 +21,5 @@ public class PantItem
     public Material material;
     public Sprite pantSprite;
     public int pantPrice;
+    public string pantProperty;
 }

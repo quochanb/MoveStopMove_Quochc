@@ -17,35 +17,44 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: 56507925b90e6964bab4a55527cb611d, type: 2}
     pantSprite: {fileID: 21300000, guid: 0806d2ad9e543b64dab8a6583c3b2039, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 1
     material: {fileID: 2100000, guid: e7d8d0a10e588f2409bfbb0f549617b1, type: 2}
     pantSprite: {fileID: 21300000, guid: 6d8c21d8e55123441ba02ac0fce3d675, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 2
     material: {fileID: 2100000, guid: 6161653da91d90547b0e4f1a419fa852, type: 2}
     pantSprite: {fileID: 21300000, guid: 16a96fb5954afd84abacd4acf0818139, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 3
     material: {fileID: 2100000, guid: 1e786ed702ab058408f7ae85d8963e08, type: 2}
     pantSprite: {fileID: 21300000, guid: bf6c3011d09de5645b20958b4178cdf7, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 4
     material: {fileID: 2100000, guid: 37d95ae247dc5df4f89008d3e1925b8e, type: 2}
     pantSprite: {fileID: 21300000, guid: be770e2a4bda55147bff7cac14cb8b34, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 5
     material: {fileID: 2100000, guid: 8b1736e9fe183b042b56931fd45ca6b5, type: 2}
     pantSprite: {fileID: 21300000, guid: a482b056a7db15c449864b0f6737a4cb, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 6
     material: {fileID: 2100000, guid: 6e909eb25e129c947b68e9bd72e4023d, type: 2}
     pantSprite: {fileID: 21300000, guid: 17737506398ad284aa00a46f0508ac61, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 7
     material: {fileID: 2100000, guid: dcc2670967dc37f4786fbf1e6c4bca2b, type: 2}
     pantSprite: {fileID: 21300000, guid: 25eaab120aefcd243b5c20ed406b1184, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed
   - pantType: 8
     material: {fileID: 2100000, guid: 209b8e5c5ab2acd4fa06e5db76d94d8d, type: 2}
     pantSprite: {fileID: 21300000, guid: ce130da2d9627654994c26c5c9da1967, type: 3}
     pantPrice: 500
+    pantProperty: 8% Move Speed

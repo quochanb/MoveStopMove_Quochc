@@ -7,21 +7,32 @@ using UnityEngine.UI;
 
 public class UIWeaponShop : UICanvas
 {
-    [SerializeField] private Button nextBtn, prevBtn, closeBtn;
-    [SerializeField] private WeaponData weaponData;
-    [SerializeField] private TextMeshProUGUI weaponName, weaponPrice;
+    [SerializeField] private Button nextBtn;
+    [SerializeField] private Button prevBtn;
+    [SerializeField] private Button closeBtn;
+
+    [SerializeField] private TextMeshProUGUI weaponName;
+    [SerializeField] private TextMeshProUGUI weaponPrice;
+    [SerializeField] private TextMeshProUGUI weaponProperty;
     [SerializeField] private TextMeshProUGUI playerCoin;
+
+    [SerializeField] private WeaponData weaponData;
     [SerializeField] private Image weaponImage;
+
     [SerializeField] Button[] buttonState;
 
+    private Player player;
     private WeaponItem weaponItem;
-    private WeaponType weaponType;
     private int currentIndex = 0;
-    public Player player;
+
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+
         ShowWeapon(currentIndex);
         ChangeButtonState(0); //Fix lai khi co userdata
         nextBtn.onClick.AddListener(OnNextButton);
@@ -37,13 +48,13 @@ public class UIWeaponShop : UICanvas
             weaponName.text = weaponItem.name;
             weaponImage.sprite = weaponItem.sprite;
             weaponPrice.text = weaponItem.price.ToString();
-            weaponType = weaponItem.weaponType;
+            weaponProperty.text = weaponItem.wpProperty;
         }
     }
 
     public void ChangeButtonState(int index)
     {
-        for(int i = 0; i < buttonState.Length; i++)
+        for (int i = 0; i < buttonState.Length; i++)
         {
             buttonState[i].gameObject.SetActive(false);
         }
@@ -86,7 +97,7 @@ public class UIWeaponShop : UICanvas
     private void OnPrevButton()
     {
         currentIndex--;
-        if(currentIndex < 0)
+        if (currentIndex < 0)
         {
             currentIndex = weaponData.weaponList.Count - 1;
         }
@@ -96,7 +107,7 @@ public class UIWeaponShop : UICanvas
     private void OnCloseButton()
     {
         Close(0);
-        UIManager.Instance.OpenUI<UIMainMenu>();
+        UIManager.Instance.GetUI<UIMainMenu>().ChangeAnim(Constants.ANIM_MM_OPEN);
     }
 
     private void OnBuyWeapon()
@@ -107,7 +118,7 @@ public class UIWeaponShop : UICanvas
 
     private void OnSelectWeapon()
     {
-        player.ChangeWeapon(weaponType);
+        player.ChangeWeapon(weaponItem.weaponType);
         ChangeButtonState(2);
     }
 }
