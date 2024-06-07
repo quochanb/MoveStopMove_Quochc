@@ -92,3 +92,18 @@ public enum GameState
     Revive = 3,
     Finish = 4
 }
+
+public enum ItemState
+{
+    Buy = 0,
+    Equip = 1,
+    Equipped = 2
+}
+
+public enum ShopType
+{
+    HatShop = 0,
+    PantShop = 1,
+    ShieldShop = 2,
+    ComboShop = 3
+}

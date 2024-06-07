@@ -22,4 +22,5 @@ public class Constants : MonoBehaviour
 
     public const string P_PREF_MUTED = "muted";
     public const string P_PREF_VIBRATED = "vibrated";
+    public const string USERDATA_KEY = "userdata_key";
 }

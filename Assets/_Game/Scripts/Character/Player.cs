@@ -41,9 +41,18 @@ public class Player : Character
     public override void OnInit()
     {
         base.OnInit();
-        ChangeWeapon(WeaponType.Axe_2);
-        ChangeHat(HatType.Headphone);
-        ChangePant(PantType.Pokemon);
+        UserData userData = UserDataManager.Instance.userData;
+
+        int currentWeaponIndex = userData.currentWeaponIndex;
+        int currentHatIndex = userData.currentHatIndex;
+        int currentPantIndex = userData.currentPantIndex;
+        int currentShieldIndex = userData.currentShieldIndex;
+        //int currentComboSkinIndex = userData.currentComboSkinIndex;
+
+        ChangeWeapon((WeaponType)currentWeaponIndex);
+        ChangeHat((HatType)currentHatIndex);
+        ChangePant((PantType)currentPantIndex);
+        ChangeShield((ShieldType)currentShieldIndex);
     }
 
     public override void Move()
