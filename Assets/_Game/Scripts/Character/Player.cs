@@ -9,33 +9,48 @@ public class Player : Character
 
     protected override void Update()
     {
-        base.Update();
-        if (IsDead)
+        if (GameManager.Instance.currentState == GameState.GamePlay)
         {
-            return;
-        }
-        if (currentTarget != null)
-        {
-            currentTarget.ActiveLockTarget();
-            if (currentTarget == null || IsOutOfAttackRange(currentTarget))
+            base.Update();
+            if (IsDead)
             {
-                currentTarget.DeactiveLockTarget();
+                //GameManager.Instance.OnRevive();
+                return;
+            }
+            if (currentTarget != null)
+            {
+                currentTarget.ActiveLockTarget();
+                if (currentTarget == null || IsOutOfAttackRange(currentTarget))
+                {
+                    currentTarget.DeactiveLockTarget();
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                ChangeAnim(Constants.ANIM_IDLE);
+            }
+
+            if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
+            {
+                Move();
+            }
+            else
+            {
+                StopMove();
             }
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            ChangeAnim(Constants.ANIM_IDLE);
-        }
-        
-        if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
-        {
-            Move();
-        }
-        
-        else
-        {
-            StopMove();
-        }
+    }
+
+    private void OnEnable()
+    {
+        UIRevive.reviveEvent += OnRevive;
+        Level.winGameEvent += OnWinGame;
+    }
+
+    private void OnDisable()
+    {
+        UIRevive.reviveEvent -= OnRevive;
+        Level.winGameEvent -= OnWinGame;
     }
 
     public override void OnInit()
@@ -66,6 +81,28 @@ public class Player : Character
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 7);
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    public override void OnHitVictim(Character attacker, Character victim)
+    {
+        base.OnHitVictim(attacker, victim);
+        AddCoins();
+    }
+
+    private void AddCoins()
+    {
+        int currentCoin = UserDataManager.Instance.GetUserCoin();
+        UserDataManager.Instance.UpdateUserCoin(currentCoin += 5);
+    }
+
+    private void OnRevive()
+    {
+        OnInit();
+    }
+
+    private void OnWinGame()
+    {
+        ChangeAnim(Constants.ANIM_WIN);
     }
 }

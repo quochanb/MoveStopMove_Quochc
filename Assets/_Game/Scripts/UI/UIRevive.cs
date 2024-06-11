@@ -10,20 +10,22 @@ public class UIRevive : UICanvas
     [SerializeField] private Button closeBtn;
     [SerializeField] private Button reviveBtn;
 
-    [SerializeField] private int countDownTime = 5;
+    [SerializeField] private int countDownTime;
     [SerializeField] private TextMeshProUGUI countDownDisplay;
     [SerializeField] private Image loading;
+
+    private int reviveFee = 150;
+
+    public static event Action reviveEvent;
 
     private void Start()
     {
         closeBtn.onClick.AddListener(OnClose);
         reviveBtn.onClick.AddListener(OnRevive);
+    }
 
-        if (loading == null)
-        {
-            loading = FindObjectOfType<Image>();
-        }
-
+    private void OnEnable()
+    {
         StartCoroutine(CountDown());
     }
 
@@ -35,25 +37,32 @@ public class UIRevive : UICanvas
     //xu ly khi nhan nut Close
     private void OnClose()
     {
-        Close(0);
-        UIManager.Instance.OpenUI<UIFail>();
-        GameManager.Instance.OnFinish();
+        GameManager.Instance.OnFail();
         //UNDONE
     }
 
     //xu ly khi hoi sinh player
     private void OnRevive()
     {
-        Close(0);
-        UIManager.Instance.OpenUI<UIJoystick>();
-        UIManager.Instance.OpenUI<UIGamePlay>();
-        GameManager.Instance.OnGamePlay();
-        //UNDONE
+        int playerCoin = UserDataManager.Instance.GetUserCoin();
+
+        if (playerCoin >= reviveFee)
+        {
+            Close(0);
+            UIManager.Instance.OpenUI<UIJoystick>();
+            UIManager.Instance.OpenUI<UIGamePlay>();
+            playerCoin -= reviveFee;
+            UserDataManager.Instance.UpdateUserCoin(playerCoin);
+            GameManager.Instance.OnGamePlay();
+            reviveEvent?.Invoke();
+        }
+        //TODO: Tru coin, hoi sinh player
     }
 
     //count down
     IEnumerator CountDown()
     {
+        countDownTime = 5;
         while (countDownTime > 0)
         {
             countDownDisplay.text = countDownTime.ToString();
@@ -63,7 +72,8 @@ public class UIRevive : UICanvas
         }
         countDownDisplay.text = "0";
 
-        yield return Cache.GetWFS(0.3f);
-        OnClose();
+        yield return Cache.GetWFS(1f);
+        UIManager.Instance.CloseAll();
+        UIManager.Instance.OpenUI<UIFail>();
     }
 }

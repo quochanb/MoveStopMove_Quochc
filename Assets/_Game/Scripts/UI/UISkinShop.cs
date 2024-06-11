@@ -27,21 +27,18 @@ public class UISkinShop : UICanvas
 
     [SerializeField] private Image[] backgrounds;
     [SerializeField] private Button[] buttonState;
-    [SerializeField] private TextMeshProUGUI propertyText;
-    [SerializeField] private TextMeshProUGUI playerCoin;
+    [SerializeField] private TextMeshProUGUI propertyItem;
 
-    private ShopType currentShopType;
+    private Player player;
     private UserData userData;
-    private int currentHatIndex = 0;
-    private int currentPantIndex = 0;
-    private int currentShieldIndex = 0;
-    private int currentComboSkinIndex = 0;
+    private ShopType currentShopType;
     private ButtonItemUI currentSelectedItem;
     private List<ButtonItemUI> buttonItems = new List<ButtonItemUI>();
 
-    private void Start()
+    private void Awake()
     {
         userData = UserDataManager.Instance.userData;
+        player = FindObjectOfType<Player>();
 
         buyBtn.onClick.AddListener(OnBuyBtn);
         closeBtn.onClick.AddListener(OnCloseBtn);
@@ -54,11 +51,12 @@ public class UISkinShop : UICanvas
         comboSetShop.onClick.AddListener(OnShowComboSetShop);
 
         OnShowHatShop();
-        UpdateCoinDisplay(userData.coin);
     }
 
     private void OnEnable()
     {
+        CameraFollow.Instance.ChangeCameraState(CameraState.Shop);
+        player.ChangeAnim(Constants.ANIM_CHARSKIN);
         ButtonItemUI.OnClicked += HandleItemSelected;
     }
 
@@ -80,9 +78,9 @@ public class UISkinShop : UICanvas
             item.SetData(hatData.hatList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyText.text = hatData.hatList[i].hatProperty;
+            propertyItem.text = hatData.hatList[i].hatProperty;
         }
-
+        SelectDefaultItem(ShopType.HatShop);
         UpdateButtonState();
     }
 
@@ -99,9 +97,9 @@ public class UISkinShop : UICanvas
             item.SetData(pantData.pantList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyText.text = pantData.pantList[i].pantProperty;
+            propertyItem.text = pantData.pantList[i].pantProperty;
         }
-
+        SelectDefaultItem(ShopType.PantShop);
         UpdateButtonState();
     }
 
@@ -118,9 +116,9 @@ public class UISkinShop : UICanvas
             item.SetData(shieldData.shieldList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyText.text = shieldData.shieldList[i].shieldProperty;
+            propertyItem.text = shieldData.shieldList[i].shieldProperty;
         }
-
+        SelectDefaultItem(ShopType.ShieldShop);
         UpdateButtonState();
     }
 
@@ -137,31 +135,14 @@ public class UISkinShop : UICanvas
     {
         Close(0);
         UIManager.Instance.GetUI<UIMainMenu>().ChangeAnim(Constants.ANIM_MM_OPEN);
+        CameraFollow.Instance.ChangeCameraState(CameraState.MainMenu);
+        player.ChangeAnim(Constants.ANIM_IDLE);
     }
 
     //xu ly su kien khi nut duoc click
     private void HandleItemSelected(ButtonItemUI item)
     {
         currentSelectedItem = item;
-
-        switch (currentShopType)
-        {
-            case ShopType.HatShop:
-                currentHatIndex = item.GetItemIndex();
-                break;
-            case ShopType.PantShop:
-                currentPantIndex = item.GetItemIndex();
-                break;
-            case ShopType.ShieldShop:
-                currentShieldIndex = item.GetItemIndex();
-                break;
-            case ShopType.ComboShop:
-                currentComboSkinIndex = item.GetItemIndex();
-                break;
-            default:
-                break;
-        }
-
         UpdateButtonState();
     }
 
@@ -173,8 +154,8 @@ public class UISkinShop : UICanvas
         if (userData.coin >= itemPrice)
         {
             userData.coin -= itemPrice;
-            UpdateCoinDisplay(userData.coin);
-            
+            UIManager.Instance.GetUI<UIMainMenu>().UpdateCoin(userData.coin);
+
             UserDataManager.Instance.UpdateUserCoin(userData.coin);
             UserDataManager.Instance.UpdateItemState(currentShopType, itemIndex, 1);
 
@@ -186,6 +167,10 @@ public class UISkinShop : UICanvas
     //xu ly select button
     private void OnSelectBtn()
     {
+        if(currentSelectedItem != null)
+        {
+            currentSelectedItem.OnSelectButton();
+        }
         int index = currentSelectedItem.GetItemIndex();
         UnselectAllItems(currentShopType);
         UserDataManager.Instance.UpdateItemState(currentShopType, index, 2);
@@ -200,8 +185,9 @@ public class UISkinShop : UICanvas
         int index = currentSelectedItem.GetItemIndex();
         UserDataManager.Instance.UpdateItemState(currentShopType, index, 1);
         UserDataManager.Instance.UpdateCurrentItem(currentShopType, -1);
-        
+
         currentSelectedItem.DeactiveEquipped();
+        UnequipItem(currentShopType);
         UpdateButtonState();
     }
 
@@ -214,11 +200,6 @@ public class UISkinShop : UICanvas
             Destroy(child.gameObject);
         }
         buttonItems.Clear();
-    }
-
-    public void UpdateCoinDisplay(int coin)
-    {
-        playerCoin.text = coin.ToString();
     }
 
     //update lai background item shop
@@ -242,29 +223,10 @@ public class UISkinShop : UICanvas
             buttonState[i].onClick.RemoveAllListeners();
         }
 
-        int state;
-
-        switch (currentShopType)
+        if (currentSelectedItem != null)
         {
-            case ShopType.HatShop:
-                state = userData.hatState[currentHatIndex];
-                break;
-            case ShopType.PantShop:
-                state = userData.pantState[currentPantIndex];
-                break;
-            case ShopType.ShieldShop:
-                state = userData.shieldState[currentShieldIndex];
-                break;
-            case ShopType.ComboShop:
-                state = userData.comboSkinState[currentComboSkinIndex];
-                break;
-            default:
-                state = -1;
-                break;
-        }
-
-        if (state >= 0)
-        {
+            int index = currentSelectedItem.GetItemIndex();
+            int state = UserDataManager.Instance.GetItemState(currentShopType, index);
             switch (state)
             {
                 //chua mua
@@ -288,7 +250,7 @@ public class UISkinShop : UICanvas
         }
     }
 
-    //goi khi item duoc select
+    //goi khi nhan nut select
     public void UnselectAllItems(ShopType shopType)
     {
         foreach (ButtonItemUI itemUI in buttonItems)
@@ -296,12 +258,57 @@ public class UISkinShop : UICanvas
             //lay ra state cua nut
             int state = UserDataManager.Instance.GetItemState(shopType, itemUI.GetItemIndex());
             //neu state = 2 (dang duoc trang bi) thi chuyen state = 1 va unequip
-            if(itemUI != null && itemUI.GetShopType() == shopType && state == 2)
+            if (itemUI != null && itemUI.GetShopType() == shopType && state == 2)
             {
                 UserDataManager.Instance.UpdateItemState(shopType, itemUI.GetItemIndex(), 1);
                 itemUI.DeactiveEquipped();
             }
         }
-        UserDataManager.Instance.SaveUserData();
+    }
+
+    //goi khi nhan nut unequip
+    public void UnequipItem(ShopType shopType)
+    {
+        switch (shopType)
+        {
+            case ShopType.HatShop:
+                player.ChangeHat(HatType.None);
+                break;
+            case ShopType.PantShop:
+                player.ChangePant(PantType.None);
+                break;
+            case ShopType.ShieldShop:
+                player.ChangeShield(ShieldType.None);
+                break;
+            default:
+                break;
+        }
+    }
+
+    //set item default khi bat dau vao shop
+    private void SelectDefaultItem(ShopType shopType)
+    {
+        ButtonItemUI defaultItem = null;
+        ButtonItemUI equippedItem = null;
+
+        foreach (var item in buttonItems)
+        {
+            if (defaultItem == null)
+            {
+                defaultItem = item;
+            }
+
+            if (UserDataManager.Instance.GetItemState(shopType, item.GetItemIndex()) == 2)
+            {
+                equippedItem = item;
+            }
+        }
+
+        currentSelectedItem = equippedItem != null ? equippedItem : defaultItem;
+
+        if (currentSelectedItem != null)
+        {
+            currentSelectedItem.OnSelectButton();
+        }
     }
 }

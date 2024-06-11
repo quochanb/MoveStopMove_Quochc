@@ -505,6 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinRenderer: {fileID: 4649123314379196012}
+  defaultMaterial: {fileID: 0}
   pantData: {fileID: 11400000, guid: 43e3494ba8feb6e48a4981760e5b2538, type: 2}
 --- !u!4 &7741083907764320668 stripped
 Transform:

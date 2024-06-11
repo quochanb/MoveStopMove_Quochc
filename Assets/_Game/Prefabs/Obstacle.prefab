@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6479267703533205084}
   - component: {fileID: 6479267703533205085}
   - component: {fileID: 6479267703533205075}
+  - component: {fileID: 964734840}
   m_Layer: 6
   m_Name: Obstacle
   m_TagString: Obstacle
@@ -42,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6479267703533205080}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -7251255731686344134, guid: a7e7b1b83a6aa154da565da899935bbc, type: 3}
 --- !u!23 &6479267703533205085
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -98,6 +99,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6298874, y: 0.8863598, z: 0.71500874}
   m_Center: {x: 0.015035438, y: 0.0020669939, z: -0.023131276}
+--- !u!114 &964734840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6479267703533205080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1001 &6479267704064006917
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +178,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a7e7b1b83a6aa154da565da899935bbc, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c9ea827aaa4145c8900e81ca1395aae, type: 2}
     - target: {fileID: 919132149155446097, guid: a7e7b1b83a6aa154da565da899935bbc, type: 3}
       propertyPath: m_Name
       value: SM_Cup_01

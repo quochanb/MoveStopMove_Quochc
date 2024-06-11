@@ -9,17 +9,20 @@ public class Enemy : Character
     public delegate void OnDeathDelegate();
     public static OnDeathDelegate onDeathEvent;
     [SerializeField] private NavMeshAgent agent;
-    
+
     private Vector3 destination;
     public IState currentState;
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
     protected override void Update()
     {
-        base.Update();
-        if (currentState != null)
+        if (GameManager.Instance.currentState == GameState.GamePlay)
         {
-            currentState.OnExecute(this);
+            base.Update();
+            if (currentState != null)
+            {
+                currentState.OnExecute(this);
+            }
         }
     }
 

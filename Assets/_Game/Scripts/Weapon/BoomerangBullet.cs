@@ -5,28 +5,37 @@ using UnityEngine;
 
 public class BoomerangBullet : Bullet
 {
-    [SerializeField] float returnTime = 1.5f;
-    private Vector3 startPosition;
+    [SerializeField] float returnTime = 1.1f;
+    private Vector3 endPoint;
+    private bool isReturning = false;
 
     public override void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
         base.OnInit(attacker, onHit, target);
-        startPosition = Tf.position;
+        endPoint = attacker.Tf.position;
     }
 
     public override void Move()
     {
-        float distance = Vector3.Distance(Tf.position, startPosition);
-        if (distance < speed * returnTime)
+        Tf.eulerAngles += new Vector3(0, 1000, 0) * Time.deltaTime;
+
+        if(!isReturning )
         {
-            //di chuyen ve phia truoc
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            Tf.position += direction * speed * Time.deltaTime;
+            if(Vector3.Distance(Tf.position, target) < 0.1f)
+            {
+                isReturning = true;
+            }
         }
         else
         {
-            //quay tro lai
-            Vector3 directionToAttacker = (attacker.Tf.position - Tf.position).normalized;
-            transform.Translate(directionToAttacker * speed * Time.deltaTime);
+            Vector3 directionToAttacker = (endPoint - Tf.position).normalized;
+            Tf.position += directionToAttacker * speed * Time.deltaTime;
+
+            if(Vector3.Distance(Tf.position, endPoint) < 0.1f)
+            {
+                OnDespawn();
+            }
         }
     }
 

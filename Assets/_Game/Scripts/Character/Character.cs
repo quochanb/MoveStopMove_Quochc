@@ -108,13 +108,9 @@ public class Character : GameUnit
     }
 
     //xu ly khi bullet va cham voi character
-    public void OnHitVictim(Character attacker, Character victim)
+    public virtual void OnHitVictim(Character attacker, Character victim)
     {
         victim.OnDead();
-        if (!attacker.isDead)
-        {
-            attacker.ChangeAnim(Constants.ANIM_IDLE);
-        }
     }
 
     //xu ly khi character die
@@ -153,6 +149,11 @@ public class Character : GameUnit
         }
         Weapon newWeapon = Instantiate(weaponData.GetWeapon(weaponType), rightHand);
         currentWeapon = newWeapon;
+
+        if(currentWeapon == null)
+        {
+            Debug.Log("loi xoa");
+        }
     }
 
     //change hat
@@ -161,9 +162,14 @@ public class Character : GameUnit
         if (currentHat != null)
         {
             Destroy(currentHat.gameObject);
+            currentHat = null;
         }
-        Hat newHat = Instantiate(hatData.GetHat(hatType), head);
-        currentHat = newHat;
+
+        if (hatType != HatType.None)
+        {
+            Hat newHat = Instantiate(hatData.GetHat(hatType), head);
+            currentHat = newHat;
+        }
     }
 
     //change pant
@@ -171,7 +177,14 @@ public class Character : GameUnit
     {
         if (currentPant != null)
         {
-            currentPant.ChangeMaterialPant(pantType);
+            if (pantType != PantType.None)
+            {
+                currentPant.ChangeMaterialPant(pantType);
+            }
+            else
+            {
+                currentPant.ResetMaterial();
+            }
         }
     }
 
@@ -181,9 +194,14 @@ public class Character : GameUnit
         if (currentShield != null)
         {
             Destroy(currentShield.gameObject);
+            currentShield = null;
         }
-        Shield newShield = Instantiate(shieldData.GetShield(shieldType), leftHand);
-        currentShield = newShield;
+
+        if (shieldType != ShieldType.None)
+        {
+            Shield newShield = Instantiate(shieldData.GetShield(shieldType), leftHand);
+            currentShield = newShield;
+        }
     }
 
     //find enemy gan nhat
@@ -260,6 +278,7 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
+        
     }
 
     //delay nem vu khi
@@ -267,5 +286,11 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         currentWeapon.Throw(this, OnHitVictim);
+        currentWeapon.gameObject.SetActive(false);
+    }
+
+    public void ActiveWeapon()
+    {
+        currentWeapon.gameObject.SetActive(true);
     }
 }

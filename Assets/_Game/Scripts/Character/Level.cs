@@ -1,20 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private Transform[] startPoint;
+    [SerializeField] private Transform[] startPoints;
     [SerializeField] private int totalEnemy = 50;
-    [SerializeField] private int initialEnemyCount = 10;
+    [SerializeField] private int initialEnemyCount = 15;
 
+    private int aliveEnemy;
     private int spawnedEnemies;
+    private List<Vector3> spawnPointList = new List<Vector3>();
+
+    public static UnityAction winGameEvent;
 
     private void Start()
     {
-        for(int i = 0; i < initialEnemyCount; i++)
+        aliveEnemy = totalEnemy;
+        //UIManager.Instance.GetUI<UIGamePlay>().UpdateAlive(aliveEnemy);
+
+        for (int i = 0; i < startPoints.Length - 3; i++)
         {
-            Spawn(startPoint[i].position);
+            spawnPointList.Add(startPoints[i].position);
+        }
+
+        for (int i = 0; i < initialEnemyCount; i++)
+        {
+            Spawn(GetRandomStartPoint());
         }
     }
 
@@ -28,7 +41,7 @@ public class Level : MonoBehaviour
         Enemy.onDeathEvent -= HandleOnDeath;
     }
 
-    public void Spawn(Vector3 point)
+    private void Spawn(Vector3 point)
     {
         if (spawnedEnemies == totalEnemy)
         {
@@ -39,15 +52,58 @@ public class Level : MonoBehaviour
         spawnedEnemies++;
     }
 
-
     private void HandleOnDeath()
     {
-        StartCoroutine(RespawnEnemy(Random.Range(3, 5)));
+        if (aliveEnemy > 0)
+        {
+            aliveEnemy--;
+            ReturnStartPoint();
+            UIManager.Instance.GetUI<UIGamePlay>().UpdateAlive(aliveEnemy);
+            StartCoroutine(RespawnEnemy(Random.Range(4, 7)));
+
+            if (aliveEnemy == 0)
+            {
+                winGameEvent?.Invoke();
+                GameManager.Instance.OnVictory();
+            }
+        }
+        
+    }
+
+    private Vector3 GetRandomStartPoint()
+    {
+        int randomIndex = Random.Range(0, spawnPointList.Count);
+        Vector3 randomPoint = spawnPointList[randomIndex];
+        spawnPointList.RemoveAt(randomIndex);
+
+        return randomPoint;
+    }
+
+    private void ReturnStartPoint()
+    {
+        for (int i = 0; i < startPoints.Length - 3; i++)
+        {
+            if (!spawnPointList.Contains(startPoints[i].position))
+            {
+                spawnPointList.Add(startPoints[i].position);
+                break;
+            }
+        }
+    }
+
+    public void DespawnEnemy()
+    {
+        SimplePool.Collect(PoolType.Enemy);
+    }
+
+    public Vector3 GetPlayerStartPoint()
+    {
+        return startPoints[Random.Range(20, 23)].position;
     }
 
     IEnumerator RespawnEnemy(float time)
     {
         yield return Cache.GetWFS(time);
-        Spawn(startPoint[Random.Range(0, startPoint.Length)].position);
+        Spawn(GetRandomStartPoint());
     }
 }

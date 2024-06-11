@@ -47,7 +47,7 @@ public class UISetting : UICanvas
     //xu ly khi nhan nut home
     private void OnHomeBtnPress()
     {
-        Close(0);
+        UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
         GameManager.Instance.OnMainMenu();
         //UNDONE
@@ -59,7 +59,6 @@ public class UISetting : UICanvas
         Close(0);
         UIManager.Instance.OpenUI<UIJoystick>();
         UIManager.Instance.GetUI<UIGamePlay>().ChangeAnim(Constants.ANIM_GL_OPEN);
-        //UIManager.Instance.OpenUI<UIGamePlay>();
         GameManager.Instance.OnGamePlay();
         //UNDONE
     }

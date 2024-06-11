@@ -32,6 +32,7 @@ public class UIMainMenu : UICanvas
 
         Load();
         UpdateButtonIcon();
+        UpdateCoin(UserDataManager.Instance.GetUserCoin());
     }
 
     public void UpdateCoin(int coin)
@@ -42,32 +43,33 @@ public class UIMainMenu : UICanvas
     //xu ly khi an nut weapon shop
     private void OnOpenWeaponShop()
     {
-        UIManager.Instance.OpenUI<UIWeaponShop>();
         ChangeAnim(Constants.ANIM_MM_CLOSE);
-        //UNDONE
+        UIManager.Instance.OpenUI<UIWeaponShop>();
+        //TODO: sound
     }
 
     //xu ly khi an nut skin shop
     private void OnOpenSkinShop()
     {
-        UIManager.Instance.OpenUI<UISkinShop>();
         ChangeAnim(Constants.ANIM_MM_CLOSE);
-        //UNDONE
+        UIManager.Instance.OpenUI<UISkinShop>();
+        //TODO: sound + cameraState. Player change anim dance
     }
 
     //xu ly khi an nut Play
     private void OnPlayGame()
     {
         Close(0);
-        UIManager.Instance.OpenUI<UIJoystick>();
+        UIManager.Instance.OpenUI<UIJoystick>(); //FIXME
         UIManager.Instance.OpenUI<UIGamePlay>();
         GameManager.Instance.OnGamePlay();
+        //TODO: sound + cameraState
     }
 
     //xu ly khi an nut sound
     private void OnSoundBtnPress()
     {
-        //UNDONE
+        //TODO: on/off sound
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;
         PlayerPrefs.SetInt(Constants.P_PREF_MUTED, muted ? 0 : 1);
         UpdateButtonIcon();
@@ -115,7 +117,10 @@ public class UIMainMenu : UICanvas
     {
         if (currentAnim != animName)
         {
-            anim.ResetTrigger(currentAnim);
+            if (currentAnim != null)
+            {
+                anim.ResetTrigger(currentAnim);
+            }
             currentAnim = animName;
             anim.SetTrigger(currentAnim);
         }

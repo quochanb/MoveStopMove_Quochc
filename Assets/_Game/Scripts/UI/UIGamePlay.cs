@@ -16,14 +16,18 @@ public class UIGamePlay : UICanvas
     private void Start()
     {
         settingBtn.onClick.AddListener(OnSetting);
-        ChangeAnim(Constants.ANIM_GL_OPEN);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(DelayChangeAnim());
     }
 
     public void OnSetting()
     {
-        UIManager.Instance.CloseAll();
-        ChangeAnim(Constants.ANIM_GL_CLOSE);
+        UIManager.Instance.CloseUI<UIJoystick>(0);
         UIManager.Instance.OpenUI<UISetting>();
+        ChangeAnim(Constants.ANIM_GL_CLOSE);
         GameManager.Instance.OnGamePause();
         //UNDONE
     }
@@ -37,9 +41,18 @@ public class UIGamePlay : UICanvas
     {
         if (currentAnim != animName)
         {
-            anim.ResetTrigger(currentAnim);
+            if (currentAnim != null)
+            {
+                anim.ResetTrigger(currentAnim);
+            }
             currentAnim = animName;
             anim.SetTrigger(currentAnim);
         }
+    }
+
+    IEnumerator DelayChangeAnim()
+    {
+        yield return Cache.GetWFS(0.5f);
+        ChangeAnim(Constants.ANIM_GL_OPEN);
     }
 }

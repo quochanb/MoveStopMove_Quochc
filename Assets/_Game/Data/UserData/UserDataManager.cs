@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +11,7 @@ public class UserDataManager : Singleton<UserDataManager>
     private void Awake()
     {
         LoadUserData();
+        //PlayerPrefs.DeleteAll();
     }
 
     //save data
@@ -42,10 +44,29 @@ public class UserDataManager : Singleton<UserDataManager>
         SaveUserData();
     }
 
+    //get coin
+    public int GetUserCoin()
+    {
+        return userData.coin;
+    }
+
     //update coin
     public void UpdateUserCoin(int newCoin)
     {
         userData.coin = newCoin;
+        SaveUserData();
+    }
+
+    //get current level
+    public int GetCurrentLevel()
+    {
+        return userData.levelNumber;
+    }
+
+    //update current level
+    public void UpdateCurrentLevel(int newLevel)
+    {
+        userData.levelNumber = newLevel;
         SaveUserData();
     }
 
@@ -69,7 +90,7 @@ public class UserDataManager : Singleton<UserDataManager>
     //update item state
     public void UpdateItemState(ShopType shopType, int index, int newState)
     {
-        switch(shopType)
+        switch (shopType)
         {
             case ShopType.HatShop:
                 userData.hatState[index] = newState;
@@ -95,23 +116,56 @@ public class UserDataManager : Singleton<UserDataManager>
         switch (shopType)
         {
             case ShopType.HatShop:
-                userData.currentHatIndex = index;
+                if (index >= 0 && index < userData.hatState.Count - 1)
+                {
+                    userData.currentHatIndex = index;
+                }
+                else
+                {
+                    userData.currentHatIndex = userData.hatState.Count - 1;
+                }
                 break;
+
             case ShopType.PantShop:
-                userData.currentPantIndex = index;
+                if (index >= 0 && index < userData.pantState.Count - 1)
+                {
+                    userData.currentPantIndex = index;
+                }
+                else
+                {
+                    userData.currentPantIndex = userData.pantState.Count - 1;
+                }
                 break;
+
             case ShopType.ShieldShop:
-                userData.currentShieldIndex = index;
+                if (index >= 0 && index < userData.hatState.Count - 1)
+                {
+                    userData.currentShieldIndex = index;
+                }
+                else
+                {
+                    userData.currentShieldIndex = userData.shieldState.Count - 1;
+                }
                 break;
+
             case ShopType.ComboShop:
-                userData.currentComboSkinIndex = index;
+                if (index >= 0 && index < userData.hatState.Count - 1)
+                {
+                    userData.currentComboSkinIndex = index;
+                }
+                else
+                {
+                    userData.currentComboSkinIndex = userData.comboSkinState.Count - 1;
+                }
                 break;
+
             default:
                 break;
         }
         SaveUserData();
     }
 
+    //get current state of item
     public int GetItemState(ShopType shopType, int index)
     {
         switch (shopType)
@@ -155,16 +209,16 @@ public class UserData
         levelNumber = 1;
         name = "YOU";
 
-        currentWeaponIndex = 0;
-        currentHatIndex = 0;
-        currentPantIndex = 0;
-        currentShieldIndex = 0;
-        currentComboSkinIndex = 0;
-
         weaponState = new List<int>() { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        hatState = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        pantState = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        shieldState = new List<int>() { 0, 0 };
+        hatState = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        pantState = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        shieldState = new List<int>() { 0, 0, 0 };
         comboSkinState = new List<int>() { 0, 0, 0 };
+
+        currentWeaponIndex = 0;
+        currentHatIndex = hatState.Count - 1;
+        currentPantIndex = pantState.Count - 1;
+        currentShieldIndex = shieldState.Count - 1;
+        currentComboSkinIndex = comboSkinState.Count - 1;
     }
 }

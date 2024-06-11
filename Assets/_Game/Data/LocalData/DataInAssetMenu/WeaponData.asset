@@ -81,7 +81,7 @@ MonoBehaviour:
     wpProperty: +25 Range
   - weaponType: 11
     weapon: {fileID: 8335819865499587499, guid: c058d45d252b640498690d7c13f29d85, type: 3}
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: c3430dd3e85b3b946923f453a8f231f7, type: 3}
     name: Z
     price: 2400
     wpProperty: +10 Range*2

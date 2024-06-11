@@ -21,7 +21,7 @@ public class UIVictory : UICanvas
         Close(0);
         UIManager.Instance.OpenUI<UIJoystick>();
         UIManager.Instance.OpenUI<UIGamePlay>();
-        GameManager.Instance.OnGamePlay();
+        GameManager.Instance.OnNextLevel();
         //UNDONE
     }
 

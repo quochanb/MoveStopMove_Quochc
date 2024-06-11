@@ -6,7 +6,7 @@ public class PoolControl : MonoBehaviour
 {
     [SerializeField] PoolAmount[] poolAmounts;
 
-    private void Awake()
+    private void Start()
     {
         for(int i = 0; i < poolAmounts.Length; i++)
         {

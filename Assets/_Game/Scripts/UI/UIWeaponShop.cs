@@ -14,7 +14,6 @@ public class UIWeaponShop : UICanvas
     [SerializeField] private TextMeshProUGUI weaponName;
     [SerializeField] private TextMeshProUGUI weaponPrice;
     [SerializeField] private TextMeshProUGUI weaponProperty;
-    [SerializeField] private TextMeshProUGUI playerCoin;
 
     [SerializeField] private WeaponData weaponData;
     [SerializeField] private Image weaponImage;
@@ -36,7 +35,6 @@ public class UIWeaponShop : UICanvas
         userData = UserDataManager.Instance.userData;
 
         ShowWeapon(currentIndex);
-        UpdateCoinDisplay(userData.coin);
         UpdateButtonState();
 
         nextBtn.onClick.AddListener(OnNextButton);
@@ -94,12 +92,6 @@ public class UIWeaponShop : UICanvas
         }
     }
 
-    //update hien thi coin nguoi choi
-    public void UpdateCoinDisplay(int coin)
-    {
-        playerCoin.text = coin.ToString();
-    }
-
     //xu ly next button
     private void OnNextButton()
     {
@@ -136,11 +128,11 @@ public class UIWeaponShop : UICanvas
         if (userData.coin >= weaponItem.price)
         {
             userData.coin -= weaponItem.price;
+            UIManager.Instance.GetUI<UIMainMenu>().UpdateCoin(userData.coin);
             //update trang thai cua weapon
             UserDataManager.Instance.UpdateWeaponState(currentIndex, 1);
             UserDataManager.Instance.UpdateUserCoin(userData.coin);
 
-            UpdateCoinDisplay(userData.coin);
             UpdateButtonState();
         }
     }

@@ -123,7 +123,7 @@ public class ButtonItemUI : MonoBehaviour
     }
 
     //xu ly khi an vao button
-    private void OnSelectButton()
+    public void OnSelectButton()
     {
         //tat border cua button
         if (currentSelectedBtn != null && currentSelectedBtn != this)
@@ -139,15 +139,15 @@ public class ButtonItemUI : MonoBehaviour
         OnClicked?.Invoke(this);
 
         //doi trang bi khi an nut
-        if (hatItem != null)
+        if (hatItem != null && player != null)
         {
             player.ChangeHat(hatItem.hatType);
         }
-        if (pantItem != null)
+        if (pantItem != null && player != null)
         {
             player.ChangePant(pantItem.pantType);
         }
-        if (shieldItem != null)
+        if (shieldItem != null && player != null)
         {
             player.ChangeShield(shieldItem.shieldType);
         }

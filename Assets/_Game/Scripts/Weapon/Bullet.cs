@@ -28,8 +28,13 @@ public class Bullet : GameUnit
         this.attacker = attacker;
         this.onHit = onHit;
         this.target = target;
-        
+
         direction = (target - Tf.position).normalized;
+    }
+
+    public void SetWeaponOnHand(Weapon weapon)
+    {
+        this.weapon = weapon;
     }
 
     public virtual void Move()
@@ -37,18 +42,13 @@ public class Bullet : GameUnit
         if (target != null)
         {
             Tf.position += direction * speed * Time.deltaTime;
-            
         }
     }
 
     public void OnDespawn()
     {
         SimplePool.Despawn(this);
-        weapon.ActiveWeapon();
-        if(!attacker.IsDead)
-        {
-            attacker.ChangeAnim(Constants.ANIM_IDLE);
-        }
+        attacker.ActiveWeapon();
     }
 
     public void DelayDespawnBullet()
@@ -58,19 +58,29 @@ public class Bullet : GameUnit
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Constants.TAG_PLAYER) || other.CompareTag(Constants.TAG_ENEMY))
-        {
-            Character victim = Cache.GetCharacter(other);
-            if (victim != attacker)
-            {
-                onHit?.Invoke(attacker, victim);
-                OnDespawn();
-            }
-        }
+        Character victim = Cache.GetCharacter(other);
 
-        if (other.CompareTag(Constants.TAG_OBSTACLE))
+        if (other.CompareTag(Constants.TAG_PLAYER))
+        {
+            GameManager.Instance.OnRevive();
+            HandleHit(victim);
+        }
+        else if (other.CompareTag(Constants.TAG_ENEMY))
+        {
+            HandleHit(victim);
+        }
+        else if (other.CompareTag(Constants.TAG_OBSTACLE))
         {
             OnDespawn();
         }
+    }
+
+    private void HandleHit(Character victim)
+    {
+        if (victim != attacker)
+        {
+            onHit?.Invoke(attacker, victim);
+        }
+        OnDespawn();
     }
 }

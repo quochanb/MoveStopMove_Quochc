@@ -15,7 +15,7 @@ public class UIFail : UICanvas
 
     public void OnMainMenu()
     {
-        Close(0);
+        UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
         GameManager.Instance.OnMainMenu();
         //UNDONE

@@ -16,22 +16,11 @@ public class Weapon : MonoBehaviour
             {
                 Bullet bullet = SimplePool.Spawn<Bullet>(bulletType, attacker.GetSpawnPoint().position, Quaternion.identity);
                 bullet.OnInit(attacker, onHit, target.position);
+                bullet.SetWeaponOnHand(this);
                 bullet.DelayDespawnBullet();
-                DeactiveWeapon();
             }
         }
     }
-
-    public void ActiveWeapon()
-    {
-        weaponSprite.gameObject.SetActive(true);
-    }
-
-    public void DeactiveWeapon()
-    {
-        weaponSprite.gameObject.SetActive(false);
-    }
-
 }
 
 
