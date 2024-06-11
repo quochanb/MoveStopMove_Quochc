@@ -49,7 +49,6 @@ public class UIRevive : UICanvas
         if (playerCoin >= reviveFee)
         {
             Close(0);
-            UIManager.Instance.OpenUI<UIJoystick>();
             UIManager.Instance.OpenUI<UIGamePlay>();
             playerCoin -= reviveFee;
             UserDataManager.Instance.UpdateUserCoin(playerCoin);

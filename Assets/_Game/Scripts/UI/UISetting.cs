@@ -57,7 +57,6 @@ public class UISetting : UICanvas
     private void OnContinueBtnPress()
     {
         Close(0);
-        UIManager.Instance.OpenUI<UIJoystick>();
         UIManager.Instance.GetUI<UIGamePlay>().ChangeAnim(Constants.ANIM_GL_OPEN);
         GameManager.Instance.OnGamePlay();
         //UNDONE

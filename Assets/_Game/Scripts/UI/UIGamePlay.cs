@@ -25,7 +25,6 @@ public class UIGamePlay : UICanvas
 
     public void OnSetting()
     {
-        UIManager.Instance.CloseUI<UIJoystick>(0);
         UIManager.Instance.OpenUI<UISetting>();
         ChangeAnim(Constants.ANIM_GL_CLOSE);
         GameManager.Instance.OnGamePause();

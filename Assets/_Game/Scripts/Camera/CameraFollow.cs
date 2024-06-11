@@ -26,7 +26,7 @@ public class CameraFollow : Singleton<CameraFollow>
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         ChangeCameraState(CameraState.MainMenu);
     }

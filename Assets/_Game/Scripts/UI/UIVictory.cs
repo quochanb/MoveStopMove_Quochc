@@ -19,7 +19,6 @@ public class UIVictory : UICanvas
     private void OnNextLevel()
     {
         Close(0);
-        UIManager.Instance.OpenUI<UIJoystick>();
         UIManager.Instance.OpenUI<UIGamePlay>();
         GameManager.Instance.OnNextLevel();
         //UNDONE

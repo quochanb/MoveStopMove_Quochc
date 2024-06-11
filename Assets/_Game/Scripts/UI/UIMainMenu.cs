@@ -60,7 +60,6 @@ public class UIMainMenu : UICanvas
     private void OnPlayGame()
     {
         Close(0);
-        UIManager.Instance.OpenUI<UIJoystick>(); //FIXME
         UIManager.Instance.OpenUI<UIGamePlay>();
         GameManager.Instance.OnGamePlay();
         //TODO: sound + cameraState

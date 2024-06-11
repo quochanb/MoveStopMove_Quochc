@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoomerangBullet : Bullet
 {
-    [SerializeField] float returnTime = 1.1f;
+    //[SerializeField] float returnTime = 1.1f;
     private Vector3 endPoint;
     private bool isReturning = false;
 
