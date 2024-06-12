@@ -125,6 +125,7 @@ public class ButtonItemUI : MonoBehaviour
     //xu ly khi an vao button
     public void OnSelectButton()
     {
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         //tat border cua button
         if (currentSelectedBtn != null && currentSelectedBtn != this)
         {

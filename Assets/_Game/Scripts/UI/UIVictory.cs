@@ -18,10 +18,10 @@ public class UIVictory : UICanvas
 
     private void OnNextLevel()
     {
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         Close(0);
         UIManager.Instance.OpenUI<UIGamePlay>();
         GameManager.Instance.OnNextLevel();
-        //UNDONE
     }
 
     private void UpdateNextLevelText(int currentLevel)

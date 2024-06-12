@@ -108,3 +108,15 @@ public enum CameraState
     Shop = 2,
     Victory = 3
 }
+
+public enum SoundType
+{
+    ButtonClick = 0,
+    Count = 1,
+    Die = 2,
+    HitWeapon = 3,
+    ThrowWeapon = 4,
+    SizeUp = 5,
+    Win = 6,
+    Lose = 7
+}

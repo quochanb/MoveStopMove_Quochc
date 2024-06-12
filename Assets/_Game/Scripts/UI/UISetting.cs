@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UISetting : UICanvas
@@ -20,12 +21,21 @@ public class UISetting : UICanvas
 
     private void Start()
     {
-        soundBtn.onClick.AddListener(OnSoundBtnPress);
-        vibraBtn.onClick.AddListener(OnVibraBtnPress);
-        homeBtn.onClick.AddListener(OnHomeBtnPress);
-        continueBtn.onClick.AddListener(OnContinueBtnPress);
+        AddButtonListenner(soundBtn, OnSoundBtnPress);
+        AddButtonListenner(vibraBtn, OnVibraBtnPress);
+        AddButtonListenner(homeBtn, OnHomeBtnPress);
+        AddButtonListenner(continueBtn, OnContinueBtnPress);
 
         UpdateButtonIcon();
+    }
+
+    private void AddButtonListenner(Button button, UnityAction action)
+    {
+        button.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.PlaySound(SoundType.ButtonClick);
+            action.Invoke();
+        });
     }
 
     //xu ly bat-tat sound
@@ -50,7 +60,6 @@ public class UISetting : UICanvas
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
         GameManager.Instance.OnMainMenu();
-        //UNDONE
     }
 
     //xu ly khi nhan nut continue
@@ -59,7 +68,6 @@ public class UISetting : UICanvas
         Close(0);
         UIManager.Instance.GetUI<UIGamePlay>().ChangeAnim(Constants.ANIM_GL_OPEN);
         GameManager.Instance.OnGamePlay();
-        //UNDONE
     }
 
     //cap nhat icon sound va vibration

@@ -13,11 +13,6 @@ public class Bullet : GameUnit
     protected Weapon weapon;
     protected Action<Character, Character> onHit;
 
-    private void Awake()
-    {
-        weapon = FindObjectOfType<Weapon>();
-    }
-
     private void Update()
     {
         Move();
@@ -58,29 +53,20 @@ public class Bullet : GameUnit
 
     private void OnTriggerEnter(Collider other)
     {
-        Character victim = Cache.GetCharacter(other);
+        if (other.CompareTag(Constants.TAG_PLAYER) || other.CompareTag(Constants.TAG_ENEMY))
+        {
+            SoundManager.Instance.PlaySound(SoundType.HitWeapon);
+            Character victim = Cache.GetCharacter(other);
+            if (victim != attacker)
+            {
+                onHit?.Invoke(attacker, victim);
+            }
+            OnDespawn();
+        }
 
-        if (other.CompareTag(Constants.TAG_PLAYER))
-        {
-            GameManager.Instance.OnRevive();
-            HandleHit(victim);
-        }
-        else if (other.CompareTag(Constants.TAG_ENEMY))
-        {
-            HandleHit(victim);
-        }
-        else if (other.CompareTag(Constants.TAG_OBSTACLE))
+        if (other.CompareTag(Constants.TAG_OBSTACLE))
         {
             OnDespawn();
         }
-    }
-
-    private void HandleHit(Character victim)
-    {
-        if (victim != attacker)
-        {
-            onHit?.Invoke(attacker, victim);
-        }
-        OnDespawn();
     }
 }

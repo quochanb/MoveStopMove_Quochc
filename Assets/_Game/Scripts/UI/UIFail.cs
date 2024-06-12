@@ -10,14 +10,31 @@ public class UIFail : UICanvas
 
     private void Start()
     {
+        
         mainMenuBtn.onClick.AddListener(OnMainMenu);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(DelayActiveButton());
+    }
+
+    private void OnDisable()
+    {
+        mainMenuBtn.gameObject.SetActive(false);
     }
 
     public void OnMainMenu()
     {
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
         GameManager.Instance.OnMainMenu();
-        //UNDONE
+    }
+
+    IEnumerator DelayActiveButton()
+    {
+        yield return Cache.GetWFS(2f);
+        mainMenuBtn.gameObject.SetActive(true);
     }
 }

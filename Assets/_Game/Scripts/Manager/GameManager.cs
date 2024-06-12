@@ -77,6 +77,7 @@ public class GameManager : Singleton<GameManager>
     {
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIFail>();
+        SoundManager.Instance.PlaySound(SoundType.Lose);
         ChangeGameState(GameState.Finish);
     }
 
@@ -96,16 +97,17 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator DelayOnRevive()
     {
-        yield return Cache.GetWFS(1.5f);
+        yield return Cache.GetWFS(1f);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIRevive>();
     }
 
     IEnumerator DelayOnVictory()
     {
-        yield return Cache.GetWFS(1.5f);
+        yield return Cache.GetWFS(1f);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIVictory>();
         CameraFollow.Instance.ChangeCameraState(CameraState.Victory);
+        SoundManager.Instance.PlaySound(SoundType.Win);
     }
 }

@@ -14,7 +14,7 @@ public class Player : Character
             base.Update();
             if (IsDead)
             {
-                //GameManager.Instance.OnRevive();
+                GameManager.Instance.OnRevive();
                 return;
             }
             if (currentTarget != null)
@@ -62,7 +62,6 @@ public class Player : Character
         int currentHatIndex = userData.currentHatIndex;
         int currentPantIndex = userData.currentPantIndex;
         int currentShieldIndex = userData.currentShieldIndex;
-        //int currentComboSkinIndex = userData.currentComboSkinIndex;
 
         ChangeWeapon((WeaponType)currentWeaponIndex);
         ChangeHat((HatType)currentHatIndex);
@@ -76,12 +75,6 @@ public class Player : Character
         Vector3 nextPoint = Tf.position + Joystick.direction * speed * Time.deltaTime;
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
-    }
-
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
     }
 
     public override void OnHitVictim(Character attacker, Character victim)
@@ -103,6 +96,18 @@ public class Player : Character
 
     private void OnWinGame()
     {
+        StartCoroutine(DelayChangeAnim());
+    }
+
+    IEnumerator DelayChangeAnim()
+    {
+        yield return Cache.GetWFS(1f);
         ChangeAnim(Constants.ANIM_WIN);
     }
+
+    //public void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //}
 }

@@ -37,13 +37,14 @@ public class UIRevive : UICanvas
     //xu ly khi nhan nut Close
     private void OnClose()
     {
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         GameManager.Instance.OnFail();
-        //UNDONE
     }
 
     //xu ly khi hoi sinh player
     private void OnRevive()
     {
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         int playerCoin = UserDataManager.Instance.GetUserCoin();
 
         if (playerCoin >= reviveFee)
@@ -55,7 +56,6 @@ public class UIRevive : UICanvas
             GameManager.Instance.OnGamePlay();
             reviveEvent?.Invoke();
         }
-        //TODO: Tru coin, hoi sinh player
     }
 
     //count down
@@ -65,14 +65,14 @@ public class UIRevive : UICanvas
         while (countDownTime > 0)
         {
             countDownDisplay.text = countDownTime.ToString();
-
+            SoundManager.Instance.PlaySound(SoundType.Count);
             yield return Cache.GetWFS(1f);
             countDownTime--;
         }
         countDownDisplay.text = "0";
+        SoundManager.Instance.PlaySound(SoundType.Count);
 
-        yield return Cache.GetWFS(1f);
-        UIManager.Instance.CloseAll();
-        UIManager.Instance.OpenUI<UIFail>();
+        yield return Cache.GetWFS(0.5f);
+        OnClose();
     }
 }

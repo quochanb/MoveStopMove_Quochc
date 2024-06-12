@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UISkinShop : UICanvas
@@ -40,15 +41,15 @@ public class UISkinShop : UICanvas
         userData = UserDataManager.Instance.userData;
         player = FindObjectOfType<Player>();
 
-        buyBtn.onClick.AddListener(OnBuyBtn);
-        closeBtn.onClick.AddListener(OnCloseBtn);
-        selectBtn.onClick.AddListener(OnSelectBtn);
-        unequipBtn.onClick.AddListener(OnUnequipBtn);
+        AddButtonListenner(buyBtn, OnBuyBtn);
+        AddButtonListenner(closeBtn, OnCloseBtn);
+        AddButtonListenner(selectBtn, OnSelectBtn);
+        AddButtonListenner(unequipBtn, OnUnequipBtn);
 
-        hatShop.onClick.AddListener(OnShowHatShop);
-        pantShop.onClick.AddListener(OnShowPantShop);
-        shieldShop.onClick.AddListener(OnShowShieldShop);
-        comboSetShop.onClick.AddListener(OnShowComboSetShop);
+        AddButtonListenner(hatShop, OnShowHatShop);
+        AddButtonListenner(pantShop, OnShowPantShop);
+        AddButtonListenner(shieldShop, OnShowShieldShop);
+        AddButtonListenner(comboSetShop, OnShowComboSetShop);
 
         OnShowHatShop();
     }
@@ -63,6 +64,15 @@ public class UISkinShop : UICanvas
     private void OnDisable()
     {
         ButtonItemUI.OnClicked -= HandleItemSelected;
+    }
+
+    private void AddButtonListenner(Button button, UnityAction action)
+    {
+        button.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.PlaySound(SoundType.ButtonClick);
+            action.Invoke();
+        });
     }
 
     //xu ly Hat button

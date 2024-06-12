@@ -483,8 +483,8 @@ MonoBehaviour:
   - {fileID: 5956937296529294438}
   - {fileID: 5956937294675443665}
   - {fileID: 5956937295891451278}
-  totalEnemy: 2
-  initialEnemyCount: 2
+  totalEnemy: 60
+  initialEnemyCount: 12
 --- !u!1 &5956937295774688359
 GameObject:
   m_ObjectHideFlags: 0

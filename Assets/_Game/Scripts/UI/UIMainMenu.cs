@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIMainMenu : UICanvas
@@ -23,11 +21,11 @@ public class UIMainMenu : UICanvas
 
     private void Start()
     {
-        wpShopBtn.onClick.AddListener(OnOpenWeaponShop);
-        skinShopBtn.onClick.AddListener(OnOpenSkinShop);
-        playBtn.onClick.AddListener(OnPlayGame);
-        soundBtn.onClick.AddListener(OnSoundBtnPress);
-        vibraBtn.onClick.AddListener(OnVibraBtnPress);
+        AddButtonListenner(wpShopBtn, OnOpenWeaponShop);
+        AddButtonListenner(skinShopBtn, OnOpenSkinShop);
+        AddButtonListenner(playBtn, OnPlayGame);
+        AddButtonListenner(soundBtn, OnSoundBtnPress);
+        AddButtonListenner(vibraBtn, OnVibraBtnPress);
 
 
         Load();
@@ -40,12 +38,20 @@ public class UIMainMenu : UICanvas
         coinText.text = coin.ToString();
     }
 
+    private void AddButtonListenner(Button button, UnityAction action)
+    {
+        button.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.PlaySound(SoundType.ButtonClick);
+            action.Invoke();
+        });
+    }
+
     //xu ly khi an nut weapon shop
     private void OnOpenWeaponShop()
     {
         ChangeAnim(Constants.ANIM_MM_CLOSE);
         UIManager.Instance.OpenUI<UIWeaponShop>();
-        //TODO: sound
     }
 
     //xu ly khi an nut skin shop
@@ -53,7 +59,6 @@ public class UIMainMenu : UICanvas
     {
         ChangeAnim(Constants.ANIM_MM_CLOSE);
         UIManager.Instance.OpenUI<UISkinShop>();
-        //TODO: sound + cameraState. Player change anim dance
     }
 
     //xu ly khi an nut Play
@@ -62,13 +67,11 @@ public class UIMainMenu : UICanvas
         Close(0);
         UIManager.Instance.OpenUI<UIGamePlay>();
         GameManager.Instance.OnGamePlay();
-        //TODO: sound + cameraState
     }
 
     //xu ly khi an nut sound
     private void OnSoundBtnPress()
     {
-        //TODO: on/off sound
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;
         PlayerPrefs.SetInt(Constants.P_PREF_MUTED, muted ? 0 : 1);
         UpdateButtonIcon();

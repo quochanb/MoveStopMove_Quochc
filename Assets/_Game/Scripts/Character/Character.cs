@@ -34,7 +34,6 @@ public class Character : GameUnit
 
     private void Awake()
     {
-        currentWeapon = FindObjectOfType<Weapon>();
         OnInit();
     }
 
@@ -102,6 +101,7 @@ public class Character : GameUnit
             Tf.LookAt(target.Tf);
             ChangeAnim(Constants.ANIM_ATTACK);
             StartCoroutine(ThrowWeapon(0.24f));
+            SoundManager.Instance.PlaySound(SoundType.ThrowWeapon);
             isAttack = true;
             StartCoroutine(DelayAttack(1f));
         }
@@ -118,6 +118,7 @@ public class Character : GameUnit
     {
         isDead = true;
         ChangeAnim(Constants.ANIM_DEAD);
+        SoundManager.Instance.PlaySound(SoundType.Die);
         if (IsDead)
         {
             return;
@@ -149,11 +150,6 @@ public class Character : GameUnit
         }
         Weapon newWeapon = Instantiate(weaponData.GetWeapon(weaponType), rightHand);
         currentWeapon = newWeapon;
-
-        if(currentWeapon == null)
-        {
-            Debug.Log("loi xoa");
-        }
     }
 
     //change hat
@@ -229,11 +225,7 @@ public class Character : GameUnit
 
     public void UpSize()
     {
-        if (body.transform.localScale.x <= 1.5f)
-        {
-            body.transform.localScale *= 1.03f;
-            radius *= 1.03f;
-        }
+        SoundManager.Instance.PlaySound(SoundType.SizeUp);
     }
 
     //khoa muc tieu
@@ -278,7 +270,7 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
-        
+
     }
 
     //delay nem vu khi

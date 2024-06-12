@@ -9,8 +9,11 @@ public class Enemy : Character
     public delegate void OnDeathDelegate();
     public static OnDeathDelegate onDeathEvent;
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
+    [SerializeField] private ColorData colorData;
 
     private Vector3 destination;
+    private ColorType colorType;
     public IState currentState;
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
@@ -30,6 +33,18 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new IdleState());
+
+        int weaponIndex = Random.Range(0, 12);
+        int hatIndex = Random.Range(0, 11);
+        int panIndex = Random.Range(0, 10);
+        int shieldIndex = Random.Range(0, 3);
+        int colorIndex = Random.Range(0, 10);
+
+        ChangeWeapon((WeaponType)weaponIndex);
+        ChangeHat((HatType)hatIndex);
+        ChangePant((PantType)panIndex);
+        ChangeShield((ShieldType)shieldIndex);
+        ChangeColor((ColorType)colorIndex);
     }
 
     public override void OnDespawn()
@@ -75,6 +90,12 @@ public class Enemy : Character
         {
             currentState.OnEnter(this);
         }
+    }
+
+    private void ChangeColor(ColorType colorType)
+    {
+        this.colorType = colorType;
+        skinnedMeshRenderer.material = colorData.GetMaterial(colorType);
     }
 
     private bool NavmeshRandomPoint(Vector3 center, float radius, out Vector3 point)

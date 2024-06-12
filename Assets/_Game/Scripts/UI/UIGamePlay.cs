@@ -25,10 +25,10 @@ public class UIGamePlay : UICanvas
 
     public void OnSetting()
     {
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         UIManager.Instance.OpenUI<UISetting>();
         ChangeAnim(Constants.ANIM_GL_CLOSE);
         GameManager.Instance.OnGamePause();
-        //UNDONE
     }
 
     public void UpdateAlive(int alive)

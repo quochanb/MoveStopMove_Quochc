@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIWeaponShop : UICanvas
@@ -37,9 +38,18 @@ public class UIWeaponShop : UICanvas
         ShowWeapon(currentIndex);
         UpdateButtonState();
 
-        nextBtn.onClick.AddListener(OnNextButton);
-        prevBtn.onClick.AddListener(OnPrevButton);
-        closeBtn.onClick.AddListener(OnCloseButton);
+        AddButtonListenner(nextBtn, OnNextButton);
+        AddButtonListenner(prevBtn, OnPrevButton);
+        AddButtonListenner(closeBtn, OnCloseButton);
+    }
+
+    private void AddButtonListenner(Button button, UnityAction action)
+    {
+        button.onClick.AddListener(() =>
+        {
+            SoundManager.Instance.PlaySound(SoundType.ButtonClick);
+            action.Invoke();
+        });
     }
 
     //show weapon
@@ -74,17 +84,17 @@ public class UIWeaponShop : UICanvas
                 //chua mua
                 case 0:
                     buttonState[0].gameObject.SetActive(true);
-                    buttonState[0].onClick.AddListener(OnBuyWeapon);
+                    AddButtonListenner(buttonState[0], OnBuyWeapon);
                     break;
                 //da mua nhung chua trang bi
                 case 1:
                     buttonState[1].gameObject.SetActive(true);
-                    buttonState[1].onClick.AddListener(OnSelectWeapon);
+                    AddButtonListenner(buttonState[1], OnSelectWeapon);
                     break;
                 //dang duoc trang bi
                 case 2:
                     buttonState[2].gameObject.SetActive(true);
-                    buttonState[2].onClick.AddListener(OnCloseButton);
+                    AddButtonListenner(buttonState[2], OnCloseButton);
                     break;
                 default:
                     break;
