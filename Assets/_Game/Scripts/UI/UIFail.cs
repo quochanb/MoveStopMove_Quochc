@@ -1,16 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIFail : UICanvas
 {
     [SerializeField] private Button mainMenuBtn;
+    [SerializeField] private TextMeshProUGUI coinText;
 
     private void Start()
     {
-        
         mainMenuBtn.onClick.AddListener(OnMainMenu);
     }
 
@@ -30,6 +31,11 @@ public class UIFail : UICanvas
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
         GameManager.Instance.OnMainMenu();
+    }
+
+    public void UpdateCoinDisplay(int coin)
+    {
+        coinText.text = coin.ToString();
     }
 
     IEnumerator DelayActiveButton()

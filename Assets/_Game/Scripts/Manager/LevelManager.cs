@@ -23,7 +23,7 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         CameraFollow.Instance.enabled = false;
     }

@@ -17,7 +17,9 @@ public class Character : GameUnit
 
     [SerializeField] protected Transform rightHand, leftHand, head;
 
+    protected List<Character> targetList = new List<Character>();
     protected bool isDead, isAttack, isMoving;
+    protected int characterLevel;
 
     public Hat currentHat;
     public Pant currentPant;
@@ -42,7 +44,7 @@ public class Character : GameUnit
 
         if (currentTarget == null || IsOutOfAttackRange(currentTarget) || currentTarget.isDead)
         {
-            FindEnemyTarget();
+            currentTarget = FindEnemyTarget();
         }
     }
 
@@ -98,12 +100,12 @@ public class Character : GameUnit
     {
         if (!isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
         {
-            Tf.LookAt(target.Tf);
+            isAttack = true;
             ChangeAnim(Constants.ANIM_ATTACK);
+            Tf.LookAt(target.Tf);
             StartCoroutine(ThrowWeapon(0.24f));
             SoundManager.Instance.PlaySound(SoundType.ThrowWeapon);
-            isAttack = true;
-            StartCoroutine(DelayAttack(1f));
+            StartCoroutine(DelayAttack(1.26f));
         }
     }
 
@@ -116,13 +118,13 @@ public class Character : GameUnit
     //xu ly khi character die
     public virtual void OnDead()
     {
-        isDead = true;
-        ChangeAnim(Constants.ANIM_DEAD);
-        SoundManager.Instance.PlaySound(SoundType.Die);
         if (IsDead)
         {
             return;
         }
+        isDead = true;
+        ChangeAnim(Constants.ANIM_DEAD);
+        SoundManager.Instance.PlaySound(SoundType.Die);
     }
 
     //lay ra character muc tieu hien tai
@@ -237,7 +239,10 @@ public class Character : GameUnit
     //bo khoa muc tieu
     public void DeactiveLockTarget()
     {
-        lockTarget.gameObject.SetActive(false);
+        if (lockTarget.gameObject.activeSelf)
+        {
+            lockTarget.gameObject.SetActive(false);
+        }
     }
 
     //kiem tra character co trong tam danh khong
@@ -265,6 +270,18 @@ public class Character : GameUnit
         }
     }
 
+    //bat weapon
+    public void ActiveWeapon()
+    {
+        currentWeapon.gameObject.SetActive(true);
+    }
+
+    //tat weapon
+    public void DeactiveWeapon()
+    {
+        currentWeapon.gameObject.SetActive(false);
+    }
+
     //delay den lan tan cong tiep theo
     private IEnumerator DelayAttack(float time)
     {
@@ -278,11 +295,6 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         currentWeapon.Throw(this, OnHitVictim);
-        currentWeapon.gameObject.SetActive(false);
     }
 
-    public void ActiveWeapon()
-    {
-        currentWeapon.gameObject.SetActive(true);
-    }
 }

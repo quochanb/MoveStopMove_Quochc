@@ -8,7 +8,7 @@ public class KnifeBullet : Bullet
     public override void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
         base.OnInit(attacker, onHit, target);
-
         Tf.LookAt(target);
+        DelayDespawnBullet();
     }
 }

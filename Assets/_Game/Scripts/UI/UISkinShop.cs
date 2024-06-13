@@ -66,6 +66,11 @@ public class UISkinShop : UICanvas
         ButtonItemUI.OnClicked -= HandleItemSelected;
     }
 
+    private void Start()
+    {
+        player.ChangeAnim(Constants.ANIM_CHARSKIN);
+    }
+
     private void AddButtonListenner(Button button, UnityAction action)
     {
         button.onClick.AddListener(() =>
@@ -147,6 +152,7 @@ public class UISkinShop : UICanvas
         UIManager.Instance.GetUI<UIMainMenu>().ChangeAnim(Constants.ANIM_MM_OPEN);
         CameraFollow.Instance.ChangeCameraState(CameraState.MainMenu);
         player.ChangeAnim(Constants.ANIM_IDLE);
+        player.ChangeCurrentSkin();
     }
 
     //xu ly su kien khi nut duoc click

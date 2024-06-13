@@ -14,6 +14,7 @@ public class Enemy : Character
 
     private Vector3 destination;
     private ColorType colorType;
+    private Color color;
     public IState currentState;
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
@@ -76,7 +77,7 @@ public class Enemy : Character
         base.OnDead();
         onDeathEvent?.Invoke();
         agent.isStopped = true;
-        Invoke(nameof(OnDespawn), 1.5f);
+        Invoke(nameof(OnDespawn), 1.2f);
     }
 
     public void ChangeState(IState newState)
@@ -92,10 +93,16 @@ public class Enemy : Character
         }
     }
 
+    public Color GetEnemyColor()
+    {
+        return color;
+    }
+
     private void ChangeColor(ColorType colorType)
     {
         this.colorType = colorType;
         skinnedMeshRenderer.material = colorData.GetMaterial(colorType);
+        color = colorData.GetMaterial(colorType).color;
     }
 
     private bool NavmeshRandomPoint(Vector3 center, float radius, out Vector3 point)

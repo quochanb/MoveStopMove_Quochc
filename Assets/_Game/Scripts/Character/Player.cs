@@ -6,6 +6,9 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField] private float speed = 6f;
+    private int coin;
+
+    public int Coin { get { return coin; } set { coin = value; } }
 
     protected override void Update()
     {
@@ -20,7 +23,7 @@ public class Player : Character
             if (currentTarget != null)
             {
                 currentTarget.ActiveLockTarget();
-                if (currentTarget == null || IsOutOfAttackRange(currentTarget))
+                if (currentTarget == null || IsOutOfAttackRange(currentTarget) || currentTarget.IsDead)
                 {
                     currentTarget.DeactiveLockTarget();
                 }
@@ -56,6 +59,13 @@ public class Player : Character
     public override void OnInit()
     {
         base.OnInit();
+        coin = 0;
+        characterLevel = 0;
+        ChangeCurrentSkin();
+    }
+
+    public void ChangeCurrentSkin()
+    {
         UserData userData = UserDataManager.Instance.userData;
 
         int currentWeaponIndex = userData.currentWeaponIndex;
@@ -77,23 +87,26 @@ public class Player : Character
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
 
+    //xu ly hit enemy
     public override void OnHitVictim(Character attacker, Character victim)
     {
         base.OnHitVictim(attacker, victim);
-        AddCoins();
+        AddCoins(5);
     }
 
-    private void AddCoins()
+    //goi khi hit enemy
+    private void AddCoins(int value)
     {
-        int currentCoin = UserDataManager.Instance.GetUserCoin();
-        UserDataManager.Instance.UpdateUserCoin(currentCoin += 5);
+        coin += value;
     }
 
+    //xu ly event revive
     private void OnRevive()
     {
         OnInit();
     }
 
+    //xu ly event win game
     private void OnWinGame()
     {
         StartCoroutine(DelayChangeAnim());

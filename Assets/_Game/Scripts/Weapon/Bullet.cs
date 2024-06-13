@@ -40,7 +40,7 @@ public class Bullet : GameUnit
         }
     }
 
-    public void OnDespawn()
+    public virtual void OnDespawn()
     {
         SimplePool.Despawn(this);
         attacker.ActiveWeapon();

@@ -205,7 +205,7 @@ public class UserData
 
     public UserData()
     {
-        coin = 10000;
+        coin = 50000;
         levelNumber = 1;
         name = "YOU";
 

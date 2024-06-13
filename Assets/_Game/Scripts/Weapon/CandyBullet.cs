@@ -8,5 +8,6 @@ public class CandyBullet : Bullet
     {
         base.Move();
         Tf.eulerAngles += new Vector3(0, 1000, 0) * Time.deltaTime;
+        DelayDespawnBullet();
     }
 }

@@ -6,7 +6,7 @@ public class GameManager : Singleton<GameManager>
 {
     public GameState currentState;
     private int levelNumber;
-    private int playerCoin = 0;
+
     private void Awake()
     {
         //tranh viec nguoi choi cham da diem vao man hinh
@@ -33,6 +33,11 @@ public class GameManager : Singleton<GameManager>
     public void ChangeGameState(GameState newState)
     {
         this.currentState = newState;
+    }
+
+    public bool IsGameState(GameState state)
+    {
+        return currentState == state;
     }
 
     public void OnMainMenu()
@@ -88,11 +93,6 @@ public class GameManager : Singleton<GameManager>
         LevelManager.Instance.OnLoadLevel(levelNumber - 1);
         UserDataManager.Instance.UpdateCurrentLevel(levelNumber);
         OnGamePlay();
-    }
-
-    public int GetCoin()
-    {
-        return playerCoin;
     }
 
     IEnumerator DelayOnRevive()

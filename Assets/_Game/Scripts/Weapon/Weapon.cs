@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] GameObject weaponSprite;
     [SerializeField] PoolType bulletType;
 
     public void Throw(Character attacker, Action<Character, Character> onHit)
@@ -17,7 +16,7 @@ public class Weapon : MonoBehaviour
                 Bullet bullet = SimplePool.Spawn<Bullet>(bulletType, attacker.GetSpawnPoint().position, Quaternion.identity);
                 bullet.OnInit(attacker, onHit, target.position);
                 bullet.SetWeaponOnHand(this);
-                bullet.DelayDespawnBullet();
+                attacker.DeactiveWeapon();
             }
         }
     }
