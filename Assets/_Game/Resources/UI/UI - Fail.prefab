@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 6127359586953926202}
   - component: {fileID: 6127359586953926201}
   m_Layer: 5
-  m_Name: Text (TMP) - NameEnemy
+  m_Name: Text (TMP) - AttackerName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3295,6 +3295,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDestroyOnClose: 0
   mainMenuBtn: {fileID: 6127359587172798699}
+  coinText: {fileID: 6127359588298457826}
+  nextZone: {fileID: 6127359588229811539}
+  currentZone: {fileID: 6127359587868040683}
+  rankingText: {fileID: 6127359587338576945}
+  attackerName: {fileID: 6127359586953926201}
 --- !u!1 &6127359588559340309
 GameObject:
   m_ObjectHideFlags: 0

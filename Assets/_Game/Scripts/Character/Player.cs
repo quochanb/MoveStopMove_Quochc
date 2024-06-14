@@ -60,7 +60,8 @@ public class Player : Character
     {
         base.OnInit();
         coin = 0;
-        characterLevel = 0;
+        this.Name = UserDataManager.Instance.GetUserName();
+        UpdateScore(this, 0);
         ChangeCurrentSkin();
     }
 
@@ -79,6 +80,7 @@ public class Player : Character
         ChangeShield((ShieldType)currentShieldIndex);
     }
 
+    //move
     public override void Move()
     {
         base.Move();
@@ -98,6 +100,8 @@ public class Player : Character
     private void AddCoins(int value)
     {
         coin += value;
+        int dataCoin = UserDataManager.Instance.GetUserCoin();
+        UserDataManager.Instance.UpdateUserCoin(dataCoin += coin);
     }
 
     //xu ly event revive
@@ -112,15 +116,10 @@ public class Player : Character
         StartCoroutine(DelayChangeAnim());
     }
 
+    //goi khi win game
     IEnumerator DelayChangeAnim()
     {
         yield return Cache.GetWFS(1f);
         ChangeAnim(Constants.ANIM_WIN);
     }
-
-    //public void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, radius);
-    //}
 }

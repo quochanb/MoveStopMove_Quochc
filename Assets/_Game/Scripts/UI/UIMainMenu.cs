@@ -38,6 +38,7 @@ public class UIMainMenu : UICanvas
         coinText.text = coin.ToString();
     }
 
+    //add listenner cho button
     private void AddButtonListenner(Button button, UnityAction action)
     {
         button.onClick.AddListener(() =>

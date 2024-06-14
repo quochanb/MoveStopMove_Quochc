@@ -24,7 +24,7 @@ public class Bullet : GameUnit
         this.onHit = onHit;
         this.target = target;
 
-        direction = (target - Tf.position).normalized;
+        direction = (target - Tf.position).normalized; //lay huong di chuyen
     }
 
     public void SetWeaponOnHand(Weapon weapon)
@@ -59,7 +59,7 @@ public class Bullet : GameUnit
             Character victim = Cache.GetCharacter(other);
             if (victim != attacker)
             {
-                onHit?.Invoke(attacker, victim);
+                onHit?.Invoke(attacker, victim); //phat di su kien khi hit character
             }
             OnDespawn();
         }

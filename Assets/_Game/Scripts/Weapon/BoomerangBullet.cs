@@ -12,17 +12,16 @@ public class BoomerangBullet : Bullet
     public override void OnInit(Character attacker, Action<Character, Character> onHit, Vector3 target)
     {
         base.OnInit(attacker, onHit, target);
-        attackerTransform = attacker.Tf;
-
+        attackerTransform = attacker.Tf; //lay transform cua attacker
     }
 
     public override void Move()
     {
-        Tf.eulerAngles += new Vector3(0, 1000, 0) * Time.deltaTime;
+        Tf.eulerAngles += new Vector3(0, 1000, 0) * Time.deltaTime; //xoay bullet
 
         if (!isReturning)
         {
-            Tf.position += direction * speed * Time.deltaTime;
+            Tf.position += direction * speed * Time.deltaTime; //bay theo huong target
             if (Vector3.Distance(Tf.position, target) < 0.1f)
             {
                 isReturning = true;
@@ -30,7 +29,7 @@ public class BoomerangBullet : Bullet
         }
         else
         {
-            endPoint = (attackerTransform.position - Tf.position).normalized;
+            endPoint = (attackerTransform.position - Tf.position).normalized; //lay huong tranform attacker
             Tf.position += endPoint * speed * Time.deltaTime;
 
             if (Vector3.Distance(Tf.position, endPoint) < 0.1f)

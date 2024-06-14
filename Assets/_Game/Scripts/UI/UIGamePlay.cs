@@ -21,8 +21,10 @@ public class UIGamePlay : UICanvas
     private void OnEnable()
     {
         StartCoroutine(DelayChangeAnim());
+        UpdateAlive(LevelManager.Instance.GetAliveEnemy());
     }
 
+    //xu ly khi bam setting btn
     public void OnSetting()
     {
         SoundManager.Instance.PlaySound(SoundType.ButtonClick);
@@ -33,7 +35,7 @@ public class UIGamePlay : UICanvas
 
     public void UpdateAlive(int alive)
     {
-        aliveText.text = "Alive: " + alive.ToString();
+        aliveText.text = $"Alive: {alive}";
     }
 
     public void ChangeAnim(string animName)

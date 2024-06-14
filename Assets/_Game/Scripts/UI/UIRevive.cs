@@ -10,9 +10,9 @@ public class UIRevive : UICanvas
     [SerializeField] private Button closeBtn;
     [SerializeField] private Button reviveBtn;
 
+    [SerializeField] private Image loading;
     [SerializeField] private int countDownTime;
     [SerializeField] private TextMeshProUGUI countDownDisplay;
-    [SerializeField] private Image loading;
 
     private int reviveFee = 150;
 

@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 9032055345410096895}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1511140956502366125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3703613216789943589}
+  m_Layer: 0
+  m_Name: Indicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3703613216789943589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511140956502366125}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9032055345410096895}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2610291336872353039
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,19 +325,19 @@ MonoBehaviour:
   rb: {fileID: 4045071072746972377}
   anim: {fileID: 1428289494041400197}
   radius: 5
+  currentTarget: {fileID: 0}
+  bulletSpawnPoint: {fileID: 3805829143479129025}
+  rightHand: {fileID: 7741083907764320668}
+  leftHand: {fileID: 930760780102117959}
+  head: {fileID: 8313923787180660365}
   body: {fileID: 5405189968656125164}
   lockTarget: {fileID: 2610291336872353039}
-  bulletSpawnPoint: {fileID: 3805829143479129025}
-  currentTarget: {fileID: 0}
   characterLayer:
     serializedVersion: 2
     m_Bits: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  rightHand: {fileID: 7741083907764320668}
-  leftHand: {fileID: 930760780102117959}
-  head: {fileID: 8313923787180660365}
   currentHat: {fileID: 0}
   currentPant: {fileID: 8387563558031715460}
   currentShield: {fileID: 0}
@@ -314,6 +345,7 @@ MonoBehaviour:
   hatData: {fileID: 11400000, guid: 2e09c65996d323b4c8ac6fa670861891, type: 2}
   shieldData: {fileID: 11400000, guid: 2f860135383eb9041b793c9c7d74912e, type: 2}
   weaponData: {fileID: 11400000, guid: aa4e604f6e6206e4e9cede229a330c3e, type: 2}
+  indicator: {fileID: 3703613216789943589}
   enemyInAttackRange:
   - {fileID: 0}
   - {fileID: 0}
@@ -332,7 +364,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 4.5
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 200

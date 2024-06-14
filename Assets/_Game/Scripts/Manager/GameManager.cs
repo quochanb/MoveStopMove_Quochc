@@ -23,6 +23,7 @@ public class GameManager : Singleton<GameManager>
         {
             Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
         }
+        
     }
 
     private void Start()
@@ -81,7 +82,7 @@ public class GameManager : Singleton<GameManager>
     public void OnFail()
     {
         UIManager.Instance.CloseAll();
-        UIManager.Instance.OpenUI<UIFail>();
+        UIManager.Instance.OpenUI<UIFail>().UpdateCoinDisplay(LevelManager.Instance.GetPlayerCoin());
         SoundManager.Instance.PlaySound(SoundType.Lose);
         ChangeGameState(GameState.Finish);
     }
@@ -106,7 +107,7 @@ public class GameManager : Singleton<GameManager>
     {
         yield return Cache.GetWFS(1f);
         UIManager.Instance.CloseAll();
-        UIManager.Instance.OpenUI<UIVictory>();
+        UIManager.Instance.OpenUI<UIVictory>().UpdateCoinDisplay(LevelManager.Instance.GetPlayerCoin());
         CameraFollow.Instance.ChangeCameraState(CameraState.Victory);
         SoundManager.Instance.PlaySound(SoundType.Win);
     }

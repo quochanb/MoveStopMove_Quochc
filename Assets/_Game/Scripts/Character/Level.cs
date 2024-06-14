@@ -13,19 +13,19 @@ public class Level : MonoBehaviour
     private int spawnedEnemies;
     private List<Vector3> spawnPointList = new List<Vector3>();
 
+    public int AliveEnemy { get { return aliveEnemy; } }
     public static UnityAction winGameEvent;
 
     private void Start()
     {
         aliveEnemy = totalEnemy;
-        //UIManager.Instance.GetUI<UIGamePlay>().UpdateAlive(aliveEnemy);
 
-        for (int i = 0; i < startPoints.Length - 3; i++)
+        for (int i = 0; i < startPoints.Length - 3; i++) //lay tu index 0 -> 19
         {
             spawnPointList.Add(startPoints[i].position);
         }
 
-        for (int i = 0; i < initialEnemyCount; i++)
+        for (int i = 0; i < initialEnemyCount; i++) //spawn theo so luong khoi tao ban dau
         {
             Spawn(GetRandomStartPoint());
         }
@@ -41,6 +41,7 @@ public class Level : MonoBehaviour
         Enemy.onDeathEvent -= HandleOnDeath;
     }
 
+    //spawn enemy
     private void Spawn(Vector3 point)
     {
         if (spawnedEnemies == totalEnemy)
@@ -52,6 +53,7 @@ public class Level : MonoBehaviour
         spawnedEnemies++;
     }
 
+    //xu ly su kien khi 1 enemy chet
     private void HandleOnDeath()
     {
         if (aliveEnemy > 0)
@@ -67,9 +69,10 @@ public class Level : MonoBehaviour
                 GameManager.Instance.OnVictory();
             }
         }
-        
+
     }
 
+    //lay random diem spawn enemy
     private Vector3 GetRandomStartPoint()
     {
         int randomIndex = Random.Range(0, spawnPointList.Count);
@@ -79,31 +82,40 @@ public class Level : MonoBehaviour
         return randomPoint;
     }
 
+    //tra lai vi tri spawn enemy
     private void ReturnStartPoint()
     {
-        for (int i = 0; i < startPoints.Length - 3; i++)
+        if (spawnPointList.Count < 5)
         {
-            if (!spawnPointList.Contains(startPoints[i].position))
+            for (int i = 0; i < startPoints.Length - 3; i++) //lay tu index 0 -> 19
             {
-                spawnPointList.Add(startPoints[i].position);
-                break;
+                if (!spawnPointList.Contains(startPoints[i].position))
+                {
+                    spawnPointList.Add(startPoints[i].position);
+                }
             }
         }
     }
 
+    //respawn enemy
+    IEnumerator RespawnEnemy(float time)
+    {
+        yield return Cache.GetWFS(time);
+        if (spawnedEnemies < totalEnemy)
+        {
+            Spawn(GetRandomStartPoint());
+        }
+    }
+
+    //huy tat ca enemy con tren map
     public void DespawnEnemy()
     {
         SimplePool.Collect(PoolType.Enemy);
     }
 
+    //lay start point cho Player
     public Vector3 GetPlayerStartPoint()
     {
-        return startPoints[Random.Range(20, 23)].position;
-    }
-
-    IEnumerator RespawnEnemy(float time)
-    {
-        yield return Cache.GetWFS(time);
-        Spawn(GetRandomStartPoint());
+        return startPoints[Random.Range(20, 23)].position; //lay tu index 20 -> 22
     }
 }

@@ -37,6 +37,12 @@ public class UserDataManager : Singleton<UserDataManager>
         }
     }
 
+    //get name
+    public string GetUserName()
+    {
+        return userData.name;
+    }
+
     //update name
     public void UpdateUserName(string newName)
     {
@@ -162,6 +168,7 @@ public class UserDataManager : Singleton<UserDataManager>
             default:
                 break;
         }
+
         SaveUserData();
     }
 

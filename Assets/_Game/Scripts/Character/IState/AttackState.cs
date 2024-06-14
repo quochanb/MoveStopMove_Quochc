@@ -20,10 +20,12 @@ public class AttackState : IState
         {
             return;
         }
+
         if (target != null)
         {
             enemy.Attack(target);
         }
+
         if (target == null || enemy.IsOutOfAttackRange(target) || target.IsDead)
         {
             timer += Time.deltaTime;

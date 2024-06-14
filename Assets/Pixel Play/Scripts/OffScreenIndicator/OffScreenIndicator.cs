@@ -42,7 +42,7 @@ public class OffScreenIndicator : MonoBehaviour
     {
         foreach(Target target in targets)
         {
-            Vector3 screenPosition = OffScreenIndicatorCore.GetScreenPosition(mainCamera, target.transform.position);
+            Vector3 screenPosition = OffScreenIndicatorCore.GetScreenPosition(mainCamera, target.IndicatorTf.position);
             bool isTargetVisible = OffScreenIndicatorCore.IsTargetVisible(screenPosition);
             Indicator indicator = null;
 
@@ -64,6 +64,8 @@ public class OffScreenIndicator : MonoBehaviour
                 indicator.SetImageColor(target.TargetColor);// Sets the image color of the indicator.
                 indicator.transform.position = screenPosition; //Sets the position of the indicator on the screen.
                 indicator.SetTextRotation(Quaternion.identity); // Sets the rotation of the distance text of the indicator.
+                indicator.SetScoreText(target.Score);
+                indicator.SetNameText(target.Name, target.TargetColor);
             }
         }
     }

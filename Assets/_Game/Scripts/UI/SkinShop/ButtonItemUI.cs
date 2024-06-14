@@ -93,21 +93,25 @@ public class ButtonItemUI : MonoBehaviour
         return shopType;
     }
 
+    //goi khi bam Buy button
     public void UnLockItem()
     {
         btnLock.gameObject.SetActive(false);
     }
 
+    //goi khi bam EquipBtn
     public void ActiveEquipped()
     {
         equipped.gameObject.SetActive(true);
     }
 
+    //goi khi bam UnequipBtn
     public void DeactiveEquipped()
     {
         equipped.gameObject.SetActive(false);
     }
 
+    //update trang thai button 0 - chua mua, 1 - da mua, 2 - dang trang bi
     private void UpdateState()
     {
         int state = UserDataManager.Instance.GetItemState(shopType, itemIndex);

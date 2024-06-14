@@ -32,11 +32,6 @@ public class SoundManager : Singleton<SoundManager>
             audioSource.Play();
         }
     }
-
-    public void StopSound()
-    {
-        audioSource.Stop();
-    }
 }
 
 [System.Serializable]

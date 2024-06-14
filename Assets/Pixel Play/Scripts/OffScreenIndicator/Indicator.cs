@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class Indicator : MonoBehaviour
 {
     [SerializeField] private IndicatorType indicatorType;
-    //[SerializeField] private TextMeshProUGUI levelText;
-    //[SerializeField] private Image levelImage;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private Image scoreImage;
     private Image indicatorImage;
     private Text distanceText;
 
@@ -48,7 +49,10 @@ public class Indicator : MonoBehaviour
     public void SetImageColor(Color color)
     {
         indicatorImage.color = color;
-        //levelImage.color = color;
+        if (scoreImage != null)
+        {
+            scoreImage.color = color;
+        }
     }
 
     /// <summary>
@@ -67,7 +71,10 @@ public class Indicator : MonoBehaviour
     public void SetTextRotation(Quaternion rotation)
     {
         distanceText.rectTransform.rotation = rotation;
-        //levelImage.rectTransform.rotation = rotation;
+        if (scoreImage != null)
+        {
+            scoreImage.rectTransform.rotation = rotation;
+        }
     }
 
     /// <summary>
@@ -79,9 +86,21 @@ public class Indicator : MonoBehaviour
         transform.gameObject.SetActive(value);
     }
 
-    public void SetLevelText(int value)
+    public void SetScoreText(int value)
     {
-        //levelText.text = value.ToString();
+        if (scoreText != null)
+        {
+            scoreText.text = value.ToString();
+        }
+    }
+
+    public void SetNameText(string value, Color color)
+    {
+        if(nameText != null)
+        {
+            nameText.text = value;
+            nameText.color = color;
+        }
     }
 }
 

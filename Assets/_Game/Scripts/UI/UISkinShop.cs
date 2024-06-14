@@ -41,11 +41,7 @@ public class UISkinShop : UICanvas
         userData = UserDataManager.Instance.userData;
         player = FindObjectOfType<Player>();
 
-        AddButtonListenner(buyBtn, OnBuyBtn);
         AddButtonListenner(closeBtn, OnCloseBtn);
-        AddButtonListenner(selectBtn, OnSelectBtn);
-        AddButtonListenner(unequipBtn, OnUnequipBtn);
-
         AddButtonListenner(hatShop, OnShowHatShop);
         AddButtonListenner(pantShop, OnShowPantShop);
         AddButtonListenner(shieldShop, OnShowShieldShop);
@@ -71,6 +67,7 @@ public class UISkinShop : UICanvas
         player.ChangeAnim(Constants.ANIM_CHARSKIN);
     }
 
+    //add listenner cho button
     private void AddButtonListenner(Button button, UnityAction action)
     {
         button.onClick.AddListener(() =>
@@ -248,17 +245,17 @@ public class UISkinShop : UICanvas
                 //chua mua
                 case 0:
                     buttonState[0].gameObject.SetActive(true);
-                    buttonState[0].onClick.AddListener(OnBuyBtn);
+                    AddButtonListenner(buyBtn, OnBuyBtn);
                     break;
                 //da mua nhung chua trang bi
                 case 1:
                     buttonState[1].gameObject.SetActive(true);
-                    buttonState[1].onClick.AddListener(OnSelectBtn);
+                    AddButtonListenner(selectBtn, OnSelectBtn);
                     break;
                 //dang trang bi nhung muon thao ra
                 case 2:
                     buttonState[2].gameObject.SetActive(true);
-                    buttonState[2].onClick.AddListener(OnUnequipBtn);
+                    AddButtonListenner(unequipBtn, OnUnequipBtn);
                     break;
                 default:
                     break;
@@ -282,7 +279,7 @@ public class UISkinShop : UICanvas
         }
     }
 
-    //goi khi nhan nut unequip
+    //thao trang bi
     public void UnequipItem(ShopType shopType)
     {
         switch (shopType)

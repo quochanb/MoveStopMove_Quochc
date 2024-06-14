@@ -17,6 +17,7 @@ public class PatrolState : IState
         {
             return;
         }
+
         if (enemy.IsDestination)
         {
             enemy.ChangeState(new IdleState());

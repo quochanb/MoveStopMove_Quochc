@@ -23,7 +23,7 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         CameraFollow.Instance.enabled = false;
     }
@@ -70,5 +70,22 @@ public class LevelManager : Singleton<LevelManager>
             CameraFollow.Instance.enabled = true;
             CameraFollow.Instance.SetTarget(player.Tf);
         }
+    }
+
+    //lay coin nguoi choi
+    public int GetPlayerCoin()
+    {
+        return player.Coin;
+    }
+
+    //lay so enemy con lai tren map
+    public int GetAliveEnemy()
+    {
+        return currentLevel.AliveEnemy;
+    }
+
+    public string GetNameAttacker()
+    {
+        return "";
     }
 }

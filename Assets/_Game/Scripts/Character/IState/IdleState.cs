@@ -21,11 +21,13 @@ public class IdleState : IState
         {
             return;
         }
+
         if (enemy.GetTarget() != null)
         {
             enemy.ChangeState(new AttackState());
 
         }
+
         else if (timer >= randomTime)
         {
             enemy.ChangeState(new PatrolState());

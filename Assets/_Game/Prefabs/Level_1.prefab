@@ -770,8 +770,8 @@ MonoBehaviour:
   - {fileID: 4106297641164173015}
   - {fileID: 4106297640316900704}
   - {fileID: 4106297641532925759}
-  totalEnemy: 50
-  initialEnemyCount: 12
+  totalEnemy: 1
+  initialEnemyCount: 1
 --- !u!1 &4106297641425160570
 GameObject:
   m_ObjectHideFlags: 0

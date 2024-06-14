@@ -6,7 +6,7 @@
 [DefaultExecutionOrder(0)]
 public class Target : MonoBehaviour
 {
-    [SerializeField] private Enemy owner;
+    [SerializeField] private Character owner;
 
     [Tooltip("Change this color to change the indicators color for this target")]
     [SerializeField] private Color targetColor = Color.red;
@@ -19,6 +19,10 @@ public class Target : MonoBehaviour
 
     [Tooltip("Select if distance text is required for this target")]
     [SerializeField] private bool needDistanceText = true;
+
+    public int Score => owner.Score;
+    public string Name => owner.Name;
+    public Transform IndicatorTf => owner.indicator;
 
     /// <summary>
     /// Please do not assign its value yourself without understanding its use.
@@ -80,7 +84,10 @@ public class Target : MonoBehaviour
         if (OffScreenIndicator.TargetStateChanged != null)
         {
             OffScreenIndicator.TargetStateChanged.Invoke(this, true);
-            targetColor = owner.GetEnemyColor();
+            if (owner is Enemy enemy)
+            {
+                targetColor = enemy.GetEnemyColor();
+            }
         }
     }
 

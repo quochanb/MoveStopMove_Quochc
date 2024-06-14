@@ -22,9 +22,9 @@ public class UIWeaponShop : UICanvas
     [SerializeField] Button[] buttonState;
 
     private Player player;
+    private UserData userData;
     private WeaponItem weaponItem;
     private int currentIndex = 0;
-    private UserData userData;
 
 
     private void Start()
@@ -43,6 +43,7 @@ public class UIWeaponShop : UICanvas
         AddButtonListenner(closeBtn, OnCloseButton);
     }
 
+    //add listenner cho button
     private void AddButtonListenner(Button button, UnityAction action)
     {
         button.onClick.AddListener(() =>
@@ -163,6 +164,7 @@ public class UIWeaponShop : UICanvas
         UserDataManager.Instance.UpdateWeaponState(currentIndex, 2);
         UserDataManager.Instance.UpdateCurrentWeapon(currentIndex);
         player.ChangeWeapon(weaponItem.weaponType);
+
         UpdateButtonState();
     }
 }

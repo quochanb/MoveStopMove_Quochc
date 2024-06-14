@@ -10,29 +10,33 @@ public class Character : GameUnit
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Animator anim;
     [SerializeField] protected float radius = 5f;
-    [SerializeField] protected GameObject body, lockTarget;
-    [SerializeField] protected Transform bulletSpawnPoint;
     [SerializeField] protected Character currentTarget;
+    [SerializeField] protected Transform bulletSpawnPoint;
+    [SerializeField] protected Transform rightHand, leftHand, head;
+    [SerializeField] protected GameObject body, lockTarget;
     [SerializeField] protected LayerMask characterLayer, groundLayer;
 
-    [SerializeField] protected Transform rightHand, leftHand, head;
+    [SerializeField] private Hat currentHat;
+    [SerializeField] private Pant currentPant;
+    [SerializeField] private Shield currentShield;
+    [SerializeField] private Weapon currentWeapon;
+
+    [SerializeField] private HatData hatData;
+    [SerializeField] private ShieldData shieldData;
+    [SerializeField] private WeaponData weaponData;
 
     protected List<Character> targetList = new List<Character>();
     protected bool isDead, isAttack, isMoving;
-    protected int characterLevel;
-
-    public Hat currentHat;
-    public Pant currentPant;
-    public Shield currentShield;
-    public Weapon currentWeapon;
-
-    public HatData hatData;
-    public ShieldData shieldData;
-    public WeaponData weaponData;
-    public bool IsDead => isDead;
-    public Collider[] enemyInAttackRange = new Collider[10];
 
     private string currentAnim;
+    private string characterName;
+    private int characterScore;
+
+    public bool IsDead => isDead;
+    public int Score => characterScore;
+    public string Name { get => characterName; set => characterName = value; }
+    public Transform indicator;
+    public Collider[] enemyInAttackRange = new Collider[10];
 
     private void Awake()
     {
@@ -54,6 +58,7 @@ public class Character : GameUnit
         isDead = false;
         isMoving = false;
         isAttack = false;
+        this.gameObject.layer = 3;
     }
 
     //goi khi muon huy
@@ -112,19 +117,24 @@ public class Character : GameUnit
     //xu ly khi bullet va cham voi character
     public virtual void OnHitVictim(Character attacker, Character victim)
     {
+        Debug.Log(attacker);
         victim.OnDead();
     }
 
     //xu ly khi character die
     public virtual void OnDead()
     {
-        if (IsDead)
+        if (isDead)
         {
             return;
         }
-        isDead = true;
-        ChangeAnim(Constants.ANIM_DEAD);
-        SoundManager.Instance.PlaySound(SoundType.Die);
+        else
+        {
+            isDead = true;
+            ChangeAnim(Constants.ANIM_DEAD);
+            this.gameObject.layer = 0; //doi layer de chuyen current target = null
+            SoundManager.Instance.PlaySound(SoundType.Die);
+        }
     }
 
     //lay ra character muc tieu hien tai
@@ -225,9 +235,22 @@ public class Character : GameUnit
         return currentTarget;
     }
 
-    public void UpSize()
+    public void LevelUp()
     {
         SoundManager.Instance.PlaySound(SoundType.SizeUp);
+    }
+
+    public void UpdateScore(Character attacker, int score)
+    {
+        if (attacker is Player)
+        {
+            characterScore = score;
+        }
+        else if (attacker is Enemy)
+        {
+
+        }
+        //TODO: logic 
     }
 
     //khoa muc tieu
@@ -259,6 +282,10 @@ public class Character : GameUnit
     //change anim
     public void ChangeAnim(string animName)
     {
+        //if(isMoving && animName == Constants.ANIM_RUN)
+        //{
+        //    return;
+        //}
         if (currentAnim != animName)
         {
             if (currentAnim != null)
@@ -287,7 +314,7 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
-
+        //ChangeAnim(Constants.ANIM_IDLE);
     }
 
     //delay nem vu khi

@@ -47,7 +47,9 @@ public class CameraFollow : Singleton<CameraFollow>
     public void ChangeCameraState(CameraState state)
     {
         this.state = state;
+        //lay vi tri offset tuong ung voi state
         offset = cameraPosition[(int)state].localPosition;
+        //lay goc xoay tuong ung voi state
         targetRotation = cameraPosition[(int)state].localRotation;
     }
 }

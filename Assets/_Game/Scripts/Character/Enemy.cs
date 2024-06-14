@@ -34,6 +34,7 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new IdleState());
+        this.Name = RandomName.GetRandomEnemyName();
 
         int weaponIndex = Random.Range(0, 12);
         int hatIndex = Random.Range(0, 11);
@@ -61,7 +62,7 @@ public class Enemy : Character
         agent.SetDestination(destination);
     }
 
-    //lay random vi tri
+    //lay random vi tri di chuyen
     public Vector3 GetRandomPoint()
     {
         Vector3 point;
@@ -72,10 +73,11 @@ public class Enemy : Character
         return Tf.position;
     }
 
+    //xu ly khi enemy die
     public override void OnDead()
     {
         base.OnDead();
-        onDeathEvent?.Invoke();
+        onDeathEvent?.Invoke(); //phat di su kien
         agent.isStopped = true;
         Invoke(nameof(OnDespawn), 1.2f);
     }
@@ -93,11 +95,13 @@ public class Enemy : Character
         }
     }
 
+    //lay mau cua enemy
     public Color GetEnemyColor()
     {
         return color;
     }
 
+    //doi mau enemy
     private void ChangeColor(ColorType colorType)
     {
         this.colorType = colorType;
