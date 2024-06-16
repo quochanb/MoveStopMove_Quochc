@@ -327,6 +327,7 @@ MonoBehaviour:
   radius: 5
   currentTarget: {fileID: 0}
   bulletSpawnPoint: {fileID: 3805829143479129025}
+  indicatorTf: {fileID: 3703613216789943589}
   rightHand: {fileID: 7741083907764320668}
   leftHand: {fileID: 930760780102117959}
   head: {fileID: 8313923787180660365}
@@ -345,7 +346,6 @@ MonoBehaviour:
   hatData: {fileID: 11400000, guid: 2e09c65996d323b4c8ac6fa670861891, type: 2}
   shieldData: {fileID: 11400000, guid: 2f860135383eb9041b793c9c7d74912e, type: 2}
   weaponData: {fileID: 11400000, guid: aa4e604f6e6206e4e9cede229a330c3e, type: 2}
-  indicator: {fileID: 3703613216789943589}
   enemyInAttackRange:
   - {fileID: 0}
   - {fileID: 0}

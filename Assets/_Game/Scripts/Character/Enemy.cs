@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Enemy : Character
 {
@@ -36,11 +37,11 @@ public class Enemy : Character
         ChangeState(new IdleState());
         this.Name = RandomName.GetRandomEnemyName();
 
-        int weaponIndex = Random.Range(0, 12);
-        int hatIndex = Random.Range(0, 11);
-        int panIndex = Random.Range(0, 10);
-        int shieldIndex = Random.Range(0, 3);
-        int colorIndex = Random.Range(0, 10);
+        int weaponIndex = Random.Range(0, Enum.GetValues(typeof(WeaponType)).Length);
+        int hatIndex = Random.Range(0, Enum.GetValues(typeof(HatType)).Length);
+        int panIndex = Random.Range(0, Enum.GetValues(typeof(PantType)).Length);
+        int shieldIndex = Random.Range(0, Enum.GetValues(typeof(ShieldType)).Length);
+        int colorIndex = Random.Range(0, Enum.GetValues(typeof(ColorType)).Length);
 
         ChangeWeapon((WeaponType)weaponIndex);
         ChangeHat((HatType)hatIndex);
@@ -95,10 +96,22 @@ public class Enemy : Character
         }
     }
 
-    //lay mau cua enemy
+    //lay color cua enemy
     public Color GetEnemyColor()
     {
         return color;
+    }
+
+    public void SetScoreEnemy(int score)
+    {
+        if(score >= 0 && score < 10)
+        {
+            this.Score = Random.Range(0, score + 3);
+        }
+        else
+        {
+            this.Score = Random.Range(score - 5, score + 6);
+        }
     }
 
     //doi mau enemy

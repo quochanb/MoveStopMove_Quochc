@@ -44,6 +44,7 @@ public class UISetting : UICanvas
     {
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;
         PlayerPrefs.SetInt(Constants.P_PREF_MUTED, muted ? 0 : 1);
+        SoundManager.Instance.SoundOff(!muted);
         UpdateButtonIcon();
     }
 
@@ -60,7 +61,7 @@ public class UISetting : UICanvas
     {
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
-        GameManager.Instance.OnMainMenu();
+        GameManager.Instance.EnterMainMenu();
     }
 
     //xu ly khi nhan nut continue
@@ -68,7 +69,7 @@ public class UISetting : UICanvas
     {
         Close(0);
         UIManager.Instance.GetUI<UIGamePlay>().ChangeAnim(Constants.ANIM_GL_OPEN);
-        GameManager.Instance.OnGamePlay();
+        GameManager.Instance.StartGamePlay();
     }
 
     //cap nhat icon sound va vibration

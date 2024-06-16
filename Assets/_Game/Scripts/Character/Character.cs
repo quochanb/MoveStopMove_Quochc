@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Character : GameUnit
 {
@@ -12,6 +11,7 @@ public class Character : GameUnit
     [SerializeField] protected float radius = 5f;
     [SerializeField] protected Character currentTarget;
     [SerializeField] protected Transform bulletSpawnPoint;
+    [SerializeField] protected Transform indicatorTf;
     [SerializeField] protected Transform rightHand, leftHand, head;
     [SerializeField] protected GameObject body, lockTarget;
     [SerializeField] protected LayerMask characterLayer, groundLayer;
@@ -31,11 +31,13 @@ public class Character : GameUnit
     private string currentAnim;
     private string characterName;
     private int characterScore;
+    protected float size;
 
     public bool IsDead => isDead;
-    public int Score => characterScore;
+    public int Score { get => characterScore; set => characterScore = value; }
     public string Name { get => characterName; set => characterName = value; }
-    public Transform indicator;
+    //public float Size { get => size; set => size = value; }
+    public Transform IndicatorTf => indicatorTf;
     public Collider[] enemyInAttackRange = new Collider[10];
 
     private void Awake()
@@ -45,11 +47,7 @@ public class Character : GameUnit
 
     protected virtual void Update()
     {
-
-        if (currentTarget == null || IsOutOfAttackRange(currentTarget) || currentTarget.isDead)
-        {
-            currentTarget = FindEnemyTarget();
-        }
+        currentTarget = FindEnemyTarget();
     }
 
     //khoi tao
@@ -117,7 +115,7 @@ public class Character : GameUnit
     //xu ly khi bullet va cham voi character
     public virtual void OnHitVictim(Character attacker, Character victim)
     {
-        Debug.Log(attacker);
+        UpdateScoreOnHit(attacker, victim);
         victim.OnDead();
     }
 
@@ -235,22 +233,79 @@ public class Character : GameUnit
         return currentTarget;
     }
 
-    public void LevelUp()
+    public int CalculateLevel(int score)
     {
-        SoundManager.Instance.PlaySound(SoundType.SizeUp);
+        int level = 0;
+        while(score > level * (level + 1))
+        {
+            level++;
+        }
+        return level;
     }
 
-    public void UpdateScore(Character attacker, int score)
+    public void UpdateScoreOnHit(Character attacker, Character victim)
     {
-        if (attacker is Player)
-        {
-            characterScore = score;
-        }
-        else if (attacker is Enemy)
-        {
+        int attackerScore = attacker.Score;
+        int victimScore = victim.Score;
+        int level = CalculateLevel(attackerScore);
 
+        if (level <= 2)
+        {
+            if (attackerScore > victimScore)
+                attacker.AddScore(1);
+            else
+                attacker.AddScore(2);
         }
-        //TODO: logic 
+        else if (level <= 4)
+        {
+            if (attackerScore > victimScore)
+                attacker.AddScore(2);
+            else
+                attacker.AddScore(3);
+        }
+        else if (level <= 6)
+        {
+            if (attackerScore > victimScore)
+                attacker.AddScore(2);
+            else
+                attacker.AddScore(4);
+        }
+        else if (level <= 8)
+        {
+            if (attackerScore > victimScore)
+                attacker.AddScore(3);
+            else
+                attacker.AddScore(5);
+        }
+        else
+        {
+            if (attackerScore > victimScore)
+                attacker.AddScore(3);
+            else
+                attacker.AddScore(6);
+        }
+    }
+
+    public virtual void AddScore(int score)
+    {
+        characterScore += score;
+        int currentLevel = CalculateLevel(characterScore);
+        if(characterScore >= currentLevel * (currentLevel + 1))
+        {
+            //SizeUp(1.02f);
+        }
+    }
+
+    public virtual void SizeUp(float size)
+    {
+        size = Mathf.Clamp(size, Constants.MIN_SIZE, Constants.MAX_SIZE);
+        this.size = size;
+        Tf.localScale *= size;
+        radius *= 1.01f;
+
+        Vector3 newPosition = Tf.position;
+        newPosition.y = 0;
+        Tf.position = newPosition;
     }
 
     //khoa muc tieu
@@ -282,10 +337,6 @@ public class Character : GameUnit
     //change anim
     public void ChangeAnim(string animName)
     {
-        //if(isMoving && animName == Constants.ANIM_RUN)
-        //{
-        //    return;
-        //}
         if (currentAnim != animName)
         {
             if (currentAnim != null)

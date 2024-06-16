@@ -12,7 +12,7 @@ public class UIFail : UICanvas
     [SerializeField] private TextMeshProUGUI nextZone;
     [SerializeField] private TextMeshProUGUI currentZone;
     [SerializeField] private TextMeshProUGUI rankingText;
-    [SerializeField] private TextMeshProUGUI attackerName;
+    [SerializeField] private TextMeshProUGUI killerName;
     private void Start()
     {
         mainMenuBtn.onClick.AddListener(OnMainMenu);
@@ -26,7 +26,7 @@ public class UIFail : UICanvas
         UpdateTextCurrentZone(currentLevel);
         UpdateTextNextZone(currentLevel);
         UpdateRankingText(LevelManager.Instance.GetAliveEnemy());
-        UpdateAttackerName(LevelManager.Instance.GetNameAttacker());
+        UpdateKillerName(LevelManager.Instance.GetKillerName());
     }
 
     private void OnDisable()
@@ -39,7 +39,7 @@ public class UIFail : UICanvas
         SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIMainMenu>();
-        GameManager.Instance.OnMainMenu();
+        GameManager.Instance.EnterMainMenu();
     }
 
     public void UpdateCoinDisplay(int coin)
@@ -62,9 +62,9 @@ public class UIFail : UICanvas
         rankingText.text = $"#{number}";
     }
 
-    private void UpdateAttackerName(string name)
+    private void UpdateKillerName(string name)
     {
-        attackerName.text = name;
+        killerName.text = name;
     }
 
     IEnumerator DelayActiveButton()

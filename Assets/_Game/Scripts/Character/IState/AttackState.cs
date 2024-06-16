@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class AttackState : IState
 {
-    Character target;
-    float timer;
-    float delayTime;
+    private Character target;
+    private float timer;
+    private float delayTime;
+
     public void OnEnter(Enemy enemy)
     {
         target = enemy.GetTarget();
         timer = 0;
-        delayTime = 1f;
+        delayTime = Random.Range(2, 5);
     }
 
     public void OnExecute(Enemy enemy)
@@ -28,7 +29,9 @@ public class AttackState : IState
 
         if (target == null || enemy.IsOutOfAttackRange(target) || target.IsDead)
         {
+            enemy.ChangeAnim(Constants.ANIM_IDLE);
             timer += Time.deltaTime;
+
             if (timer >= delayTime)
             {
                 enemy.ChangeState(new PatrolState());

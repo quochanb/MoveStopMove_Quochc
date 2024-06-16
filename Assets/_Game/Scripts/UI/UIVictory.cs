@@ -53,6 +53,6 @@ public class UIVictory : UICanvas
         SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         Close(0);
         UIManager.Instance.OpenUI<UIGamePlay>();
-        GameManager.Instance.OnNextLevel();
+        GameManager.Instance.NextLevel();
     }
 }

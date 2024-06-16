@@ -28,7 +28,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        OnMainMenu();
+        EnterMainMenu();
     }
 
     public void ChangeGameState(GameState newState)
@@ -41,7 +41,7 @@ public class GameManager : Singleton<GameManager>
         return currentState == state;
     }
 
-    public void OnMainMenu()
+    public void EnterMainMenu()
     {
         ChangeGameState(GameState.MainMenu);
 
@@ -51,35 +51,35 @@ public class GameManager : Singleton<GameManager>
 
         LevelManager.Instance.OnReset();
         levelNumber = UserDataManager.Instance.GetCurrentLevel();
-        LevelManager.Instance.OnLoadLevel(levelNumber - 1);
+        LevelManager.Instance.LoadLevel(levelNumber - 1);
 
         CameraFollow.Instance.ChangeCameraState(CameraState.MainMenu);
     }
 
-    public void OnGamePlay()
+    public void StartGamePlay()
     {
         ChangeGameState(GameState.GamePlay);
         CameraFollow.Instance.ChangeCameraState(CameraState.GamePlay);
     }
 
-    public void OnGamePause()
+    public void PauseGame()
     {
         ChangeGameState(GameState.GamePause);
     }
 
-    public void OnRevive()
+    public void ShowRevivePopup()
     {
         ChangeGameState(GameState.Revive);
-        StartCoroutine(DelayOnRevive());
+        StartCoroutine(DelayRevive());
     }
 
-    public void OnVictory()
+    public void HandleVictory()
     {
         ChangeGameState(GameState.Finish);
-        StartCoroutine(DelayOnVictory());
+        StartCoroutine(DelayHandleVictory());
     }
 
-    public void OnFail()
+    public void HandleFail()
     {
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIFail>().UpdateCoinDisplay(LevelManager.Instance.GetPlayerCoin());
@@ -87,23 +87,23 @@ public class GameManager : Singleton<GameManager>
         ChangeGameState(GameState.Finish);
     }
 
-    public void OnNextLevel()
+    public void NextLevel()
     {
         levelNumber++;
         LevelManager.Instance.OnReset();
-        LevelManager.Instance.OnLoadLevel(levelNumber - 1);
+        LevelManager.Instance.LoadLevel(levelNumber - 1);
         UserDataManager.Instance.UpdateCurrentLevel(levelNumber);
-        OnGamePlay();
+        StartGamePlay();
     }
 
-    IEnumerator DelayOnRevive()
+    IEnumerator DelayRevive()
     {
         yield return Cache.GetWFS(1f);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIRevive>();
     }
 
-    IEnumerator DelayOnVictory()
+    IEnumerator DelayHandleVictory()
     {
         yield return Cache.GetWFS(1f);
         UIManager.Instance.CloseAll();

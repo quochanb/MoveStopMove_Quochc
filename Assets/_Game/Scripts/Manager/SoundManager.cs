@@ -32,6 +32,11 @@ public class SoundManager : Singleton<SoundManager>
             audioSource.Play();
         }
     }
+
+    public void SoundOff(bool value)
+    {
+        audioSource.mute = value;
+    }
 }
 
 [System.Serializable]

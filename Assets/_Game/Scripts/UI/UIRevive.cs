@@ -38,7 +38,7 @@ public class UIRevive : UICanvas
     private void OnClose()
     {
         SoundManager.Instance.PlaySound(SoundType.ButtonClick);
-        GameManager.Instance.OnFail();
+        GameManager.Instance.HandleFail();
     }
 
     //xu ly khi hoi sinh player
@@ -53,7 +53,7 @@ public class UIRevive : UICanvas
             UIManager.Instance.OpenUI<UIGamePlay>();
             playerCoin -= reviveFee;
             UserDataManager.Instance.UpdateUserCoin(playerCoin);
-            GameManager.Instance.OnGamePlay();
+            GameManager.Instance.StartGamePlay();
             reviveEvent?.Invoke();
         }
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class IdleState : IState
 {
-    float randomTime;
-    float timer;
+    private float randomTime;
+    private float timer;
 
     public void OnEnter(Enemy enemy)
     {

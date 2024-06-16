@@ -46,8 +46,6 @@ public class UISkinShop : UICanvas
         AddButtonListenner(pantShop, OnShowPantShop);
         AddButtonListenner(shieldShop, OnShowShieldShop);
         AddButtonListenner(comboSetShop, OnShowComboSetShop);
-
-        OnShowHatShop();
     }
 
     private void OnEnable()
@@ -55,6 +53,7 @@ public class UISkinShop : UICanvas
         CameraFollow.Instance.ChangeCameraState(CameraState.Shop);
         player.ChangeAnim(Constants.ANIM_CHARSKIN);
         ButtonItemUI.OnClicked += HandleItemSelected;
+        OnShowHatShop();
     }
 
     private void OnDisable()

@@ -6,34 +6,44 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField] private float speed = 6f;
+    [SerializeField] private CombatText combatTextPrefab;
+
+    private Character targetLocking;
+    private string killerName;
     private int coin;
 
+    public string KillerName { get { return killerName; }}
     public int Coin { get { return coin; } set { coin = value; } }
+
+    private void Start()
+    {
+        this.Score = 0;
+    }
 
     protected override void Update()
     {
         if (GameManager.Instance.currentState == GameState.GamePlay)
         {
+            //neu co target va target ko nam trong attack range
+            if (currentTarget != null && IsOutOfAttackRange(currentTarget))
+            {
+                ResetTarget();
+            }
+
             base.Update();
+
             if (IsDead)
             {
-                GameManager.Instance.OnRevive();
+                GameManager.Instance.ShowRevivePopup();
                 return;
             }
-            if (currentTarget != null)
-            {
-                currentTarget.ActiveLockTarget();
-                if (currentTarget == null || IsOutOfAttackRange(currentTarget) || currentTarget.IsDead)
-                {
-                    currentTarget.DeactiveLockTarget();
-                }
-            }
+
             if (Input.GetMouseButtonUp(0))
             {
                 ChangeAnim(Constants.ANIM_IDLE);
             }
 
-            if (Input.GetMouseButton(0) && Joystick.direction != Vector3.zero)
+            if (Input.GetMouseButton(0) && Vector3.Distance(Joystick.direction, Vector3.zero) > 0.1f)
             {
                 Move();
             }
@@ -41,18 +51,20 @@ public class Player : Character
             {
                 StopMove();
             }
+
+            SetLockTarget(); //hien thi khoa muc tieu
         }
     }
 
     private void OnEnable()
     {
-        UIRevive.reviveEvent += OnRevive;
+        UIRevive.reviveEvent += OnRevivePlayer;
         Level.winGameEvent += OnWinGame;
     }
 
     private void OnDisable()
     {
-        UIRevive.reviveEvent -= OnRevive;
+        UIRevive.reviveEvent -= OnRevivePlayer;
         Level.winGameEvent -= OnWinGame;
     }
 
@@ -61,7 +73,7 @@ public class Player : Character
         base.OnInit();
         coin = 0;
         this.Name = UserDataManager.Instance.GetUserName();
-        UpdateScore(this, 0);
+        this.size = 1;
         ChangeCurrentSkin();
     }
 
@@ -89,11 +101,25 @@ public class Player : Character
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
 
+    public override void SizeUp(float size)
+    {
+        base.SizeUp(size);
+        
+        SoundManager.Instance.PlaySound(SoundType.Win);
+    }
+
     //xu ly hit enemy
     public override void OnHitVictim(Character attacker, Character victim)
     {
         base.OnHitVictim(attacker, victim);
+        killerName = victim.Name;
         AddCoins(5);
+    }
+
+    public override void AddScore(int score)
+    {
+        base.AddScore(score);
+        Instantiate(combatTextPrefab, Tf).OnInit(score);
     }
 
     //goi khi hit enemy
@@ -105,7 +131,7 @@ public class Player : Character
     }
 
     //xu ly event revive
-    private void OnRevive()
+    private void OnRevivePlayer()
     {
         OnInit();
     }
@@ -116,10 +142,50 @@ public class Player : Character
         StartCoroutine(DelayChangeAnim());
     }
 
+    //reset khoa muc tieu
+    private void ResetTarget()
+    {
+        currentTarget.DeactiveLockTarget();
+        targetLocking = null;
+        currentTarget = null;
+    }
+
+    //hien thi khoa muc tieu gan nhat
+    private void SetLockTarget()
+    {
+        if (currentTarget != null)
+        {
+            //neu dang co target bi khoa va target do khac currentTarget
+            if (targetLocking != null && targetLocking != currentTarget)
+            {
+                targetLocking.DeactiveLockTarget(); //bo target dang bi khoa
+            }
+
+            if (targetLocking == currentTarget)
+            {
+                return;
+            }
+            currentTarget.ActiveLockTarget(); //khoa target moi
+
+            targetLocking = currentTarget;
+        }
+
+        if (currentTarget != null && currentTarget.IsDead)
+        {
+            ResetTarget();
+        }
+    }
+
     //goi khi win game
     IEnumerator DelayChangeAnim()
     {
         yield return Cache.GetWFS(1f);
         ChangeAnim(Constants.ANIM_WIN);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

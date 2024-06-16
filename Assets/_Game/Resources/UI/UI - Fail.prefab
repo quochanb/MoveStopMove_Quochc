@@ -3299,7 +3299,7 @@ MonoBehaviour:
   nextZone: {fileID: 6127359588229811539}
   currentZone: {fileID: 6127359587868040683}
   rankingText: {fileID: 6127359587338576945}
-  attackerName: {fileID: 6127359586953926201}
+  killerName: {fileID: 6127359586953926201}
 --- !u!1 &6127359588559340309
 GameObject:
   m_ObjectHideFlags: 0

@@ -67,7 +67,7 @@ public class UIMainMenu : UICanvas
     {
         Close(0);
         UIManager.Instance.OpenUI<UIGamePlay>();
-        GameManager.Instance.OnGamePlay();
+        GameManager.Instance.StartGamePlay();
     }
 
     //xu ly khi an nut sound
@@ -75,6 +75,7 @@ public class UIMainMenu : UICanvas
     {
         bool muted = PlayerPrefs.GetInt(Constants.P_PREF_MUTED, 0) == 1;
         PlayerPrefs.SetInt(Constants.P_PREF_MUTED, muted ? 0 : 1);
+        SoundManager.Instance.SoundOff(!muted);
         UpdateButtonIcon();
     }
 

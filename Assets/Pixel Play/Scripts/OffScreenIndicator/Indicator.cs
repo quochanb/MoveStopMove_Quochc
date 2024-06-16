@@ -11,6 +11,7 @@ public class Indicator : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private Image scoreImage;
+    [SerializeField] private CanvasGroup canvasGroup;
     private Image indicatorImage;
     private Text distanceText;
 
@@ -101,6 +102,11 @@ public class Indicator : MonoBehaviour
             nameText.text = value;
             nameText.color = color;
         }
+    }
+
+    public void SetAlpha(float value)
+    {
+        canvasGroup.alpha = value;
     }
 }
 

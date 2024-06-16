@@ -18,13 +18,6 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        aliveEnemy = totalEnemy;
-
-        for (int i = 0; i < startPoints.Length - 3; i++) //lay tu index 0 -> 19
-        {
-            spawnPointList.Add(startPoints[i].position);
-        }
-
         for (int i = 0; i < initialEnemyCount; i++) //spawn theo so luong khoi tao ban dau
         {
             Spawn(GetRandomStartPoint());
@@ -33,6 +26,16 @@ public class Level : MonoBehaviour
 
     private void OnEnable()
     {
+        aliveEnemy = totalEnemy;
+
+        for (int i = 0; i < startPoints.Length - 3; i++) //lay tu index 0 -> 19
+        {
+            if (!spawnPointList.Contains(startPoints[i].position))
+            {
+                spawnPointList.Add(startPoints[i].position);
+            }
+        }
+
         Enemy.onDeathEvent += HandleOnDeath;
     }
 
@@ -48,9 +51,16 @@ public class Level : MonoBehaviour
         {
             return;
         }
-        Enemy enemy = SimplePool.Spawn<Enemy>(PoolType.Enemy, point, Quaternion.identity);
-        enemy.OnInit();
-        spawnedEnemies++;
+        else
+        {
+            Enemy enemy = SimplePool.Spawn<Enemy>(PoolType.Enemy, point, Quaternion.identity);
+            enemy.OnInit();
+            if (LevelManager.Instance.IsPlayerLoaded)
+            {
+                enemy.SetScoreEnemy(LevelManager.Instance.GetPlayerScore());
+            }
+            spawnedEnemies++;
+        }
     }
 
     //xu ly su kien khi 1 enemy chet
@@ -61,12 +71,12 @@ public class Level : MonoBehaviour
             aliveEnemy--;
             ReturnStartPoint();
             UIManager.Instance.GetUI<UIGamePlay>().UpdateAlive(aliveEnemy);
-            StartCoroutine(RespawnEnemy(Random.Range(4, 7)));
+            StartCoroutine(RespawnEnemy(Random.Range(3, 6)));
 
             if (aliveEnemy == 0)
             {
                 winGameEvent?.Invoke();
-                GameManager.Instance.OnVictory();
+                GameManager.Instance.HandleVictory();
             }
         }
 
@@ -101,7 +111,7 @@ public class Level : MonoBehaviour
     IEnumerator RespawnEnemy(float time)
     {
         yield return Cache.GetWFS(time);
-        if (spawnedEnemies < totalEnemy)
+        if (spawnedEnemies < totalEnemy && spawnPointList.Count > 0)
         {
             Spawn(GetRandomStartPoint());
         }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 22278040}
   - component: {fileID: 11403194}
   - component: {fileID: 114082041123525444}
+  - component: {fileID: 3223589277152449197}
   m_Layer: 5
   m_Name: ArrowIndicator
   m_TagString: Untagged
@@ -95,6 +96,19 @@ MonoBehaviour:
   scoreText: {fileID: 2173222725369858430}
   nameText: {fileID: 0}
   scoreImage: {fileID: 2344833628426111656}
+  canvasGroup: {fileID: 3223589277152449197}
+--- !u!225 &3223589277152449197
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 150680}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1086876969492358
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,9 @@ public class LevelManager : Singleton<LevelManager>
     private Player player;
     private Level currentLevel;
     private Transform tf;
+    private bool isPlayerLoaded;
+
+    public bool IsPlayerLoaded => isPlayerLoaded;
 
     public Transform Tf
     {
@@ -41,10 +44,11 @@ public class LevelManager : Singleton<LevelManager>
             Destroy(player.gameObject);
             CameraFollow.Instance.enabled = false;
         }
+        isPlayerLoaded = false;
     }
 
     //load level
-    public void OnLoadLevel(int level)
+    public void LoadLevel(int level)
     {
         if (level < levels.Length)
         {
@@ -55,11 +59,11 @@ public class LevelManager : Singleton<LevelManager>
             Debug.LogError("No more level to load !");
         }
 
-        Invoke(nameof(OnLoadPlayer), 0.01f);
+        Invoke(nameof(LoadPlayer), 0.01f);
     }
 
     //load player
-    public void OnLoadPlayer()
+    public void LoadPlayer()
     {
         if (player == null)
         {
@@ -69,6 +73,8 @@ public class LevelManager : Singleton<LevelManager>
 
             CameraFollow.Instance.enabled = true;
             CameraFollow.Instance.SetTarget(player.Tf);
+
+            isPlayerLoaded = true;
         }
     }
 
@@ -78,14 +84,21 @@ public class LevelManager : Singleton<LevelManager>
         return player.Coin;
     }
 
+    //lay ra score nguoi choi
+    public int GetPlayerScore()
+    {
+        return player.Score;
+    }
+
     //lay so enemy con lai tren map
     public int GetAliveEnemy()
     {
         return currentLevel.AliveEnemy;
     }
 
-    public string GetNameAttacker()
+    //lay ten killer
+    public string GetKillerName()
     {
-        return "";
+        return player.KillerName;
     }
 }

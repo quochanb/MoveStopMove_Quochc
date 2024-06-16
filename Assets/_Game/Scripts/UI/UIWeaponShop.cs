@@ -29,10 +29,6 @@ public class UIWeaponShop : UICanvas
 
     private void Start()
     {
-        if (player == null)
-        {
-            player = FindObjectOfType<Player>();
-        }
         userData = UserDataManager.Instance.userData;
 
         ShowWeapon(currentIndex);
@@ -41,6 +37,15 @@ public class UIWeaponShop : UICanvas
         AddButtonListenner(nextBtn, OnNextButton);
         AddButtonListenner(prevBtn, OnPrevButton);
         AddButtonListenner(closeBtn, OnCloseButton);
+    }
+
+    private void OnEnable()
+    {
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+        player.gameObject.SetActive(false);
     }
 
     //add listenner cho button
@@ -54,7 +59,7 @@ public class UIWeaponShop : UICanvas
     }
 
     //show weapon
-    public void ShowWeapon(int index)
+    private void ShowWeapon(int index)
     {
         if (index >= 0 && index < weaponData.weaponList.Count)
         {
@@ -69,7 +74,7 @@ public class UIWeaponShop : UICanvas
     }
 
     //update trang thai cac nut: buy, select, equipped
-    public void UpdateButtonState()
+    private void UpdateButtonState()
     {
         for (int i = 0; i < buttonState.Length; i++)
         {
@@ -130,6 +135,7 @@ public class UIWeaponShop : UICanvas
     {
         Close(0);
         UIManager.Instance.GetUI<UIMainMenu>().ChangeAnim(Constants.ANIM_MM_OPEN);
+        player.gameObject.SetActive(true);
     }
 
     //xu ly buy button
@@ -152,7 +158,7 @@ public class UIWeaponShop : UICanvas
     private void OnSelectWeapon()
     {
         //update trang thai cac vu khi ve 1 (da mua nhung chua trang bi)
-        for(int i = 0; i < userData.weaponState.Count; i++)
+        for (int i = 0; i < userData.weaponState.Count; i++)
         {
             if (userData.weaponState[i] == 2)
             {

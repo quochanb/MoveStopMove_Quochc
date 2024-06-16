@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 22229124}
   - component: {fileID: 11434702}
   - component: {fileID: 114629346974849376}
+  - component: {fileID: 1125091121809977752}
   m_Layer: 5
   m_Name: BoxIndicator
   m_TagString: Untagged
@@ -96,6 +97,19 @@ MonoBehaviour:
   scoreText: {fileID: 7159184525490511402}
   nameText: {fileID: 940476568988304736}
   scoreImage: {fileID: 726730746544715201}
+  canvasGroup: {fileID: 1125091121809977752}
+--- !u!225 &1125091121809977752
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163008}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &328195865706718776
 GameObject:
   m_ObjectHideFlags: 0
