@@ -23,7 +23,7 @@ public class Target : MonoBehaviour
     public int Score => owner.Score;
     public string Name => owner.Name;
     public Transform IndicatorTf => owner.IndicatorTf;
-    public bool IsLoaded => (owner != null && owner.gameObject.activeSelf);
+    //public bool IsLoaded => (owner != null && owner.gameObject.activeInHierarchy);
 
     /// <summary>
     /// Please do not assign its value yourself without understanding its use.
@@ -74,15 +74,6 @@ public class Target : MonoBehaviour
         get
         {
             return needDistanceText;
-        }
-    }
-
-    private void Start()
-    {
-        if (owner is Enemy enemy)
-        {
-            targetColor = enemy.GetEnemyColor();
-            Debug.Log("lay mau");
         }
     }
 

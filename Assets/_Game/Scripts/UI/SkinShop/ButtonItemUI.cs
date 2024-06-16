@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +13,7 @@ public class ButtonItemUI : MonoBehaviour
     private HatItem hatItem;
     private PantItem pantItem;
     private ShieldItem shieldItem;
+    private SetFullItem setFullItem;
 
     //tao bien static de luu button hien tai duoc chon
     private static ButtonItemUI currentSelectedBtn;
@@ -73,6 +71,17 @@ public class ButtonItemUI : MonoBehaviour
         this.shopType = ShopType.ShieldShop;
         this.itemPrice = shieldItem.shieldPrice;
         btnImage.sprite = shieldItem.shieldSprite;
+        UpdateState();
+    }
+
+    //set full data
+    public void SetData(SetFullItem setFullItem, int index)
+    {
+        this.setFullItem = setFullItem;
+        this.itemIndex = index;
+        this.shopType= ShopType.SetFullShop;
+        this.itemPrice = setFullItem.price;
+        btnImage.sprite = setFullItem.sprite;
         UpdateState();
     }
 

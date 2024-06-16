@@ -16,6 +16,8 @@ public class Enemy : Character
     private Vector3 destination;
     private ColorType colorType;
     private Color color;
+    private Target target;
+
     public IState currentState;
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
 
@@ -35,6 +37,7 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new IdleState());
+        SizeUp(Random.Range(Constants.MIN_SIZE, Constants.MAX_SIZE));
         this.Name = RandomName.GetRandomEnemyName();
 
         int weaponIndex = Random.Range(0, Enum.GetValues(typeof(WeaponType)).Length);
@@ -96,12 +99,7 @@ public class Enemy : Character
         }
     }
 
-    //lay color cua enemy
-    public Color GetEnemyColor()
-    {
-        return color;
-    }
-
+    //random score
     public void SetScoreEnemy(int score)
     {
         if(score >= 0 && score < 10)
@@ -111,6 +109,19 @@ public class Enemy : Character
         else
         {
             this.Score = Random.Range(score - 5, score + 6);
+        }
+    }
+
+    //lay color de set cho indicator
+    public void UpdateTargetColor()
+    {
+        if(target == null)
+        {
+            target = GetComponent<Target>();
+        }
+        if (target != null)
+        {
+            target.TargetColor = color;
         }
     }
 

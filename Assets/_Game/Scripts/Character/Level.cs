@@ -55,6 +55,7 @@ public class Level : MonoBehaviour
         {
             Enemy enemy = SimplePool.Spawn<Enemy>(PoolType.Enemy, point, Quaternion.identity);
             enemy.OnInit();
+            enemy.UpdateTargetColor();
             if (LevelManager.Instance.IsPlayerLoaded)
             {
                 enemy.SetScoreEnemy(LevelManager.Instance.GetPlayerScore());

@@ -69,6 +69,16 @@ public enum ShieldType
     None = 2
 }
 
+public enum SetFullType
+{
+    Set_1 = 0,
+    Set_2 = 1,
+    Set_3 = 2,
+    Set_4 = 3,
+    Set_5 = 4,
+    None = 5
+}
+
 public enum ColorType
 {
     None = 0,
@@ -98,7 +108,7 @@ public enum ShopType
     HatShop = 0,
     PantShop = 1,
     ShieldShop = 2,
-    ComboShop = 3
+    SetFullShop = 3
 }
 
 public enum CameraState

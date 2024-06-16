@@ -1999,10 +1999,11 @@ MonoBehaviour:
   hatShop: {fileID: 2552075855196028071}
   pantShop: {fileID: 2552075856719755538}
   shieldShop: {fileID: 2552075855925009113}
-  comboSetShop: {fileID: 2552075855244835407}
+  setFullShop: {fileID: 2552075855244835407}
   hatData: {fileID: 11400000, guid: 2e09c65996d323b4c8ac6fa670861891, type: 2}
   pantData: {fileID: 11400000, guid: 43e3494ba8feb6e48a4981760e5b2538, type: 2}
   shieldData: {fileID: 11400000, guid: 2f860135383eb9041b793c9c7d74912e, type: 2}
+  setFullData: {fileID: 11400000, guid: 1f529e2d2bb1eca4fb85de9d3177e7ac, type: 2}
   itemUIPrefab: {fileID: -884110346776847225, guid: c095bb46f160f344c972cd0b5afe3b10, type: 3}
   parent: {fileID: 2552075856765299308}
   backgrounds:
@@ -2015,6 +2016,7 @@ MonoBehaviour:
   - {fileID: 2552075855643458544}
   - {fileID: 2552075857141625031}
   propertyItem: {fileID: 2552075855854850009}
+  priceItem: {fileID: 2552075855868292300}
 --- !u!1 &2552075856302750842
 GameObject:
   m_ObjectHideFlags: 0

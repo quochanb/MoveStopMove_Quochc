@@ -17,11 +17,12 @@ public class UISkinShop : UICanvas
     [SerializeField] private Button hatShop;
     [SerializeField] private Button pantShop;
     [SerializeField] private Button shieldShop;
-    [SerializeField] private Button comboSetShop;
+    [SerializeField] private Button setFullShop;
 
     [SerializeField] private HatData hatData;
     [SerializeField] private PantData pantData;
     [SerializeField] private ShieldData shieldData;
+    [SerializeField] private SetFullData setFullData;
 
     [SerializeField] private ButtonItemUI itemUIPrefab;
     [SerializeField] private Transform parent;
@@ -29,6 +30,7 @@ public class UISkinShop : UICanvas
     [SerializeField] private Image[] backgrounds;
     [SerializeField] private Button[] buttonState;
     [SerializeField] private TextMeshProUGUI propertyItem;
+    [SerializeField] private TextMeshProUGUI priceItem;
 
     private Player player;
     private UserData userData;
@@ -45,7 +47,7 @@ public class UISkinShop : UICanvas
         AddButtonListenner(hatShop, OnShowHatShop);
         AddButtonListenner(pantShop, OnShowPantShop);
         AddButtonListenner(shieldShop, OnShowShieldShop);
-        AddButtonListenner(comboSetShop, OnShowComboSetShop);
+        AddButtonListenner(setFullShop, OnShowSetFulltShop);
     }
 
     private void OnEnable()
@@ -90,6 +92,7 @@ public class UISkinShop : UICanvas
             item.OnInit();
             buttonItems.Add(item);
             propertyItem.text = hatData.hatList[i].hatProperty;
+            priceItem.text = hatData.hatList[i].hatPrice.ToString();
         }
         SelectDefaultItem(ShopType.HatShop);
         UpdateButtonState();
@@ -109,6 +112,7 @@ public class UISkinShop : UICanvas
             item.OnInit();
             buttonItems.Add(item);
             propertyItem.text = pantData.pantList[i].pantProperty;
+            priceItem.text = pantData.pantList[i].pantPrice.ToString();
         }
         SelectDefaultItem(ShopType.PantShop);
         UpdateButtonState();
@@ -128,17 +132,30 @@ public class UISkinShop : UICanvas
             item.OnInit();
             buttonItems.Add(item);
             propertyItem.text = shieldData.shieldList[i].shieldProperty;
+            priceItem.text = shieldData.shieldList[i].shieldPrice.ToString();
         }
         SelectDefaultItem(ShopType.ShieldShop);
         UpdateButtonState();
     }
 
     //xu ly comboset button
-    private void OnShowComboSetShop()
+    private void OnShowSetFulltShop()
     {
-        currentShopType = ShopType.ComboShop;
+        currentShopType = ShopType.SetFullShop;
         ClearShop();
         UpdateBackground(3);
+
+        for (int i = 0; i < setFullData.setFullList.Count; i++)
+        {
+            ButtonItemUI item = Instantiate(itemUIPrefab, parent);
+            item.SetData(setFullData.setFullList[i], i);
+            item.OnInit();
+            buttonItems.Add(item);
+            propertyItem.text = setFullData.setFullList[i].property;
+            priceItem.text = setFullData.setFullList[i].price.ToString();
+        }
+        SelectDefaultItem(ShopType.SetFullShop);
+        UpdateButtonState();
     }
 
     //xu ly close button
@@ -179,7 +196,7 @@ public class UISkinShop : UICanvas
     //xu ly select button
     private void OnSelectBtn()
     {
-        if(currentSelectedItem != null)
+        if (currentSelectedItem != null)
         {
             currentSelectedItem.OnSelectButton();
         }

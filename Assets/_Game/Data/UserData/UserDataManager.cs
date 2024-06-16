@@ -107,8 +107,8 @@ public class UserDataManager : Singleton<UserDataManager>
             case ShopType.ShieldShop:
                 userData.shieldState[index] = newState;
                 break;
-            case ShopType.ComboShop:
-                userData.comboSkinState[index] = newState;
+            case ShopType.SetFullShop:
+                userData.setFullState[index] = newState;
                 break;
             default:
                 break;
@@ -154,14 +154,14 @@ public class UserDataManager : Singleton<UserDataManager>
                 }
                 break;
 
-            case ShopType.ComboShop:
+            case ShopType.SetFullShop:
                 if (index >= 0 && index < userData.hatState.Count - 1)
                 {
-                    userData.currentComboSkinIndex = index;
+                    userData.currentSetFullIndex = index;
                 }
                 else
                 {
-                    userData.currentComboSkinIndex = userData.comboSkinState.Count - 1;
+                    userData.currentSetFullIndex = userData.setFullState.Count - 1;
                 }
                 break;
 
@@ -183,8 +183,8 @@ public class UserDataManager : Singleton<UserDataManager>
                 return userData.pantState[index];
             case ShopType.ShieldShop:
                 return userData.shieldState[index];
-            case ShopType.ComboShop:
-                return userData.comboSkinState[index];
+            case ShopType.SetFullShop:
+                return userData.setFullState[index];
             default:
                 return -1;
         }
@@ -202,13 +202,13 @@ public class UserData
     public int currentHatIndex;
     public int currentPantIndex;
     public int currentShieldIndex;
-    public int currentComboSkinIndex;
+    public int currentSetFullIndex;
 
     public List<int> weaponState;
     public List<int> hatState;
     public List<int> pantState;
     public List<int> shieldState;
-    public List<int> comboSkinState;
+    public List<int> setFullState;
 
     public UserData()
     {
@@ -220,12 +220,12 @@ public class UserData
         hatState = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         pantState = new List<int>() { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         shieldState = new List<int>() { 0, 0, 0 };
-        comboSkinState = new List<int>() { 0, 0, 0 };
+        setFullState = new List<int>() { 0, 0, 0, 0, 0, 0 };
 
         currentWeaponIndex = 0;
         currentHatIndex = hatState.Count - 1;
         currentPantIndex = pantState.Count - 1;
         currentShieldIndex = shieldState.Count - 1;
-        currentComboSkinIndex = comboSkinState.Count - 1;
+        currentSetFullIndex = setFullState.Count - 1;
     }
 }
