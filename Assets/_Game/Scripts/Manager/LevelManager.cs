@@ -13,7 +13,7 @@ public class LevelManager : Singleton<LevelManager>
     private bool isPlayerLoaded;
 
     public bool IsPlayerLoaded => isPlayerLoaded;
-
+    public bool IsPlayerDead => player.IsDead;
     public Transform Tf
     {
         get

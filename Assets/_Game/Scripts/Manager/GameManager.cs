@@ -90,8 +90,10 @@ public class GameManager : Singleton<GameManager>
     public void NextLevel()
     {
         levelNumber++;
+        if (levelNumber > 3) levelNumber = 1; //TO TEST
         LevelManager.Instance.OnReset();
         LevelManager.Instance.LoadLevel(levelNumber - 1);
+        UIManager.Instance.GetUI<UIGamePlay>().UpdateAlive(LevelManager.Instance.GetAliveEnemy());
         UserDataManager.Instance.UpdateCurrentLevel(levelNumber);
         StartGamePlay();
     }
@@ -105,7 +107,7 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator DelayHandleVictory()
     {
-        yield return Cache.GetWFS(1f);
+        yield return Cache.GetWFS(0.5f);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIVictory>().UpdateCoinDisplay(LevelManager.Instance.GetPlayerCoin());
         CameraFollow.Instance.ChangeCameraState(CameraState.Victory);

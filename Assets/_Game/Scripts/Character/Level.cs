@@ -6,8 +6,8 @@ using UnityEngine.Events;
 public class Level : MonoBehaviour
 {
     [SerializeField] private Transform[] startPoints;
-    [SerializeField] private int totalEnemy = 50;
-    [SerializeField] private int initialEnemyCount = 15;
+    [SerializeField] private int totalEnemy;
+    [SerializeField] private int initialEnemyCount;
 
     private int aliveEnemy;
     private int spawnedEnemies;
@@ -80,7 +80,6 @@ public class Level : MonoBehaviour
                 GameManager.Instance.HandleVictory();
             }
         }
-
     }
 
     //lay random diem spawn enemy

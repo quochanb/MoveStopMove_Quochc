@@ -15,6 +15,9 @@ public class CombatText : MonoBehaviour
 
     public void OnDespawn()
     {
-        Destroy(combatText.gameObject);
+        if (combatText != null)
+        {
+            Destroy(combatText.gameObject);
+        }
     }
 }

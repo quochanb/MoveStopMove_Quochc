@@ -1337,10 +1337,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4106297640473937332}
     m_Modifications:
+    - target: {fileID: 964734840, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5632716723016157057, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d3ef29749561c0c4184816b3d1a8dbde, type: 2}
+    - target: {fileID: 6479267703533205075, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4461e96047bf23941a40e62f719fbaa2, type: 2}
     - target: {fileID: 6479267703533205080, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
       propertyPath: m_Name
       value: Obstacle (1)
@@ -1489,7 +1497,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3764189204889170681}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4461e96047bf23941a40e62f719fbaa2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1523,10 +1531,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4106297640473937332}
     m_Modifications:
+    - target: {fileID: 964734840, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5632716723016157057, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 78fd08f67de0b9948a9d0de322c20f75, type: 2}
+    - target: {fileID: 6479267703533205075, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4461e96047bf23941a40e62f719fbaa2, type: 2}
     - target: {fileID: 6479267703533205080, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
       propertyPath: m_Name
       value: Obstacle (2)
@@ -1589,10 +1605,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4106297640473937332}
     m_Modifications:
+    - target: {fileID: 964734840, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5632716723016157057, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1e1c6a0a64beb49ec96272beefa468a5, type: 2}
+    - target: {fileID: 6479267703533205075, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4461e96047bf23941a40e62f719fbaa2, type: 2}
     - target: {fileID: 6479267703533205080, guid: 3a391b6f3f5877844a067f27f675c9af, type: 3}
       propertyPath: m_Name
       value: Obstacle

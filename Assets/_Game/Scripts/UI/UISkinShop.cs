@@ -41,7 +41,7 @@ public class UISkinShop : UICanvas
     private void Awake()
     {
         userData = UserDataManager.Instance.userData;
-        player = FindObjectOfType<Player>();
+
 
         AddButtonListenner(closeBtn, OnCloseBtn);
         AddButtonListenner(hatShop, OnShowHatShop);
@@ -52,8 +52,12 @@ public class UISkinShop : UICanvas
 
     private void OnEnable()
     {
-        CameraFollow.Instance.ChangeCameraState(CameraState.Shop);
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
         player.ChangeAnim(Constants.ANIM_CHARSKIN);
+        CameraFollow.Instance.ChangeCameraState(CameraState.Shop);
         ButtonItemUI.OnClicked += HandleItemSelected;
         OnShowHatShop();
     }
@@ -91,8 +95,6 @@ public class UISkinShop : UICanvas
             item.SetData(hatData.hatList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyItem.text = hatData.hatList[i].hatProperty;
-            priceItem.text = hatData.hatList[i].hatPrice.ToString();
         }
         SelectDefaultItem(ShopType.HatShop);
         UpdateButtonState();
@@ -111,8 +113,6 @@ public class UISkinShop : UICanvas
             item.SetData(pantData.pantList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyItem.text = pantData.pantList[i].pantProperty;
-            priceItem.text = pantData.pantList[i].pantPrice.ToString();
         }
         SelectDefaultItem(ShopType.PantShop);
         UpdateButtonState();
@@ -131,8 +131,6 @@ public class UISkinShop : UICanvas
             item.SetData(shieldData.shieldList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyItem.text = shieldData.shieldList[i].shieldProperty;
-            priceItem.text = shieldData.shieldList[i].shieldPrice.ToString();
         }
         SelectDefaultItem(ShopType.ShieldShop);
         UpdateButtonState();
@@ -151,8 +149,6 @@ public class UISkinShop : UICanvas
             item.SetData(setFullData.setFullList[i], i);
             item.OnInit();
             buttonItems.Add(item);
-            propertyItem.text = setFullData.setFullList[i].property;
-            priceItem.text = setFullData.setFullList[i].price.ToString();
         }
         SelectDefaultItem(ShopType.SetFullShop);
         UpdateButtonState();
@@ -172,6 +168,9 @@ public class UISkinShop : UICanvas
     private void HandleItemSelected(ButtonItemUI item)
     {
         currentSelectedItem = item;
+        priceItem.text = currentSelectedItem.GetItemPrice().ToString();
+        propertyItem.text = currentSelectedItem.GetItemProperty().ToString();
+        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         UpdateButtonState();
     }
 

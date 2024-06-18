@@ -27,16 +27,17 @@ public class Character : GameUnit
 
     protected List<Character> targetList = new List<Character>();
     protected bool isDead, isAttack, isMoving;
+    protected float currentSize;
+    protected float newSize;
 
     private string currentAnim;
     private string characterName;
     private int characterScore;
-    protected float size;
 
     public bool IsDead => isDead;
     public int Score { get => characterScore; set => characterScore = value; }
     public string Name { get => characterName; set => characterName = value; }
-    //public float Size { get => size; set => size = value; }
+    //public float Size { get => currentSize; set => currentSize = value; }
     public Transform IndicatorTf => indicatorTf;
     public Collider[] enemyInAttackRange = new Collider[10];
 
@@ -105,7 +106,7 @@ public class Character : GameUnit
         {
             isAttack = true;
             ChangeAnim(Constants.ANIM_ATTACK);
-            Tf.LookAt(target.Tf);
+            Tf.LookAt(new Vector3(target.Tf.position.x, Tf.position.y, target.Tf.position.z));
             StartCoroutine(ThrowWeapon(0.24f));
             SoundManager.Instance.PlaySound(SoundType.ThrowWeapon);
             StartCoroutine(DelayAttack(1.26f));
@@ -233,9 +234,10 @@ public class Character : GameUnit
         return currentTarget;
     }
 
+    //lay ra level cua character de tinh upsize
     public int CalculateLevel(int score)
     {
-        int level = 0;
+        int level = 0; //gia su ban dau level = 0
         while(score > level * (level + 1))
         {
             level++;
@@ -243,6 +245,7 @@ public class Character : GameUnit
         return level;
     }
 
+    //tinh toan score cho charater
     public void UpdateScoreOnHit(Character attacker, Character victim)
     {
         int attackerScore = attacker.Score;
@@ -286,26 +289,44 @@ public class Character : GameUnit
         }
     }
 
+    //goi khi hit character
     public virtual void AddScore(int score)
     {
         characterScore += score;
         int currentLevel = CalculateLevel(characterScore);
         if(characterScore >= currentLevel * (currentLevel + 1))
         {
-            //SizeUp(1.02f);
+            if(this is Player)
+            Debug.Log($"Update to level: {currentLevel}; PlayerScore {characterScore}");
+            UpSize(Constants.UP_SIZE);
         }
     }
 
-    public virtual void SizeUp(float size)
+    //goi khi character dat moc score
+    public virtual void UpSize(float value)
     {
-        size = Mathf.Clamp(size, Constants.MIN_SIZE, Constants.MAX_SIZE);
-        this.size = size;
-        Tf.localScale *= size;
-        radius *= 1.01f;
+        newSize = currentSize + value;
+        SetSize(newSize);
+        currentSize = newSize;
+    }
 
-        Vector3 newPosition = Tf.position;
-        newPosition.y = 0;
-        Tf.position = newPosition;
+    //set size
+    public void SetSize(float newSize)
+    {
+        if(this is Enemy)
+        {
+            return;
+        }
+        currentSize = Mathf.Clamp(newSize, Constants.MIN_SIZE, Constants.MAX_SIZE);
+        Debug.Log($"currentSize: {currentSize}");
+        body.transform.localScale = currentSize * Vector3.one;
+        Debug.Log($"currentScalePlayer: {Tf.localScale}");
+        radius = currentSize / 0.17f;
+
+        //TEST
+        //Vector3 newPosition = Tf.position;
+        //newPosition.y = 0;
+        //Tf.position = newPosition;
     }
 
     //khoa muc tieu

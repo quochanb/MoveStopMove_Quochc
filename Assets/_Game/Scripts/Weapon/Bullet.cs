@@ -30,6 +30,7 @@ public class Bullet : GameUnit
     public void SetWeaponOnHand(Weapon weapon)
     {
         this.weapon = weapon;
+        Tf.localScale = attacker.Tf.localScale;
     }
 
     public virtual void Move()

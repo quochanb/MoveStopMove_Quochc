@@ -126,7 +126,7 @@ public enum SoundType
     Die = 2,
     HitWeapon = 3,
     ThrowWeapon = 4,
-    SizeUp = 5,
+    UpSize = 5,
     Win = 6,
     Lose = 7
 }

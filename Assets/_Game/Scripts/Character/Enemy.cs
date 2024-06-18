@@ -37,7 +37,7 @@ public class Enemy : Character
     {
         base.OnInit();
         ChangeState(new IdleState());
-        SizeUp(Random.Range(Constants.MIN_SIZE, Constants.MAX_SIZE));
+        SetSize(Random.Range(Constants.MIN_SIZE, Constants.MAX_SIZE));
         this.Name = RandomName.GetRandomEnemyName();
 
         int weaponIndex = Random.Range(0, Enum.GetValues(typeof(WeaponType)).Length);
@@ -80,7 +80,12 @@ public class Enemy : Character
     //xu ly khi enemy die
     public override void OnDead()
     {
+        if (isDead)
+        {
+            return;
+        }
         base.OnDead();
+        
         onDeathEvent?.Invoke(); //phat di su kien
         agent.isStopped = true;
         Invoke(nameof(OnDespawn), 1.2f);
@@ -102,7 +107,7 @@ public class Enemy : Character
     //random score
     public void SetScoreEnemy(int score)
     {
-        if(score >= 0 && score < 10)
+        if (score >= 0 && score < 10)
         {
             this.Score = Random.Range(0, score + 3);
         }
@@ -115,7 +120,7 @@ public class Enemy : Character
     //lay color de set cho indicator
     public void UpdateTargetColor()
     {
-        if(target == null)
+        if (target == null)
         {
             target = GetComponent<Target>();
         }

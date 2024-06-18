@@ -20,6 +20,7 @@ public class ButtonItemUI : MonoBehaviour
     private Player player;
     private int itemIndex;
     private int itemPrice;
+    private string itemProperty;
     private ShopType shopType;
 
     public static event Action<ButtonItemUI> OnClicked;
@@ -48,6 +49,7 @@ public class ButtonItemUI : MonoBehaviour
         this.itemIndex = index;
         this.shopType = ShopType.HatShop;
         this.itemPrice = hatItem.hatPrice;
+        this.itemProperty = hatItem.hatProperty;
         btnImage.sprite = hatItem.hatSprite;
         UpdateState();
     }
@@ -59,6 +61,7 @@ public class ButtonItemUI : MonoBehaviour
         this.itemIndex = index;
         this.shopType = ShopType.PantShop;
         this.itemPrice = pantItem.pantPrice;
+        this.itemProperty = pantItem.pantProperty;
         btnImage.sprite = pantItem.pantSprite;
         UpdateState();
     }
@@ -70,6 +73,7 @@ public class ButtonItemUI : MonoBehaviour
         this.itemIndex = index;
         this.shopType = ShopType.ShieldShop;
         this.itemPrice = shieldItem.shieldPrice;
+        this.itemProperty = shieldItem.shieldProperty;
         btnImage.sprite = shieldItem.shieldSprite;
         UpdateState();
     }
@@ -81,6 +85,7 @@ public class ButtonItemUI : MonoBehaviour
         this.itemIndex = index;
         this.shopType= ShopType.SetFullShop;
         this.itemPrice = setFullItem.price;
+        this.itemProperty = setFullItem.property;
         btnImage.sprite = setFullItem.sprite;
         UpdateState();
     }
@@ -95,6 +100,11 @@ public class ButtonItemUI : MonoBehaviour
     public int GetItemIndex()
     {
         return itemIndex;
+    }
+
+    public string GetItemProperty()
+    {
+        return itemProperty;
     }
 
     public ShopType GetShopType()
@@ -138,7 +148,6 @@ public class ButtonItemUI : MonoBehaviour
     //xu ly khi an vao button
     public void OnSelectButton()
     {
-        SoundManager.Instance.PlaySound(SoundType.ButtonClick);
         //tat border cua button
         if (currentSelectedBtn != null && currentSelectedBtn != this)
         {

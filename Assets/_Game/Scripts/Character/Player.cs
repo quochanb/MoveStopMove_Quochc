@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Character
@@ -18,6 +19,7 @@ public class Player : Character
     private void Start()
     {
         this.Score = 0;
+        SetSize(1f);
     }
 
     protected override void Update()
@@ -72,8 +74,8 @@ public class Player : Character
     {
         base.OnInit();
         coin = 0;
-        this.Name = UserDataManager.Instance.GetUserName();
-        this.size = 1;
+        Name = UserDataManager.Instance.GetUserName();
+        SetSize(newSize);
         ChangeCurrentSkin();
     }
 
@@ -101,11 +103,11 @@ public class Player : Character
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
 
-    public override void SizeUp(float size)
+    public override void UpSize(float size)
     {
-        base.SizeUp(size);
-        
-        SoundManager.Instance.PlaySound(SoundType.Win);
+        base.UpSize(size);
+
+        SoundManager.Instance.PlaySound(SoundType.UpSize);
     }
 
     //xu ly hit enemy
@@ -179,13 +181,13 @@ public class Player : Character
     //goi khi win game
     IEnumerator DelayChangeAnim()
     {
-        yield return Cache.GetWFS(1f);
+        yield return Cache.GetWFS(0.5f);
         ChangeAnim(Constants.ANIM_WIN);
     }
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+    //public void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, radius);
+    //}
 }

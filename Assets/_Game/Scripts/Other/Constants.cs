@@ -26,6 +26,7 @@ public class Constants : MonoBehaviour
 
     public const string PATH_TEXTFILE = "TextFiles/names";
 
-    public const float MIN_SIZE = 0.7f;
-    public const float MAX_SIZE = 1.4f;
+    public const float MIN_SIZE = 0.8f;
+    public const float MAX_SIZE = 1.3f;
+    public const float UP_SIZE = 0.05f;
 }

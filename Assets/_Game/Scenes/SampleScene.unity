@@ -738,32 +738,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84313f8bbdade054da4f23f0ee1cc693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
+  soundList:
   - soundType: 0
     clip: {fileID: 8300000, guid: 3b6425a632d4cfc4b9eb26a34e55071c, type: 3}
-    volume: 0.5
+    amount: 20
   - soundType: 1
     clip: {fileID: 8300000, guid: fc6e52864f743e140b6ae3631dbb6cff, type: 3}
-    volume: 0.5
+    amount: 10
   - soundType: 2
     clip: {fileID: 8300000, guid: 919de2e922c8eac4e8146fd9a08c08c7, type: 3}
-    volume: 0.1
+    amount: 20
   - soundType: 3
     clip: {fileID: 8300000, guid: f4e59084b141a76498a865bc81ef9a8a, type: 3}
-    volume: 0.5
+    amount: 20
   - soundType: 4
     clip: {fileID: 8300000, guid: e269d0f1215732843b81be1d34760e91, type: 3}
-    volume: 0.2
+    amount: 20
   - soundType: 5
     clip: {fileID: 8300000, guid: 84159911c3981a2488380b0438e940ff, type: 3}
-    volume: 0.5
+    amount: 10
   - soundType: 6
     clip: {fileID: 8300000, guid: 3f9df24e23a9cfc4bbcb24d35f881833, type: 3}
-    volume: 0.5
+    amount: 5
   - soundType: 7
     clip: {fileID: 8300000, guid: b0ecab52e9a553142a999ebe0df5bfa6, type: 3}
-    volume: 0.5
-  audioSource: {fileID: 733680693}
+    amount: 5
 --- !u!1 &748127336
 GameObject:
   m_ObjectHideFlags: 0
