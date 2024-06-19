@@ -58,7 +58,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             Debug.LogError("No more level to load !");
         }
-
+        
         Invoke(nameof(LoadPlayer), 0.01f);
     }
 

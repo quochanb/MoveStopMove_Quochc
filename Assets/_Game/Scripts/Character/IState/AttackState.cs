@@ -10,9 +10,10 @@ public class AttackState : IState
 
     public void OnEnter(Enemy enemy)
     {
+        enemy.ChangeAnim(Constants.ANIM_ATTACK);
         target = enemy.GetTarget();
         timer = 0;
-        delayTime = Random.Range(2, 5);
+        delayTime = Random.Range(1, 4);
     }
 
     public void OnExecute(Enemy enemy)

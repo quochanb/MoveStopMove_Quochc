@@ -20,6 +20,7 @@ public class Enemy : Character
 
     public IState currentState;
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
+    public bool IsMoving => isMoving;
 
     protected override void Update()
     {

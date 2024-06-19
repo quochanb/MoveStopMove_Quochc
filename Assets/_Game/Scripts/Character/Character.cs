@@ -37,7 +37,7 @@ public class Character : GameUnit
     public bool IsDead => isDead;
     public int Score { get => characterScore; set => characterScore = value; }
     public string Name { get => characterName; set => characterName = value; }
-    //public float Size { get => currentSize; set => currentSize = value; }
+    public float Size { get => currentSize; set => currentSize = value; }
     public Transform IndicatorTf => indicatorTf;
     public Collider[] enemyInAttackRange = new Collider[10];
 
@@ -57,7 +57,7 @@ public class Character : GameUnit
         isDead = false;
         isMoving = false;
         isAttack = false;
-        this.gameObject.layer = 3;
+        this.gameObject.layer = 3; //character layer
     }
 
     //goi khi muon huy
@@ -72,7 +72,7 @@ public class Character : GameUnit
         RaycastHit hit;
         if (Physics.Raycast(nextPoint, Vector3.down, out hit, 2f, groundLayer))
         {
-            return hit.point + Vector3.up;
+            return hit.point + new Vector3(0, 0.978f, 0);
         }
         return Tf.position;
     }
@@ -80,6 +80,8 @@ public class Character : GameUnit
     //moving
     public virtual void Move()
     {
+        if(isDead) return;
+
         isMoving = true;
         ChangeAnim(Constants.ANIM_RUN);
     }
@@ -87,8 +89,9 @@ public class Character : GameUnit
     //stop moving
     public virtual void StopMove()
     {
-        isMoving = false;
+        if(isDead) return;
 
+        isMoving = false;
         if (currentTarget == null)
         {
             ChangeAnim(Constants.ANIM_IDLE);
@@ -102,14 +105,14 @@ public class Character : GameUnit
     //attack
     public virtual void Attack(Character target)
     {
-        if (!isAttack && !target.isDead && !IsOutOfAttackRange(currentTarget))
+        if (!isAttack && !IsOutOfAttackRange(currentTarget))
         {
             isAttack = true;
             ChangeAnim(Constants.ANIM_ATTACK);
             Tf.LookAt(new Vector3(target.Tf.position.x, Tf.position.y, target.Tf.position.z));
             StartCoroutine(ThrowWeapon(0.24f));
             SoundManager.Instance.PlaySound(SoundType.ThrowWeapon);
-            StartCoroutine(DelayAttack(1.26f));
+            StartCoroutine(ResetAttack(1.16f));
         }
     }
 
@@ -238,7 +241,7 @@ public class Character : GameUnit
     public int CalculateLevel(int score)
     {
         int level = 0; //gia su ban dau level = 0
-        while(score > level * (level + 1))
+        while (score > level * (level + 1))
         {
             level++;
         }
@@ -294,10 +297,8 @@ public class Character : GameUnit
     {
         characterScore += score;
         int currentLevel = CalculateLevel(characterScore);
-        if(characterScore >= currentLevel * (currentLevel + 1))
+        if (characterScore >= currentLevel * (currentLevel + 1))
         {
-            if(this is Player)
-            Debug.Log($"Update to level: {currentLevel}; PlayerScore {characterScore}");
             UpSize(Constants.UP_SIZE);
         }
     }
@@ -313,20 +314,9 @@ public class Character : GameUnit
     //set size
     public void SetSize(float newSize)
     {
-        if(this is Enemy)
-        {
-            return;
-        }
         currentSize = Mathf.Clamp(newSize, Constants.MIN_SIZE, Constants.MAX_SIZE);
-        Debug.Log($"currentSize: {currentSize}");
         body.transform.localScale = currentSize * Vector3.one;
-        Debug.Log($"currentScalePlayer: {Tf.localScale}");
         radius = currentSize / 0.17f;
-
-        //TEST
-        //Vector3 newPosition = Tf.position;
-        //newPosition.y = 0;
-        //Tf.position = newPosition;
     }
 
     //khoa muc tieu
@@ -382,11 +372,18 @@ public class Character : GameUnit
     }
 
     //delay den lan tan cong tiep theo
-    private IEnumerator DelayAttack(float time)
+    private IEnumerator ResetAttack(float time)
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
-        //ChangeAnim(Constants.ANIM_IDLE);
+        if(!isMoving && !isDead)
+        {
+            ChangeAnim(Constants.ANIM_IDLE);
+        }
+        if(isMoving && !isDead)
+        {
+            ChangeAnim(Constants.ANIM_RUN);
+        }
     }
 
     //delay nem vu khi
@@ -395,5 +392,4 @@ public class Character : GameUnit
         yield return Cache.GetWFS(time);
         currentWeapon.Throw(this, OnHitVictim);
     }
-
 }

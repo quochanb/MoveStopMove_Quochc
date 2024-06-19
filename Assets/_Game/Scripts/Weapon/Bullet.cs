@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Bullet : GameUnit
@@ -23,14 +20,13 @@ public class Bullet : GameUnit
         this.attacker = attacker;
         this.onHit = onHit;
         this.target = target;
-
+        Tf.localScale = attacker.Size * Vector3.one;
         direction = (target - Tf.position).normalized; //lay huong di chuyen
     }
 
     public void SetWeaponOnHand(Weapon weapon)
     {
         this.weapon = weapon;
-        Tf.localScale = attacker.Tf.localScale;
     }
 
     public virtual void Move()
@@ -61,8 +57,8 @@ public class Bullet : GameUnit
             if (victim != attacker)
             {
                 onHit?.Invoke(attacker, victim); //phat di su kien khi hit character
+                OnDespawn();
             }
-            OnDespawn();
         }
 
         if (other.CompareTag(Constants.TAG_OBSTACLE))

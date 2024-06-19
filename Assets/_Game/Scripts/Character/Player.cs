@@ -99,6 +99,7 @@ public class Player : Character
     {
         base.Move();
         Vector3 nextPoint = Tf.position + Joystick.direction * speed * Time.deltaTime;
+        nextPoint.y = 0f;
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
@@ -181,7 +182,7 @@ public class Player : Character
     //goi khi win game
     IEnumerator DelayChangeAnim()
     {
-        yield return Cache.GetWFS(0.5f);
+        yield return Cache.GetWFS(0.8f);
         ChangeAnim(Constants.ANIM_WIN);
     }
 
