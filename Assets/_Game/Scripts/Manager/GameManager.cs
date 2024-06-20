@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
         {
             Screen.SetResolution(Mathf.RoundToInt(ratio * (float)maxScreenHeight), maxScreenHeight, true);
         }
-        
+
     }
 
     private void Start()
@@ -100,7 +100,7 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator DelayRevive()
     {
-        yield return Cache.GetWFS(1f);
+        yield return Cache.GetWFS(0.5f);
         UIManager.Instance.CloseAll();
         UIManager.Instance.OpenUI<UIRevive>();
     }

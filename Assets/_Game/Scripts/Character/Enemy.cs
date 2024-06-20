@@ -37,7 +37,7 @@ public class Enemy : Character
     public override void OnInit()
     {
         base.OnInit();
-        ChangeState(new IdleState());
+        //ChangeState(new IdleState());
         SetSize(Random.Range(Constants.MIN_SIZE, Constants.MAX_SIZE));
         this.Name = RandomName.GetRandomEnemyName();
 

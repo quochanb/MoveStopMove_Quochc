@@ -72,7 +72,7 @@ public class Character : GameUnit
         RaycastHit hit;
         if (Physics.Raycast(nextPoint, Vector3.down, out hit, 2f, groundLayer))
         {
-            return hit.point + new Vector3(0, 0.978f, 0);
+            return hit.point + new Vector3(0, 1f, 0);
         }
         return Tf.position;
     }
@@ -80,7 +80,7 @@ public class Character : GameUnit
     //moving
     public virtual void Move()
     {
-        if(isDead) return;
+        if (isDead) return;
 
         isMoving = true;
         ChangeAnim(Constants.ANIM_RUN);
@@ -89,7 +89,7 @@ public class Character : GameUnit
     //stop moving
     public virtual void StopMove()
     {
-        if(isDead) return;
+        if (isDead) return;
 
         isMoving = false;
         if (currentTarget == null)
@@ -376,13 +376,12 @@ public class Character : GameUnit
     {
         yield return Cache.GetWFS(time);
         isAttack = false;
-        if(!isMoving && !isDead)
+        if (!isDead)
         {
-            ChangeAnim(Constants.ANIM_IDLE);
-        }
-        if(isMoving && !isDead)
-        {
-            ChangeAnim(Constants.ANIM_RUN);
+            if (isMoving)
+                ChangeAnim(Constants.ANIM_RUN);
+            else
+                ChangeAnim(Constants.ANIM_IDLE);
         }
     }
 

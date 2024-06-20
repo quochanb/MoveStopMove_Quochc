@@ -17,6 +17,11 @@ public class BoomerangBullet : Bullet
 
     public override void Move()
     {
+        if (attacker.IsDead)
+        {
+            OnDespawn();
+        }
+
         Tf.eulerAngles += new Vector3(0, 1000, 0) * Time.deltaTime; //xoay bullet
 
         if (!isReturning)
@@ -32,9 +37,10 @@ public class BoomerangBullet : Bullet
             endPoint = (attackerTransform.position - Tf.position).normalized; //lay huong tranform attacker
             Tf.position += endPoint * speed * Time.deltaTime;
 
-            if (Vector3.Distance(Tf.position, endPoint) < 0.1f)
+            if (Vector3.Distance(Tf.position, endPoint) < 0.5f)
             {
                 OnDespawn();
+                
             }
         }
     }

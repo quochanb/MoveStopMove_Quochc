@@ -37,7 +37,6 @@ public class Player : Character
             if (IsDead)
             {
                 GameManager.Instance.ShowRevivePopup();
-                return;
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -75,7 +74,7 @@ public class Player : Character
         base.OnInit();
         coin = 0;
         Name = UserDataManager.Instance.GetUserName();
-        SetSize(newSize);
+        SetSize(currentSize);
         ChangeCurrentSkin();
     }
 
@@ -99,7 +98,6 @@ public class Player : Character
     {
         base.Move();
         Vector3 nextPoint = Tf.position + Joystick.direction * speed * Time.deltaTime;
-        nextPoint.y = 0f;
         Tf.position = CheckGround(nextPoint);
         Tf.rotation = Quaternion.LookRotation(Joystick.direction);
     }
