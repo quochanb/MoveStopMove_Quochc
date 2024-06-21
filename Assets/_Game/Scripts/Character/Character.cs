@@ -72,7 +72,7 @@ public class Character : GameUnit
         RaycastHit hit;
         if (Physics.Raycast(nextPoint, Vector3.down, out hit, 2f, groundLayer))
         {
-            return hit.point + new Vector3(0, 1f, 0);
+            return hit.point + new Vector3(0, 0.978f, 0);
         }
         return Tf.position;
     }
@@ -342,7 +342,7 @@ public class Character : GameUnit
             return true;
         }
         float distanceToTarget = Vector3.Distance(Tf.position, target.Tf.position);
-        return distanceToTarget > radius;
+        return distanceToTarget > radius*0.95f;
     }
 
     //change anim

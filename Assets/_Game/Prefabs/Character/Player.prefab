@@ -396,9 +396,11 @@ MonoBehaviour:
   currentPant: {fileID: 7635434127271384876}
   currentShield: {fileID: 0}
   currentWeapon: {fileID: 0}
+  currentSetFull: {fileID: 0}
   hatData: {fileID: 11400000, guid: 2e09c65996d323b4c8ac6fa670861891, type: 2}
   shieldData: {fileID: 11400000, guid: 2f860135383eb9041b793c9c7d74912e, type: 2}
   weaponData: {fileID: 11400000, guid: aa4e604f6e6206e4e9cede229a330c3e, type: 2}
+  setFullData: {fileID: 11400000, guid: 1f529e2d2bb1eca4fb85de9d3177e7ac, type: 2}
   enemyInAttackRange:
   - {fileID: 0}
   - {fileID: 0}

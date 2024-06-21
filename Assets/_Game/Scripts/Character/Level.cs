@@ -74,7 +74,7 @@ public class Level : MonoBehaviour
             UIManager.Instance.GetUI<UIGamePlay>().UpdateAlive(aliveEnemy);
             StartCoroutine(RespawnEnemy(Random.Range(3, 6)));
 
-            if (aliveEnemy == 0)
+            if (aliveEnemy == 0 && !LevelManager.Instance.IsPlayerDead)
             {
                 winGameEvent?.Invoke();
                 GameManager.Instance.HandleVictory();

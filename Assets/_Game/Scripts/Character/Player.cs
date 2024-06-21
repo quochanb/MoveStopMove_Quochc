@@ -13,7 +13,7 @@ public class Player : Character
     private string killerName;
     private int coin;
 
-    public string KillerName { get { return killerName; }}
+    public string KillerName { get { return killerName; } }
     public int Coin { get { return coin; } set { coin = value; } }
 
     private void Start()
@@ -24,7 +24,7 @@ public class Player : Character
 
     protected override void Update()
     {
-        if (GameManager.Instance.currentState == GameState.GamePlay)
+        if (GameManager.Instance.IsGameState(GameState.GamePlay))
         {
             //neu co target va target ko nam trong attack range
             if (currentTarget != null && IsOutOfAttackRange(currentTarget))

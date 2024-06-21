@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.EventSystems.EventTrigger;
 using Random = UnityEngine.Random;
 
 public class Enemy : Character
@@ -24,7 +25,7 @@ public class Enemy : Character
 
     protected override void Update()
     {
-        if (GameManager.Instance.currentState == GameState.GamePlay)
+        if (GameManager.Instance.IsGameState(GameState.GamePlay))
         {
             base.Update();
             if (currentState != null)
@@ -37,9 +38,10 @@ public class Enemy : Character
     public override void OnInit()
     {
         base.OnInit();
-        //ChangeState(new IdleState());
+        ChangeState(new IdleState());
         SetSize(Random.Range(Constants.MIN_SIZE, Constants.MAX_SIZE));
         this.Name = RandomName.GetRandomEnemyName();
+        this.Score = 0;
 
         int weaponIndex = Random.Range(0, Enum.GetValues(typeof(WeaponType)).Length);
         int hatIndex = Random.Range(0, Enum.GetValues(typeof(HatType)).Length);

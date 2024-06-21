@@ -71,12 +71,12 @@ public enum ShieldType
 
 public enum SetFullType
 {
-    Set_1 = 0,
-    Set_2 = 1,
-    Set_3 = 2,
-    Set_4 = 3,
-    Set_5 = 4,
-    None = 5
+    Devil = 0,
+    Angle = 1,
+    Witch = 2,
+    DeadPool = 3,
+    Thor = 4,
+    Default = 5
 }
 
 public enum ColorType
