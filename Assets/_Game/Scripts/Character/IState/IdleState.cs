@@ -22,7 +22,7 @@ public class IdleState : IState
             return;
         }
 
-        if (enemy.GetTarget() != null)
+        if (enemy.GetTarget() != null && !enemy.IsOutOfAttackRange(enemy.GetTarget()))
         {
             enemy.ChangeState(new AttackState());
 

@@ -110,9 +110,9 @@ public class Character : GameUnit
             isAttack = true;
             ChangeAnim(Constants.ANIM_ATTACK);
             Tf.LookAt(new Vector3(target.Tf.position.x, Tf.position.y, target.Tf.position.z));
-            StartCoroutine(ThrowWeapon(0.24f));
+            StartCoroutine(ThrowWeapon(0.21f));
             SoundManager.Instance.PlaySound(SoundType.ThrowWeapon);
-            StartCoroutine(ResetAttack(1.16f));
+            StartCoroutine(ResetAttack());
         }
     }
 
@@ -128,6 +128,7 @@ public class Character : GameUnit
     {
         if (isDead)
         {
+            StopAllCoroutines();
             return;
         }
         else
@@ -342,7 +343,7 @@ public class Character : GameUnit
             return true;
         }
         float distanceToTarget = Vector3.Distance(Tf.position, target.Tf.position);
-        return distanceToTarget > radius*0.95f;
+        return distanceToTarget > radius * 0.9f;
     }
 
     //change anim
@@ -372,16 +373,21 @@ public class Character : GameUnit
     }
 
     //delay den lan tan cong tiep theo
-    private IEnumerator ResetAttack(float time)
+    private IEnumerator ResetAttack()
     {
-        yield return Cache.GetWFS(time);
+        yield return Cache.GetWFS(0.9f);
         isAttack = false;
+        ActiveWeapon();
         if (!isDead)
         {
-            if (isMoving)
-                ChangeAnim(Constants.ANIM_RUN);
-            else
+            if (!isMoving)
+            {
                 ChangeAnim(Constants.ANIM_IDLE);
+            }
+            if (isMoving)
+            {
+                ChangeAnim(Constants.ANIM_RUN);
+            }
         }
     }
 

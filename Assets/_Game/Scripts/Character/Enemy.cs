@@ -21,13 +21,15 @@ public class Enemy : Character
 
     public IState currentState;
     public bool IsDestination => Vector3.Distance(Tf.position, destination + (Tf.position.y - destination.y) * Vector3.up) < 0.1f;
-    public bool IsMoving => isMoving;
+    public bool IsMoving { get => isMoving; set => isMoving = value; }
+    public bool IsAttack { get => isAttack; set => isAttack = value; }
 
     protected override void Update()
     {
         if (GameManager.Instance.IsGameState(GameState.GamePlay))
         {
             base.Update();
+
             if (currentState != null)
             {
                 currentState.OnExecute(this);
@@ -88,7 +90,7 @@ public class Enemy : Character
             return;
         }
         base.OnDead();
-        
+
         onDeathEvent?.Invoke(); //phat di su kien
         agent.isStopped = true;
         Invoke(nameof(OnDespawn), 1.2f);

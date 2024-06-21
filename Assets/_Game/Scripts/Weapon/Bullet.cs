@@ -40,7 +40,7 @@ public class Bullet : GameUnit
     public virtual void OnDespawn()
     {
         SimplePool.Despawn(this);
-        attacker.ActiveWeapon();
+        
     }
 
     public void DelayDespawnBullet()
@@ -57,6 +57,7 @@ public class Bullet : GameUnit
             if (victim != attacker)
             {
                 onHit?.Invoke(attacker, victim); //phat di su kien khi hit character
+                attacker.ActiveWeapon();
                 OnDespawn();
             }
         }

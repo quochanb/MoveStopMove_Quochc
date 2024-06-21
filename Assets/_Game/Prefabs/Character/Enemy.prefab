@@ -88,8 +88,8 @@ Transform:
   m_GameObject: {fileID: 2610291336872353039}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 9032055345410096895}
   m_RootOrder: 4
@@ -343,11 +343,9 @@ MonoBehaviour:
   currentPant: {fileID: 8387563558031715460}
   currentShield: {fileID: 0}
   currentWeapon: {fileID: 0}
-  currentSetFull: {fileID: 0}
   hatData: {fileID: 11400000, guid: 2e09c65996d323b4c8ac6fa670861891, type: 2}
   shieldData: {fileID: 11400000, guid: 2f860135383eb9041b793c9c7d74912e, type: 2}
   weaponData: {fileID: 11400000, guid: aa4e604f6e6206e4e9cede229a330c3e, type: 2}
-  setFullData: {fileID: 11400000, guid: 1f529e2d2bb1eca4fb85de9d3177e7ac, type: 2}
   enemyInAttackRange:
   - {fileID: 0}
   - {fileID: 0}

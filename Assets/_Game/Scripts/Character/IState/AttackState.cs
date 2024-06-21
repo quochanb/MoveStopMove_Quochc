@@ -23,20 +23,17 @@ public class AttackState : IState
             return;
         }
 
+        timer += Time.deltaTime;
+
         if (target != null)
         {
             enemy.Attack(target);
         }
 
-        if (target == null || enemy.IsOutOfAttackRange(target) || target.IsDead)
+        if (timer >= delayTime)
         {
-            enemy.ChangeAnim(Constants.ANIM_IDLE);
-            timer += Time.deltaTime;
-
-            if (timer >= delayTime)
-            {
-                enemy.ChangeState(new PatrolState());
-            }
+            enemy.IsMoving = true;
+            enemy.ChangeState(new PatrolState());
         }
     }
 

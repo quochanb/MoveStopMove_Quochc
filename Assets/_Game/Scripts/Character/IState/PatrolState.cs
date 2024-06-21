@@ -6,9 +6,9 @@ public class PatrolState : IState
 {
     public void OnEnter(Enemy enemy)
     {
+        enemy.ChangeAnim(Constants.ANIM_RUN);
         Vector3 destination = enemy.GetRandomPoint();
         enemy.SetDestination(destination);
-        enemy.ChangeAnim(Constants.ANIM_RUN);
     }
 
     public void OnExecute(Enemy enemy)
@@ -20,6 +20,7 @@ public class PatrolState : IState
 
         if (enemy.IsDestination)
         {
+            enemy.IsMoving = false;
             enemy.ChangeState(new IdleState());
         }
     }

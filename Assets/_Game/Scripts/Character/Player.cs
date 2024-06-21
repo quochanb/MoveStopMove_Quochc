@@ -154,7 +154,7 @@ public class Player : Character
     //hien thi khoa muc tieu gan nhat
     private void SetLockTarget()
     {
-        if (currentTarget != null)
+        if (currentTarget != null && !IsOutOfAttackRange(currentTarget))
         {
             //neu dang co target bi khoa va target do khac currentTarget
             if (targetLocking != null && targetLocking != currentTarget)
