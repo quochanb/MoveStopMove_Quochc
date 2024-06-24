@@ -13,8 +13,11 @@ public class Character : GameUnit
     [SerializeField] protected Transform bulletSpawnPoint;
     [SerializeField] protected Transform indicatorTf;
     [SerializeField] protected Transform rightHand, leftHand, head;
+    [SerializeField] protected Transform hips;
+    [SerializeField] protected Material defaultMaterial;
     [SerializeField] protected GameObject body, lockTarget;
     [SerializeField] protected LayerMask characterLayer, groundLayer;
+    [SerializeField] protected SkinnedMeshRenderer skinnedMeshRenderer;
 
     [SerializeField] private Hat currentHat;
     [SerializeField] private Pant currentPant;
@@ -24,6 +27,7 @@ public class Character : GameUnit
     [SerializeField] private HatData hatData;
     [SerializeField] private ShieldData shieldData;
     [SerializeField] private WeaponData weaponData;
+    [SerializeField] private SetFullData setFullData;
 
     protected List<Character> targetList = new List<Character>();
     protected bool isDead, isAttack, isMoving;
@@ -33,6 +37,10 @@ public class Character : GameUnit
     private string currentAnim;
     private string characterName;
     private int characterScore;
+    private GameObject currentTail;
+    private GameObject currentWing;
+    private GameObject currentHair;
+    private GameObject currentAccessory;
 
     public bool IsDead => isDead;
     public int Score { get => characterScore; set => characterScore = value; }
@@ -215,6 +223,64 @@ public class Character : GameUnit
         }
     }
 
+    //change set full
+    public void ChangeSetFull(SetFullType setFullType)
+    {
+        ResetSetFull();
+
+        if (setFullType != SetFullType.Default)
+        {
+            if (setFullData.setFullList[(int)setFullType].tail != null)
+            {
+                currentTail = Instantiate(setFullData.GetTail(setFullType), hips);
+            }
+
+
+            if (setFullData.setFullList[(int)setFullType].wing != null)
+            {
+                currentWing = Instantiate(setFullData.GetWing(setFullType), hips);
+            }
+
+            if (setFullData.setFullList[(int)setFullType].hair != null)
+            {
+                currentHair = Instantiate(setFullData.GetHair(setFullType), head);
+            }
+
+            if (setFullData.setFullList[(int)setFullType].accessory != null)
+            {
+                currentAccessory = Instantiate(setFullData.GetAccessory(setFullType), leftHand);
+            }
+
+            currentPant.gameObject.SetActive(false);
+            skinnedMeshRenderer.material = setFullData.GetMaterialSkin(setFullType);
+        }
+        else
+        {
+            currentPant.gameObject.SetActive(true);
+            skinnedMeshRenderer.material = defaultMaterial;
+        }
+    }
+
+    public void ResetSetFull()
+    {
+        if (currentTail != null)
+        {
+            Destroy(currentTail.gameObject);
+        }
+        if (currentWing != null)
+        {
+            Destroy(currentWing.gameObject);
+        }
+        if (currentHair != null)
+        {
+            Destroy(currentHair.gameObject);
+        }
+        if (currentAccessory != null)
+        {
+            Destroy(currentAccessory.gameObject);
+        }
+    }
+
     //find enemy gan nhat
     public Character FindEnemyTarget()
     {
@@ -317,7 +383,7 @@ public class Character : GameUnit
     {
         currentSize = Mathf.Clamp(newSize, Constants.MIN_SIZE, Constants.MAX_SIZE);
         body.transform.localScale = currentSize * Vector3.one;
-        radius = currentSize / 0.17f;
+        radius = currentSize / Constants.RATIO;
     }
 
     //khoa muc tieu

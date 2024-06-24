@@ -29,4 +29,6 @@ public class Constants : MonoBehaviour
     public const float MIN_SIZE = 0.8f;
     public const float MAX_SIZE = 1.3f;
     public const float UP_SIZE = 0.05f;
+    public const float RATIO = 0.17f;
+    public const float ORIGINAL_SIZE = 1f;
 }

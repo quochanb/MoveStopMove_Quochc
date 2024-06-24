@@ -174,5 +174,9 @@ public class ButtonItemUI : MonoBehaviour
         {
             player.ChangeShield(shieldItem.shieldType);
         }
+        if(setFullItem != null && player != null)
+        {
+            player.ChangeSetFull(setFullItem.setFullType);
+        }
     }
 }

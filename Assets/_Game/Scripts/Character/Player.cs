@@ -19,7 +19,7 @@ public class Player : Character
     private void Start()
     {
         this.Score = 0;
-        SetSize(1f);
+        SetSize(Constants.ORIGINAL_SIZE);
     }
 
     protected override void Update()
@@ -86,11 +86,13 @@ public class Player : Character
         int currentHatIndex = userData.currentHatIndex;
         int currentPantIndex = userData.currentPantIndex;
         int currentShieldIndex = userData.currentShieldIndex;
+        int currentSetFullIndex = userData.currentSetFullIndex;
 
         ChangeWeapon((WeaponType)currentWeaponIndex);
         ChangeHat((HatType)currentHatIndex);
         ChangePant((PantType)currentPantIndex);
         ChangeShield((ShieldType)currentShieldIndex);
+        ChangeSetFull((SetFullType)currentSetFullIndex);
     }
 
     //move

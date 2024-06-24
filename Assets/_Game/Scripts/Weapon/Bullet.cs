@@ -40,7 +40,6 @@ public class Bullet : GameUnit
     public virtual void OnDespawn()
     {
         SimplePool.Despawn(this);
-        
     }
 
     public void DelayDespawnBullet()

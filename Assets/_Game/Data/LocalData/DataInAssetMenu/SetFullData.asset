@@ -16,20 +16,36 @@ MonoBehaviour:
   - setFullType: 0
     sprite: {fileID: 21300000, guid: 591bf6bd34c3a3c4e9143ba55a6c7d7b, type: 3}
     price: 2500
+    setFullPrefab: {fileID: -271673555722586720, guid: e8b34e0e130518d4ab506b837aa19175, type: 3}
+    setFullMaterial: {fileID: 2100000, guid: 7385810fa8fac644795f10c165782c92, type: 2}
     property: 8% Range
   - setFullType: 1
     sprite: {fileID: 21300000, guid: 9f8e6f5ea0f849447b464193072ab6f3, type: 3}
     price: 2500
+    setFullPrefab: {fileID: -7502037024867590813, guid: fcda0312f62293147bfff0b9282df184, type: 3}
+    setFullMaterial: {fileID: 2100000, guid: 86443a9b6789a3045b36db40add96800, type: 2}
     property: 11% Move Speed
   - setFullType: 2
     sprite: {fileID: 21300000, guid: 916eb971e2dc28b419a242fa6950df78, type: 3}
     price: 2500
+    setFullPrefab: {fileID: -7828154853830653896, guid: 18b796664208d2e4aaa396b641f8f1b9, type: 3}
+    setFullMaterial: {fileID: 2100000, guid: f4618b18a7f0d6f4bad24ed5c4577e04, type: 2}
     property: 50% Gold
   - setFullType: 3
     sprite: {fileID: 21300000, guid: 7965f490c2ec6044d854d957fe85186e, type: 3}
     price: 5000
+    setFullPrefab: {fileID: -1906748090993826680, guid: 5637cffc7e5a31e4aa9c23affb46eecd, type: 3}
+    setFullMaterial: {fileID: 2100000, guid: 72facc1cd7f70814b965d48f953cd046, type: 2}
     property: 100% Gold
   - setFullType: 4
     sprite: {fileID: 21300000, guid: 0363a7557b133774f99bf84dcf6fcbed, type: 3}
     price: 5000
+    setFullPrefab: {fileID: 8292772304782665904, guid: edd79257069831e479514fe562da6527, type: 3}
+    setFullMaterial: {fileID: 2100000, guid: 094c3e06b53f2fe4ba8143e820bb53d6, type: 2}
     property: 12% Range
+  - setFullType: 5
+    sprite: {fileID: 0}
+    price: 0
+    setFullPrefab: {fileID: -7620432356351000989, guid: c3bf72e8129b91e41bf117380c4abaf8, type: 3}
+    setFullMaterial: {fileID: 2100000, guid: 2468810d6eb0d7743a0e015373882877, type: 2}
+    property: 

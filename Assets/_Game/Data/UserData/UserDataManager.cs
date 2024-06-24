@@ -144,7 +144,7 @@ public class UserDataManager : Singleton<UserDataManager>
                 break;
 
             case ShopType.ShieldShop:
-                if (index >= 0 && index < userData.hatState.Count - 1)
+                if (index >= 0 && index < userData.shieldState.Count - 1)
                 {
                     userData.currentShieldIndex = index;
                 }
@@ -155,7 +155,7 @@ public class UserDataManager : Singleton<UserDataManager>
                 break;
 
             case ShopType.SetFullShop:
-                if (index >= 0 && index < userData.hatState.Count - 1)
+                if (index >= 0 && index < userData.setFullState.Count - 1)
                 {
                     userData.currentSetFullIndex = index;
                 }

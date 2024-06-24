@@ -308,6 +308,9 @@ public class UISkinShop : UICanvas
             case ShopType.ShieldShop:
                 player.ChangeShield(ShieldType.None);
                 break;
+            case ShopType.SetFullShop:
+                player.ChangeSetFull(SetFullType.Default);
+                break;
             default:
                 break;
         }

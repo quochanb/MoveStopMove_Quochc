@@ -11,7 +11,6 @@ public class Enemy : Character
     public delegate void OnDeathDelegate();
     public static OnDeathDelegate onDeathEvent;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     [SerializeField] private ColorData colorData;
 
     private Vector3 destination;
