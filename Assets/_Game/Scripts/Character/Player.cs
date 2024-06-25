@@ -37,6 +37,7 @@ public class Player : Character
             if (IsDead)
             {
                 GameManager.Instance.ShowRevivePopup();
+                return;
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -185,10 +186,4 @@ public class Player : Character
         yield return Cache.GetWFS(0.8f);
         ChangeAnim(Constants.ANIM_WIN);
     }
-
-    //public void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, radius);
-    //}
 }

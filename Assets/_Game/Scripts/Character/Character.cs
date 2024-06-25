@@ -95,7 +95,7 @@ public class Character : GameUnit
     }
 
     //stop moving
-    public virtual void StopMove()
+    public void StopMove()
     {
         if (isDead) return;
 
@@ -243,11 +243,13 @@ public class Character : GameUnit
 
             if (setFullData.setFullList[(int)setFullType].hair != null)
             {
+                ChangeHat(HatType.None);
                 currentHair = Instantiate(setFullData.GetHair(setFullType), head);
             }
 
             if (setFullData.setFullList[(int)setFullType].accessory != null)
             {
+                ChangeShield(ShieldType.None);
                 currentAccessory = Instantiate(setFullData.GetAccessory(setFullType), leftHand);
             }
 

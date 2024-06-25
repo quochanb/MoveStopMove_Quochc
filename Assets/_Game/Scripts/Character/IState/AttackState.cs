@@ -11,7 +11,7 @@ public class AttackState : IState
     public void OnEnter(Enemy enemy)
     {
         enemy.ChangeAnim(Constants.ANIM_ATTACK);
-        target = enemy.GetTarget();
+        target = enemy.GetTarget(); //lay muc tieu
         timer = 0;
         delayTime = Random.Range(1, 4);
     }

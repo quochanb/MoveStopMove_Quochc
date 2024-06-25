@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172303602}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 4, z: -7}
+  m_LocalPosition: {x: 0, y: 5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -437,10 +437,10 @@ MonoBehaviour:
     currentShieldIndex: 0
     currentSetFullIndex: 2
     weaponState: 010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-    hatState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-    pantState: 000000000000000000000000000000000000000000000000000000000000000000000000
-    shieldState: 0000000000000000
-    setFullState: 000000000000000000000000
+    hatState: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    pantState: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+    shieldState: 000000000000000000000000
+    setFullState: 000000000000000000000000000000000000000000000000
 --- !u!1 &676683258
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1028,7 +1028,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 4.478, z: -8}
+  m_LocalPosition: {x: 0, y: 3.5, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1160,7 +1160,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1285425874}
   m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
-  m_LocalPosition: {x: 0, y: 1.5, z: -10}
+  m_LocalPosition: {x: 0, y: 2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

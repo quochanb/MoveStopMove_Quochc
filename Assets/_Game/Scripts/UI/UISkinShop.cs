@@ -219,7 +219,6 @@ public class UISkinShop : UICanvas
         UpdateButtonState();
     }
 
-
     //xoa item trong shop
     private void ClearShop()
     {
