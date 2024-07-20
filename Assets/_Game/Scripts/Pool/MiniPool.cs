@@ -2,53 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniPool<T> where T : Component
+public class MiniPool : MonoBehaviour
 {
-    private Queue<T> pools = new Queue<T>();
-    private List<T> listActives = new List<T>();
+    [SerializeField] private AudioSource prefab;
+    [SerializeField] private Transform parent;
+    [SerializeField] private int poolSize;
 
-    T prefab;
-    Transform parent;
+    private Queue<AudioSource> pools = new Queue<AudioSource>();
+    private List<AudioSource> listActives = new List<AudioSource>();
 
-    public void OnInit(T prefab, int amount, Transform parent = null)
+    private void Awake()
     {
-        this.prefab = prefab;
-        this.parent = parent;
-
-        for (int i = 0; i < amount; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             Despawn(GameObject.Instantiate(prefab, parent));
         }
     }
 
-    public T Spawn(Vector3 pos, Quaternion rot)
+    public AudioSource Spawn()
     {
-        T go = pools.Count > 0 ? pools.Dequeue() : GameObject.Instantiate(prefab, parent);
+        AudioSource source = pools.Count > 0 ? pools.Dequeue() : GameObject.Instantiate(prefab, parent);
 
-        listActives.Add(go);
+        listActives.Add(source);
+        source.gameObject.SetActive(true);
 
-        go.transform.SetPositionAndRotation(pos, rot);
-        go.gameObject.SetActive(true);
-
-        return go;
-    }
-    public T Spawn()
-    {
-        T go = pools.Count > 0 ? pools.Dequeue() : GameObject.Instantiate(prefab, parent);
-
-        listActives.Add(go);
-        go.gameObject.SetActive(true);
-
-        return go;
+        return source;
     }
 
-    public void Despawn(T obj)
+    public void Despawn(AudioSource source)
     {
-        if (obj.gameObject.activeSelf)
+        if (source.gameObject.activeSelf)
         {
-            obj.gameObject.SetActive(false);
-            pools.Enqueue(obj);
-            listActives.Remove(obj);
+            source.gameObject.SetActive(false);
+            pools.Enqueue(source);
+            listActives.Remove(source);
         }
     }
 
@@ -68,10 +55,6 @@ public class MiniPool<T> where T : Component
         {
             GameObject.Destroy(pools.Dequeue().gameObject);
         }
-    }
-
-    public List<T> GetActiveObjects()
-    {
-        return new List<T>(listActives);
+        pools.Clear();
     }
 }

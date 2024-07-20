@@ -77,7 +77,10 @@ public class UISkinShop : UICanvas
     {
         button.onClick.AddListener(() =>
         {
-            SoundManager.Instance.PlaySound(SoundType.ButtonClick);
+            if (button == closeBtn)
+            {
+                SoundManager.Instance.PlaySound(SoundType.ButtonClick);
+            }
             action.Invoke();
         });
     }

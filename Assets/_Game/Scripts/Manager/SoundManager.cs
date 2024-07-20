@@ -5,43 +5,32 @@ using UnityEngine;
 
 public class SoundManager : Singleton<SoundManager>
 {
+    [SerializeField] private MiniPool miniPool;
     [SerializeField] private List<Sound> soundList;
-    [SerializeField] private int amount;
 
-    private Dictionary<SoundType, MiniPool<AudioSource>> soundPools = new Dictionary<SoundType, MiniPool<AudioSource>>();
+    private List<AudioSource> activeSources = new List<AudioSource>();
+    private Dictionary<SoundType, Sound> soundDict;
     private bool isMuted = false;
 
     private void Awake()
     {
-        foreach (Sound sound in soundList)
+        soundDict = new Dictionary<SoundType, Sound>();
+        foreach (var sound in soundList)
         {
-            InitSoundPool(sound);
+            soundDict[sound.soundType] = sound;
         }
-    }
-
-    private void InitSoundPool(Sound sound)
-    {
-        GameObject soundObject = new($"Sound_{sound.soundType}");
-        soundObject.transform.parent = transform; // set parent
-
-        AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        audioSource.clip = sound.clip;
-        audioSource.volume = sound.volume;
-        audioSource.playOnAwake = false;
-
-        MiniPool<AudioSource> miniPool = new MiniPool<AudioSource>();
-        miniPool.OnInit(audioSource, amount, transform);
-        soundPools[sound.soundType] = miniPool;
     }
 
     public void PlaySound(SoundType soundType)
     {
-        if (soundPools.ContainsKey(soundType))
+        if (soundDict.ContainsKey(soundType))
         {
-            AudioSource source = soundPools[soundType].Spawn(); //sinh ra tu pool
-            source.volume = isMuted ? 0 : soundList.Find(s => s.soundType == soundType).volume;
+            AudioSource source = miniPool.Spawn(); //sinh ra tu pool
+            source.clip = soundDict[soundType].clip;
+            source.volume = isMuted ? 0 : soundDict[soundType].volume;
             source.Play();
-            StartCoroutine(DeactivateSound(source, soundType));//cho deactive source
+            activeSources.Add(source);
+            StartCoroutine(DeactivateSound(source));//cho deactive source
         }
         else
         {
@@ -52,19 +41,20 @@ public class SoundManager : Singleton<SoundManager>
     public void SoundOff(bool value)
     {
         isMuted = value;
-        foreach (var pool in soundPools.Values)
+        foreach (var source in activeSources)
         {
-            foreach (var source in pool.GetActiveObjects())
+            if (source != null && source.isPlaying)
             {
                 source.volume = isMuted ? 0 : soundList.Find(s => s.clip == source.clip).volume;
             }
         }
     }
 
-    private IEnumerator DeactivateSound(AudioSource source, SoundType soundType)
+    private IEnumerator DeactivateSound(AudioSource source)
     {
         yield return Cache.GetWFS(source.clip.length);
-        soundPools[soundType].Despawn(source);
+        miniPool.Despawn(source);
+        activeSources.Remove(source);
     }
 }
 
